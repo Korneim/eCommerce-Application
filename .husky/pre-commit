@@ -1,0 +1,1 @@
+cd eCommerce-app && npx lint-staged 
