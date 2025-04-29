@@ -36,12 +36,19 @@ export default tseslint.config(
             '@typescript-eslint/member-ordering': 'error',
             'class-methods-use-this': 'error',
         },
-        noInlineConfig: 'true',
-        reportUnusedDisableDirectives: 'true',
     },
     eslintPluginUnicorn.configs.recommended,
     {
         rules: {
+            'unicorn/filename-case': [
+                'error',
+                {
+                    cases: {
+                        camelCase: true,
+                        pascalCase: true,
+                    },
+                },
+            ],
             'unicorn/better-regex': 'warn',
             'unicorn/prefer-module': 'off',
             'unicorn/no-array-for-each': 'off',
