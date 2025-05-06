@@ -4,5 +4,5 @@
 @use './components/Button/Button.module';
 @use './pages/Login/Login.module';
 @use './pages/Main/Main.module';
-@use './pages/Not-found/Not-found';
+@use 'pages/not-found/not-found.module';
 @use './pages/Registration/Registration.module';

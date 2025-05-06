@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { MainLayout } from '../../components/main-layout/MainLayout.tsx';
 import type { FC } from 'react';
 import { routes } from './routes.ts';
+import { NotFoundPage } from '../../pages/not-found/NotFound.tsx';
 
 export const Router: FC = () => {
     const router = createBrowserRouter([
@@ -20,11 +21,11 @@ export const Router: FC = () => {
                     path: routes.login,
                     element: <div>login</div>,
                 },
-                {
-                    path: '*',
-                    element: <div>404 page</div>,
-                },
             ],
+        },
+        {
+            path: '*',
+            element: <NotFoundPage />,
         },
     ]);
 
