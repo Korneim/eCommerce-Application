@@ -1,6 +1,5 @@
 .footer {
-  position: relative;
-  bottom: 0;
+  height: 274px;
 }
 
 .icon {
@@ -12,5 +11,10 @@
 }
 
 .img {
-  margin-bottom: -40px;
+  width: 710px;
+  height: 274px;
+  background-image: url("../../assets/images/footerImg.png");
+  background-position: 100% 150%;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
