@@ -3,6 +3,6 @@
 @use './styles/variables';
 @use './components/Button/Button.module';
 @use './pages/Login/Login.module';
-@use './pages/Main/Main.module';
+@use 'pages/Main/main.module';
 @use './pages/Not-found/Not-found';
 @use './pages/Registration/Registration.module';
