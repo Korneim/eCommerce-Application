@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { ConfigProvider } from 'antd';
-import { MainPage } from './pages/Main/MainPage.tsx';
+import { Router } from './utils/router/Router.tsx';
 
 export const App: FC = () => {
     return (
@@ -22,7 +22,7 @@ export const App: FC = () => {
                 },
             }}
         >
-            <MainPage />
+            <Router />
         </ConfigProvider>
     );
 };
