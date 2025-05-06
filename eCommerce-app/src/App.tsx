@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import { Footer } from './components/footer/Footer.tsx';
 import { ConfigProvider } from 'antd';
+import { Router } from './utils/router/Router.tsx';
 
 export const App: FC = () => {
     return (
@@ -14,9 +14,7 @@ export const App: FC = () => {
                 },
             }}
         >
-            <div className={'wrapper'}>
-                <Footer />
-            </div>
+            <Router />
         </ConfigProvider>
     );
 };

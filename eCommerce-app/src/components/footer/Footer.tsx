@@ -6,7 +6,7 @@ import scss from './footer.module.scss';
 
 export const Footer: FC = () => {
     return (
-        <Flex justify="space-around">
+        <Flex justify="space-around" className={scss.footer}>
             <img src={footerImg} alt="Books" className={scss.img} />
             <Flex vertical>
                 <Typography.Title level={3}>Контакты</Typography.Title>

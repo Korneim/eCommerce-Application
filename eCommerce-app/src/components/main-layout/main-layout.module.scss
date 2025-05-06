@@ -1,0 +1,10 @@
+.wrapper {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+
+}
+
+.wrapper:last-child {
+  align-self: flex-end;
+}
