@@ -27,7 +27,11 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                 />
             </Form.Item>
 
-            <Form.Item layout="horizontal" label={LABEL.CITY}>
+            <Form.Item
+                layout="horizontal"
+                label={LABEL.CITY}
+                validateStatus={errors.paymentAddress?.city ? 'error' : ''}
+            >
                 <Controller
                     name="paymentAddress.city"
                     control={control}
@@ -45,7 +49,11 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                 )}
             </Form.Item>
 
-            <Form.Item layout="horizontal" label={LABEL.COUNTRY}>
+            <Form.Item
+                layout="horizontal"
+                label={LABEL.COUNTRY}
+                validateStatus={errors.paymentAddress?.country ? 'error' : ''}
+            >
                 <Controller
                     name="paymentAddress.country"
                     control={control}
@@ -69,7 +77,11 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                 )}
             </Form.Item>
 
-            <Form.Item layout="horizontal" label={LABEL.STREET}>
+            <Form.Item
+                layout="horizontal"
+                label={LABEL.STREET}
+                validateStatus={errors.paymentAddress?.street ? 'error' : ''}
+            >
                 <Controller
                     name="paymentAddress.street"
                     control={control}
@@ -84,7 +96,11 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                 )}
             </Form.Item>
 
-            <Form.Item layout="horizontal" label={LABEL.INDEX}>
+            <Form.Item
+                layout="horizontal"
+                label={LABEL.INDEX}
+                validateStatus={errors.paymentAddress?.index ? 'error' : ''}
+            >
                 <Controller
                     name="paymentAddress.index"
                     control={control}

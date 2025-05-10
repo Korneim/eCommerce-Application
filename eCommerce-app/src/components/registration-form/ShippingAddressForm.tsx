@@ -18,7 +18,11 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
                 Адрес доставки
             </Typography.Title>
 
-            <Form.Item layout="horizontal" label={LABEL.CITY}>
+            <Form.Item
+                layout="horizontal"
+                label={LABEL.CITY}
+                validateStatus={errors.shippingAddress?.city ? 'error' : ''}
+            >
                 <Controller
                     name="shippingAddress.city"
                     control={control}
@@ -36,7 +40,11 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
                 )}
             </Form.Item>
 
-            <Form.Item layout="horizontal" label={LABEL.COUNTRY}>
+            <Form.Item
+                layout="horizontal"
+                label={LABEL.COUNTRY}
+                validateStatus={errors.shippingAddress?.country ? 'error' : ''}
+            >
                 <Controller
                     name="shippingAddress.country"
                     control={control}
@@ -60,7 +68,11 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
                 )}
             </Form.Item>
 
-            <Form.Item layout="horizontal" label={LABEL.STREET}>
+            <Form.Item
+                layout="horizontal"
+                label={LABEL.STREET}
+                validateStatus={errors.shippingAddress?.street ? 'error' : ''}
+            >
                 <Controller
                     name="shippingAddress.street"
                     control={control}
@@ -75,7 +87,11 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
                 )}
             </Form.Item>
 
-            <Form.Item layout="horizontal" label={LABEL.INDEX}>
+            <Form.Item
+                layout="horizontal"
+                label={LABEL.INDEX}
+                validateStatus={errors.shippingAddress?.index ? 'error' : ''}
+            >
                 <Controller
                     name="shippingAddress.index"
                     control={control}

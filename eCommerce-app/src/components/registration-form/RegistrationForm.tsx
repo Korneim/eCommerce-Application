@@ -85,7 +85,7 @@ export const RegistrationForm: FC = () => {
             <Row gutter={[24, 24]}>
                 <Col xs={24} md={24} lg={12}>
                     <Typography.Title level={3}>Создать учетную запись</Typography.Title>
-                    <Form.Item layout="vertical" label={LABEL.NAME}>
+                    <Form.Item layout="vertical" label={LABEL.NAME} validateStatus={errors.firstName ? 'error' : ''}>
                         <Controller
                             name="firstName"
                             control={control}
@@ -102,7 +102,7 @@ export const RegistrationForm: FC = () => {
                             <div style={{ color: 'var(--error-font-color)' }}>{errors.firstName?.message}</div>
                         )}
                     </Form.Item>
-                    <Form.Item layout="vertical" label={LABEL.SURNAME}>
+                    <Form.Item layout="vertical" label={LABEL.SURNAME} validateStatus={errors.lastName ? 'error' : ''}>
                         <Controller
                             name="lastName"
                             control={control}
@@ -121,7 +121,7 @@ export const RegistrationForm: FC = () => {
                             <div style={{ color: 'var(--error-font-color)' }}>{errors.lastName?.message}</div>
                         )}
                     </Form.Item>
-                    <Form.Item layout="vertical" label={LABEL.EMAIL}>
+                    <Form.Item layout="vertical" label={LABEL.EMAIL} validateStatus={errors.email ? 'error' : ''}>
                         <Controller
                             name="email"
                             control={control}
@@ -140,7 +140,7 @@ export const RegistrationForm: FC = () => {
                             <div style={{ color: 'var(--error-font-color)' }}>{errors.email?.message}</div>
                         )}
                     </Form.Item>
-                    <Form.Item layout="vertical" label={LABEL.PASSWORD}>
+                    <Form.Item layout="vertical" label={LABEL.PASSWORD} validateStatus={errors.password ? 'error' : ''}>
                         <Controller
                             name="password"
                             control={control}
@@ -156,7 +156,11 @@ export const RegistrationForm: FC = () => {
                             <div style={{ color: 'var(--error-font-color)' }}>{errors.password?.message}</div>
                         )}
                     </Form.Item>
-                    <Form.Item layout="vertical" label={LABEL.DATE_OF_BIRTH}>
+                    <Form.Item
+                        layout="vertical"
+                        label={LABEL.DATE_OF_BIRTH}
+                        validateStatus={errors.date ? 'error' : ''}
+                    >
                         <Controller
                             name="date"
                             control={control}
