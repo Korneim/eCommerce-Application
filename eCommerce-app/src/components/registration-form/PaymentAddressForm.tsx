@@ -14,7 +14,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
             autoComplete="off"
         >
             <Typography.Title level={3}>Адрес оплаты</Typography.Title>
-            <Form.Item name="remember" valuePropName="checked">
+            <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: '48px' }}>
                 <Controller
                     name="paymentAddress.copyAddress"
                     control={control}
