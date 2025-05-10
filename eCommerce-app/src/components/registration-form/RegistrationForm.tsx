@@ -6,6 +6,7 @@ import { RegistrationFormValues } from './types';
 import { PaymentAddressForm } from './PaymentAddressForm';
 import styles from './registration-form.module.scss';
 import { ShippingAddressForm } from './ShippingAddressForm';
+import { Link } from 'react-router-dom';
 
 export const RegistrationForm: FC = () => {
     const {
@@ -180,7 +181,7 @@ export const RegistrationForm: FC = () => {
                     <PaymentAddressForm control={control} errors={errors} />
                 </Col>
             </Row>
-            <Flex justify="center">
+            <Flex justify="center" vertical align="center" gap={'10px'}>
                 <Button
                     type="primary"
                     style={{
@@ -191,6 +192,10 @@ export const RegistrationForm: FC = () => {
                 >
                     Регистрация
                 </Button>
+
+                <div>
+                    Уже есть учетная запись? Тогда просто нажмите <Link to={'/login'}>Вход</Link>
+                </div>
             </Flex>
         </Form>
     );
