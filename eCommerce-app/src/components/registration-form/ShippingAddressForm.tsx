@@ -7,13 +7,7 @@ import { validate } from './utils';
 
 export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) => {
     return (
-        <Form
-            style={{ marginBottom: '72px' }}
-            layout="horizontal"
-            name="shippingAddressForm"
-            labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
-            autoComplete="off"
-        >
+        <div style={{ marginBottom: '72px' }}>
             <Typography.Title level={3} style={{ marginBottom: '24px' }}>
                 Адрес доставки
             </Typography.Title>
@@ -21,6 +15,7 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
             <Form.Item
                 layout="horizontal"
                 label={LABEL.CITY}
+                labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
                 validateStatus={errors.shippingAddress?.city ? 'error' : ''}
             >
                 <Controller
@@ -43,6 +38,7 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
             <Form.Item
                 layout="horizontal"
                 label={LABEL.COUNTRY}
+                labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
                 validateStatus={errors.shippingAddress?.country ? 'error' : ''}
             >
                 <Controller
@@ -71,6 +67,7 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
             <Form.Item
                 layout="horizontal"
                 label={LABEL.STREET}
+                labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
                 validateStatus={errors.shippingAddress?.street ? 'error' : ''}
             >
                 <Controller
@@ -90,6 +87,7 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
             <Form.Item
                 layout="horizontal"
                 label={LABEL.INDEX}
+                labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
                 validateStatus={errors.shippingAddress?.index ? 'error' : ''}
             >
                 <Controller
@@ -120,6 +118,6 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
                     )}
                 ></Controller>
             </Form.Item>
-        </Form>
+        </div>
     );
 };

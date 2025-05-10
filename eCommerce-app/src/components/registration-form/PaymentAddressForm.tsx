@@ -7,13 +7,7 @@ import { validate } from './utils';
 
 export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) => {
     return (
-        <Form
-            style={{ marginBottom: '72px' }}
-            layout="horizontal"
-            name="paymentAddressForm"
-            labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
-            autoComplete="off"
-        >
+        <div style={{ marginBottom: '72px' }}>
             <Typography.Title level={3}>Адрес оплаты</Typography.Title>
             <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: '48px' }}>
                 <Controller
@@ -30,6 +24,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
             <Form.Item
                 layout="horizontal"
                 label={LABEL.CITY}
+                labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
                 validateStatus={errors.paymentAddress?.city ? 'error' : ''}
             >
                 <Controller
@@ -52,6 +47,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
             <Form.Item
                 layout="horizontal"
                 label={LABEL.COUNTRY}
+                labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
                 validateStatus={errors.paymentAddress?.country ? 'error' : ''}
             >
                 <Controller
@@ -80,6 +76,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
             <Form.Item
                 layout="horizontal"
                 label={LABEL.STREET}
+                labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
                 validateStatus={errors.paymentAddress?.street ? 'error' : ''}
             >
                 <Controller
@@ -99,6 +96,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
             <Form.Item
                 layout="horizontal"
                 label={LABEL.INDEX}
+                labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
                 validateStatus={errors.paymentAddress?.index ? 'error' : ''}
             >
                 <Controller
@@ -129,6 +127,6 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                     )}
                 ></Controller>
             </Form.Item>
-        </Form>
+        </div>
     );
 };
