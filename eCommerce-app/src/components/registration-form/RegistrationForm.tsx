@@ -1,12 +1,13 @@
 import { FC } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, Col, DatePicker, Flex, Form, Input, Row, Typography } from 'antd';
-import { ERROR, LABEL, MIN_AGE, PASSWORD_MIN_LENGTH, PLACEHOLDER } from './constants';
+import { ERROR, LABEL, PLACEHOLDER } from './constants';
 import { RegistrationFormValues } from './types';
 import { PaymentAddressForm } from './PaymentAddressForm';
 import styles from './registration-form.module.scss';
 import { ShippingAddressForm } from './ShippingAddressForm';
 import { Link } from 'react-router-dom';
+import { validateDate, validatePassword } from './utils';
 
 export const RegistrationForm: FC = () => {
     const {
@@ -19,58 +20,6 @@ export const RegistrationForm: FC = () => {
 
     const onSubmit = (data: RegistrationFormValues) => {
         console.log(data);
-    };
-
-    const validatePassword = (value: string) => {
-        const trimmedValue = value.trim();
-
-        if (trimmedValue !== value) {
-            return 'Пароль не должен содержать пробелы в начале или в конце';
-        }
-
-        if (/[а-яА-Я]/.test(trimmedValue)) {
-            return 'Используйте только латинские буквы';
-        }
-
-        if (value.length < PASSWORD_MIN_LENGTH) {
-            return `Пароль должен содержать минимум ${PASSWORD_MIN_LENGTH} символов`;
-        }
-
-        if (!/[a-z]/.test(value)) {
-            return 'Пароль должен содержать минимум 1 строчную букву';
-        }
-
-        if (!/[A-Z]/.test(value)) {
-            return 'Пароль должен содержать минимум 1 заглавную букву';
-        }
-
-        if (!/\d/.test(value)) {
-            return 'Пароль должен содержать минимум 1 цифру';
-        }
-
-        return true;
-    };
-
-    const validateDate = (value: string): boolean | string => {
-        const today = new Date();
-        const birthDate = new Date(value);
-
-        if (birthDate > today) {
-            return ERROR.INCORRECT_DATE;
-        }
-
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-
-        if (age < MIN_AGE) {
-            return `Вам должно быть не менее ${MIN_AGE} лет`;
-        }
-
-        return true;
     };
 
     return (

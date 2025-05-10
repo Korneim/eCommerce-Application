@@ -3,7 +3,7 @@ import { AddressFormProps } from './types';
 import { Controller } from 'react-hook-form';
 import { Checkbox, Form, Input, Tooltip, Typography } from 'antd';
 import { COUNTRY_TOOLTIP, ERROR, LABEL, PLACEHOLDER } from './constants';
-import { validate } from './utils';
+import { validateStreet } from './utils';
 
 export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) => {
     return (
@@ -84,7 +84,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                     control={control}
                     rules={{
                         required: ERROR.REQUIRED_FIELD,
-                        validate: validate,
+                        validate: validateStreet,
                     }}
                     render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.STREET} variant="filled" />}
                 />
