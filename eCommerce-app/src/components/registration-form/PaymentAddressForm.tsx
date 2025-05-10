@@ -1,0 +1,98 @@
+import { FC } from 'react';
+import { PaymentAddressFormProps } from './types';
+import { Controller } from 'react-hook-form';
+import { Checkbox, Form, Input, Typography } from 'antd';
+import { ERROR, LABEL, PLACEHOLDER } from './constants';
+
+export const PaymentAddressForm: FC<PaymentAddressFormProps> = ({ control, errors }) => {
+    return (
+        <Form
+            style={{ marginBottom: '72px' }}
+            layout="horizontal"
+            name="PaymentAddressForm"
+            labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
+            autoComplete="off"
+        >
+            <Typography.Title level={3}>Адрес оплаты</Typography.Title>
+            <Form.Item name="remember" valuePropName="checked">
+                <Controller
+                    name="paymentAddress.copyAddress"
+                    control={control}
+                    render={({ field }) => (
+                        <Checkbox checked={field.value} onChange={field.onChange}>
+                            Скопировать данные из адреса доставки
+                        </Checkbox>
+                    )}
+                />
+            </Form.Item>
+
+            <Form.Item layout="horizontal" label={LABEL.CITY}>
+                <Controller
+                    name="paymentAddress.city"
+                    control={control}
+                    rules={{
+                        required: ERROR.REQUIRED_FIELD,
+                    }}
+                    render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.CITY} variant="filled" />}
+                />
+                {errors.paymentAddress?.city && (
+                    <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.city.message}</div>
+                )}
+            </Form.Item>
+
+            <Form.Item layout="horizontal" label={LABEL.COUNTRY}>
+                <Controller
+                    name="paymentAddress.country"
+                    control={control}
+                    rules={{
+                        required: ERROR.REQUIRED_FIELD,
+                    }}
+                    render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.COUNTRY} variant="filled" />}
+                />
+                {errors.paymentAddress?.country && (
+                    <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.country.message}</div>
+                )}
+            </Form.Item>
+
+            <Form.Item layout="horizontal" label={LABEL.STREET}>
+                <Controller
+                    name="paymentAddress.street"
+                    control={control}
+                    rules={{
+                        required: ERROR.REQUIRED_FIELD,
+                    }}
+                    render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.STREET} variant="filled" />}
+                />
+                {errors.paymentAddress?.street && (
+                    <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.street.message}</div>
+                )}
+            </Form.Item>
+
+            <Form.Item layout="horizontal" label={LABEL.INDEX}>
+                <Controller
+                    name="paymentAddress.index"
+                    control={control}
+                    rules={{
+                        required: ERROR.REQUIRED_FIELD,
+                    }}
+                    render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.INDEX} variant="filled" />}
+                />
+                {errors.paymentAddress?.index && (
+                    <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.index.message}</div>
+                )}
+            </Form.Item>
+
+            <Form.Item name="remember" valuePropName="checked">
+                <Controller
+                    name="paymentAddress.defaultAddress"
+                    control={control}
+                    render={({ field }) => (
+                        <Checkbox checked={field.value} onChange={field.onChange}>
+                            Сделать адресом оплаты по умолчания
+                        </Checkbox>
+                    )}
+                ></Controller>
+            </Form.Item>
+        </Form>
+    );
+};
