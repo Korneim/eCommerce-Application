@@ -3,13 +3,14 @@ import { AddressFormProps } from './types';
 import { Controller } from 'react-hook-form';
 import { Checkbox, Form, Input, Typography } from 'antd';
 import { ERROR, LABEL, PLACEHOLDER } from './constants';
+import { validate } from './utils';
 
 export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) => {
     return (
         <Form
             style={{ marginBottom: '72px' }}
             layout="horizontal"
-            name="PaymentAddressForm"
+            name="paymentAddressForm"
             labelCol={{ style: { width: '60px', marginRight: '3px', textAlign: 'left' } }}
             autoComplete="off"
         >
@@ -32,6 +33,10 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                     control={control}
                     rules={{
                         required: ERROR.REQUIRED_FIELD,
+                        pattern: {
+                            value: /^[a-zA-Zа-яА-Я\u00C0-\u017FёЁ]+(?:[ ]?[a-zA-Zа-яА-Я\u00C0-\u017FёЁ]+)*$/, //буквы и пробел
+                            message: ERROR.CITY_FORMAT,
+                        },
                     }}
                     render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.CITY} variant="filled" />}
                 />
@@ -60,6 +65,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                     control={control}
                     rules={{
                         required: ERROR.REQUIRED_FIELD,
+                        validate: validate,
                     }}
                     render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.STREET} variant="filled" />}
                 />
@@ -74,6 +80,10 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                     control={control}
                     rules={{
                         required: ERROR.REQUIRED_FIELD,
+                        pattern: {
+                            value: /^\d{6}$/,
+                            message: ERROR.INCORRECT_FORMAT,
+                        },
                     }}
                     render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.INDEX} variant="filled" />}
                 />
