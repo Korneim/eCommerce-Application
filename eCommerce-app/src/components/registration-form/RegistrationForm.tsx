@@ -5,6 +5,7 @@ import { ERROR, LABEL, MIN_AGE, PASSWORD_MIN_LENGTH, PLACEHOLDER } from './const
 import { RegistrationFormValues } from './types';
 import { PaymentAddressForm } from './PaymentAddressForm';
 import styles from './registration-form.module.scss';
+import { ShippingAddressForm } from './ShippingAddressForm';
 
 export const RegistrationForm: FC = () => {
     const {
@@ -175,6 +176,7 @@ export const RegistrationForm: FC = () => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} md={24} lg={12}>
+                    <ShippingAddressForm control={control} errors={errors} />
                     <PaymentAddressForm control={control} errors={errors} />
                 </Col>
             </Row>

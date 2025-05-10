@@ -20,7 +20,7 @@ export interface AddressFormValues {
     defaultAddress?: boolean; //TODO: change ?
 }
 
-export interface PaymentAddressFormProps {
+export interface AddressFormProps {
     control: Control<RegistrationFormValues>;
     errors: FieldErrors<RegistrationFormValues>;
 }
