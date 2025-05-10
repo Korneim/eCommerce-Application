@@ -1,8 +1,8 @@
-import { Checkbox, Form, Input, Typography } from 'antd';
+import { Checkbox, Form, Input, Tooltip, Typography } from 'antd';
 import { AddressFormProps } from './types';
 import { FC } from 'react';
 import { Controller } from 'react-hook-form';
-import { ERROR, LABEL, PLACEHOLDER } from './constants';
+import { COUNTRY_TOOLTIP, ERROR, LABEL, PLACEHOLDER } from './constants';
 import { validate } from './utils';
 
 export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) => {
@@ -43,7 +43,17 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
                     rules={{
                         required: ERROR.REQUIRED_FIELD,
                     }}
-                    render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.COUNTRY} variant="filled" />}
+                    render={({ field }) => (
+                        <Tooltip title={COUNTRY_TOOLTIP}>
+                            <Input
+                                {...field}
+                                placeholder={PLACEHOLDER.COUNTRY}
+                                variant="filled"
+                                value="Россия"
+                                disabled
+                            />
+                        </Tooltip>
+                    )}
                 />
                 {errors.shippingAddress?.country && (
                     <div style={{ color: 'var(--error-font-color)' }}>{errors.shippingAddress.country.message}</div>

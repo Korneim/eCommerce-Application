@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { AddressFormProps } from './types';
 import { Controller } from 'react-hook-form';
-import { Checkbox, Form, Input, Typography } from 'antd';
-import { ERROR, LABEL, PLACEHOLDER } from './constants';
+import { Checkbox, Form, Input, Tooltip, Typography } from 'antd';
+import { COUNTRY_TOOLTIP, ERROR, LABEL, PLACEHOLDER } from './constants';
 import { validate } from './utils';
 
 export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) => {
@@ -52,7 +52,17 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                     rules={{
                         required: ERROR.REQUIRED_FIELD,
                     }}
-                    render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.COUNTRY} variant="filled" />}
+                    render={({ field }) => (
+                        <Tooltip title={COUNTRY_TOOLTIP}>
+                            <Input
+                                {...field}
+                                placeholder={PLACEHOLDER.COUNTRY}
+                                variant="filled"
+                                value="Россия"
+                                disabled
+                            />
+                        </Tooltip>
+                    )}
                 />
                 {errors.paymentAddress?.country && (
                     <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.country.message}</div>
