@@ -1,20 +1,62 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { AddressFormProps } from './types';
-import { Controller } from 'react-hook-form';
-import { Checkbox, Form, Input, Tooltip, Typography } from 'antd';
+import { Controller, useWatch } from 'react-hook-form';
+import { Checkbox, CheckboxChangeEvent, Form, Input, Tooltip, Typography } from 'antd';
 import { COUNTRY_TOOLTIP, ERROR, LABEL, PLACEHOLDER } from './constants';
 import { validateStreet } from './utils';
 
-export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) => {
+export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setValue, getValues }) => {
+    // получение значений полей из адреса доставки
+    const shippingAddressValues = useWatch({
+        control,
+        name: 'shippingAddress',
+    });
+
+    // проверка отмечен чекбокс или нет
+    const copyAddress = useWatch({
+        control,
+        name: 'paymentAddress.copyAddress',
+    });
+
+    useEffect(() => {
+        if (copyAddress && shippingAddressValues) {
+            setValue('paymentAddress.city', shippingAddressValues.city);
+            setValue('paymentAddress.street', shippingAddressValues.street);
+            setValue('paymentAddress.index', shippingAddressValues.index);
+        }
+    }, [shippingAddressValues, copyAddress, setValue]); // если меняются эти значения, то данные дублируются
+
+    const handleCopyAddress = (checked: boolean) => {
+        if (checked) {
+            const shippingAddress = getValues('shippingAddress');
+
+            if (shippingAddress) {
+                setValue('paymentAddress.city', shippingAddress.city);
+                setValue('paymentAddress.street', shippingAddress.street);
+                setValue('paymentAddress.index', shippingAddress.index);
+            }
+        } else {
+            setValue('paymentAddress.city', '');
+            setValue('paymentAddress.street', '');
+            setValue('paymentAddress.index', '');
+        }
+    };
+
     return (
         <div style={{ marginBottom: '72px' }}>
             <Typography.Title level={3}>Адрес оплаты</Typography.Title>
-            <Form.Item name="remember" valuePropName="checked" style={{ marginBottom: '48px' }}>
+            <Form.Item name="remember" valuePropName="checked">
                 <Controller
                     name="paymentAddress.copyAddress"
                     control={control}
                     render={({ field }) => (
-                        <Checkbox checked={field.value} onChange={field.onChange}>
+                        <Checkbox
+                            checked={field.value}
+                            onChange={(e: CheckboxChangeEvent) => {
+                                field.onChange(e);
+                                handleCopyAddress(e.target.checked);
+                            }}
+                        >
                             Скопировать данные из адреса доставки
                         </Checkbox>
                     )}
@@ -37,7 +79,9 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                             message: ERROR.CITY_FORMAT,
                         },
                     }}
-                    render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.CITY} variant="filled" />}
+                    render={({ field }) => (
+                        <Input {...field} placeholder={PLACEHOLDER.CITY} variant="filled" disabled={copyAddress} /> //если чекбокс(copyAddress) установлен то инпуты блокируются
+                    )}
                 />
                 {errors.paymentAddress?.city && (
                     <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.city.message}</div>
@@ -53,9 +97,6 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                 <Controller
                     name="paymentAddress.country"
                     control={control}
-                    rules={{
-                        required: ERROR.REQUIRED_FIELD,
-                    }}
                     render={({ field }) => (
                         <Tooltip title={COUNTRY_TOOLTIP}>
                             <Input
@@ -86,7 +127,9 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                         required: ERROR.REQUIRED_FIELD,
                         validate: validateStreet,
                     }}
-                    render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.STREET} variant="filled" />}
+                    render={({ field }) => (
+                        <Input {...field} placeholder={PLACEHOLDER.STREET} variant="filled" disabled={copyAddress} />
+                    )}
                 />
                 {errors.paymentAddress?.street && (
                     <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.street.message}</div>
@@ -109,7 +152,9 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors }) =>
                             message: ERROR.INCORRECT_FORMAT,
                         },
                     }}
-                    render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.INDEX} variant="filled" />}
+                    render={({ field }) => (
+                        <Input {...field} placeholder={PLACEHOLDER.INDEX} variant="filled" disabled={copyAddress} />
+                    )}
                 />
                 {errors.paymentAddress?.index && (
                     <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.index.message}</div>

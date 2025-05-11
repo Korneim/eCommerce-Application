@@ -14,6 +14,8 @@ export const RegistrationForm: FC = () => {
         control,
         handleSubmit,
         formState: { errors },
+        setValue,
+        getValues,
     } = useForm<RegistrationFormValues>({
         mode: 'onChange',
     });
@@ -130,8 +132,8 @@ export const RegistrationForm: FC = () => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} md={24} lg={12}>
-                    <ShippingAddressForm control={control} errors={errors} />
-                    <PaymentAddressForm control={control} errors={errors} />
+                    <ShippingAddressForm control={control} errors={errors} setValue={setValue} getValues={getValues} />
+                    <PaymentAddressForm control={control} errors={errors} setValue={setValue} getValues={getValues} />
                 </Col>
             </Row>
             <Flex justify="center" vertical align="center" gap={'10px'}>

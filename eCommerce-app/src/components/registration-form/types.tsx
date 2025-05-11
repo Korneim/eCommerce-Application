@@ -1,4 +1,4 @@
-import { Control, FieldErrors } from 'react-hook-form';
+import { Control, FieldErrors, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 
 export interface RegistrationFormValues {
     firstName: string;
@@ -23,4 +23,6 @@ export interface AddressFormValues {
 export interface AddressFormProps {
     control: Control<RegistrationFormValues>;
     errors: FieldErrors<RegistrationFormValues>;
+    setValue: UseFormSetValue<RegistrationFormValues>;
+    getValues: UseFormGetValues<RegistrationFormValues>;
 }

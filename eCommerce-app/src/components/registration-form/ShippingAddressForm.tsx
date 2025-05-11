@@ -44,9 +44,6 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
                 <Controller
                     name="shippingAddress.country"
                     control={control}
-                    rules={{
-                        required: ERROR.REQUIRED_FIELD,
-                    }}
                     render={({ field }) => (
                         <Tooltip title={COUNTRY_TOOLTIP}>
                             <Input
