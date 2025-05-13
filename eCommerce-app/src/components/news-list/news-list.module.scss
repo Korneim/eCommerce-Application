@@ -1,0 +1,13 @@
+.card {
+  justify-content: space-around;
+
+  @media (width <= 1000px) {
+    width: 100%;
+    flex-direction: column !important;
+    gap: 20px;
+  }
+}
+
+.container {
+  margin-left: 70px;
+}

@@ -1,0 +1,31 @@
+.card {
+  width: 634px;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+
+  @media (width <= 1400px) {
+    width: 100%;
+    flex-direction: column !important;
+    gap: 20px;
+  }
+}
+
+.title {
+  text-align: center;
+
+}
+
+.container {
+  position: relative;
+}
+
+.book {
+  border-radius: 5px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 65px;
+}
