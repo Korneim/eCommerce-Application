@@ -21,7 +21,7 @@ export const RegistrationForm: FC = () => {
     });
 
     const onSubmit = (data: RegistrationFormValues) => {
-        console.log(data);
+        console.log(data, 'registration');
     };
 
     return (
@@ -29,7 +29,6 @@ export const RegistrationForm: FC = () => {
             layout="vertical"
             name="RegistrationForm"
             className={styles.form}
-            initialValues={{ remember: true }}
             onFinish={handleSubmit(onSubmit)}
             autoComplete="off"
         >
@@ -100,7 +99,7 @@ export const RegistrationForm: FC = () => {
                                 validate: validatePassword,
                             }}
                             render={({ field }) => (
-                                <Input {...field} placeholder={PLACEHOLDER.PASSWORD} variant="filled" />
+                                <Input.Password {...field} placeholder={PLACEHOLDER.PASSWORD} variant="filled" />
                             )}
                         />
                         {errors.password && (
