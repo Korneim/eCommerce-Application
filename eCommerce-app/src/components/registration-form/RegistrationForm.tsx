@@ -30,7 +30,7 @@ export const RegistrationForm: FC = () => {
             name="RegistrationForm"
             className={styles.form}
             onFinish={handleSubmit(onSubmit)}
-            autoComplete="off"
+            autoComplete="on"
         >
             <Row gutter={[24, 24]}>
                 <Col xs={24} md={24} lg={12}>
@@ -46,7 +46,14 @@ export const RegistrationForm: FC = () => {
                                     message: ERROR.INCORRECT_SYMBOLS,
                                 },
                             }}
-                            render={({ field }) => <Input {...field} placeholder={PLACEHOLDER.NAME} variant="filled" />}
+                            render={({ field }) => (
+                                <Input
+                                    {...field}
+                                    placeholder={PLACEHOLDER.NAME}
+                                    variant="filled"
+                                    autoComplete="given-name"
+                                />
+                            )}
                         />
                         {errors.firstName && (
                             <div style={{ color: 'var(--error-font-color)' }}>{errors.firstName?.message}</div>
@@ -64,7 +71,12 @@ export const RegistrationForm: FC = () => {
                                 },
                             }}
                             render={({ field }) => (
-                                <Input {...field} placeholder={PLACEHOLDER.SURNAME} variant="filled" />
+                                <Input
+                                    {...field}
+                                    placeholder={PLACEHOLDER.SURNAME}
+                                    variant="filled"
+                                    autoComplete="family-name"
+                                />
                             )}
                         />
                         {errors.lastName && (
@@ -83,7 +95,12 @@ export const RegistrationForm: FC = () => {
                                 },
                             }}
                             render={({ field }) => (
-                                <Input {...field} placeholder={PLACEHOLDER.EMAIL} variant="filled" />
+                                <Input
+                                    {...field}
+                                    placeholder={PLACEHOLDER.EMAIL}
+                                    variant="filled"
+                                    autoComplete="email"
+                                />
                             )}
                         />
                         {errors.email && (
@@ -99,7 +116,12 @@ export const RegistrationForm: FC = () => {
                                 validate: validatePassword,
                             }}
                             render={({ field }) => (
-                                <Input.Password {...field} placeholder={PLACEHOLDER.PASSWORD} variant="filled" />
+                                <Input.Password
+                                    {...field}
+                                    placeholder={PLACEHOLDER.PASSWORD}
+                                    variant="filled"
+                                    autoComplete="current-password"
+                                />
                             )}
                         />
                         {errors.password && (
