@@ -16,6 +16,8 @@
         "test": "jest"
     },
     "dependencies": {
+        "@commercetools/platform-sdk": "^8.9.0",
+        "@commercetools/ts-client": "^3.3.0",
         "antd": "^5.24.9",
         "normalize.css": "^8.0.1",
         "react": "^19.0.0",
