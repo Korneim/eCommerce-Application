@@ -16,8 +16,8 @@ export interface AddressFormValues {
     country: string;
     street: string;
     index: string;
-    copyAddress?: boolean; //TODO: change ?
-    defaultAddress?: boolean; //TODO: change ?
+    copyAddress?: boolean;
+    defaultAddress?: boolean;
 }
 
 export interface AddressFormProps {

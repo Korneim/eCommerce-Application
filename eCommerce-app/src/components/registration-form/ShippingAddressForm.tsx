@@ -1,11 +1,23 @@
 import { Checkbox, Form, Input, Tooltip, Typography } from 'antd';
 import { AddressFormProps } from './types';
-import { FC } from 'react';
-import { Controller } from 'react-hook-form';
-import { COUNTRY_TOOLTIP, ERROR, LABEL, PLACEHOLDER } from './constants';
+import { FC, useEffect } from 'react';
+import { Controller, useWatch } from 'react-hook-form';
+import { COUNTRY_TOOLTIP, DEFAULT_COUNTRY, ERROR, LABEL, PLACEHOLDER } from './constants';
 import { validateStreet } from './utils';
 
-export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) => {
+export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors, setValue }) => {
+    //проверка чекбокса для установки дефолтного адреса
+    const setDefaultAddress = useWatch({
+        control,
+        name: 'shippingAddress.defaultAddress',
+    });
+
+    useEffect(() => {
+        if (setDefaultAddress) {
+            setValue('shippingAddress.defaultAddress', true);
+        }
+    }, [setDefaultAddress, setValue]);
+
     return (
         <div style={{ marginBottom: '72px' }}>
             <Typography.Title level={3} style={{ marginBottom: '24px' }}>
@@ -44,6 +56,7 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors }) =
                 <Controller
                     name="shippingAddress.country"
                     control={control}
+                    defaultValue={DEFAULT_COUNTRY}
                     render={({ field }) => (
                         <Tooltip title={COUNTRY_TOOLTIP}>
                             <Input

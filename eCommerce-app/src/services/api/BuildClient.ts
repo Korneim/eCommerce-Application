@@ -70,9 +70,3 @@ export const createApiRoot = (type: ClientType): ByProjectKeyRequestBuilder => {
 
 export const apiRootAuth = createApiRoot('auth');
 export const apiRootRegister = createApiRoot('register');
-
-//test
-// export const getProject = async (type: ClientType) => {
-//     const apiRoot = createApiRoot(type);
-//     return apiRoot.get().execute();
-// };

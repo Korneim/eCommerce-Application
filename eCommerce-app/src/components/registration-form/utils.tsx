@@ -1,4 +1,5 @@
 import { ERROR, MIN_AGE, PASSWORD_MIN_LENGTH } from './constants';
+import dayjs from 'dayjs';
 
 export const validatePassword = (value: string) => {
     const trimmedValue = value.trim();
@@ -61,4 +62,8 @@ export const validateStreet = (value: string): string | boolean => {
     }
 
     return true;
+};
+
+export const formatDate = (date: string) => {
+    return dayjs(date).format('YYYY-MM-DD');
 };

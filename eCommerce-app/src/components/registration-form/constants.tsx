@@ -1,6 +1,7 @@
 export const MIN_AGE = 13;
 export const PASSWORD_MIN_LENGTH = 8;
 export const COUNTRY_TOOLTIP = 'На данный момент доставка осуществляется только по России';
+export const DEFAULT_COUNTRY = 'RU';
 
 export const PLACEHOLDER = {
     NAME: 'Введите имя',

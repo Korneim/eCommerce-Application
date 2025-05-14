@@ -2,11 +2,10 @@ import { FC, useEffect } from 'react';
 import { AddressFormProps } from './types';
 import { Controller, useWatch } from 'react-hook-form';
 import { Checkbox, CheckboxChangeEvent, Form, Input, Tooltip, Typography } from 'antd';
-import { COUNTRY_TOOLTIP, ERROR, LABEL, PLACEHOLDER } from './constants';
+import { COUNTRY_TOOLTIP, DEFAULT_COUNTRY, ERROR, LABEL, PLACEHOLDER } from './constants';
 import { validateStreet } from './utils';
 
 export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setValue, getValues }) => {
-    // получение значений полей из адреса доставки
     const shippingAddressValues = useWatch({
         control,
         name: 'shippingAddress',
@@ -17,6 +16,11 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
         control,
         name: 'paymentAddress.copyAddress',
     });
+    //проверка чекбокса для установки дефолтного адреса
+    const setDefaultAddress = useWatch({
+        control,
+        name: 'paymentAddress.defaultAddress',
+    });
 
     useEffect(() => {
         if (copyAddress && shippingAddressValues) {
@@ -24,7 +28,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
             setValue('paymentAddress.street', shippingAddressValues.street);
             setValue('paymentAddress.index', shippingAddressValues.index);
         }
-    }, [shippingAddressValues, copyAddress, setValue]); // если меняются эти значения, то данные дублируются
+    }, [shippingAddressValues, copyAddress, setValue]); // если меняются эти значения, то данные копируются
 
     const handleCopyAddress = (checked: boolean) => {
         if (checked) {
@@ -41,6 +45,12 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
             setValue('paymentAddress.index', '');
         }
     };
+
+    useEffect(() => {
+        if (setDefaultAddress) {
+            setValue('paymentAddress.defaultAddress', true);
+        }
+    }, [setDefaultAddress, setValue]);
 
     return (
         <div style={{ marginBottom: '72px' }}>
@@ -97,6 +107,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
                 <Controller
                     name="paymentAddress.country"
                     control={control}
+                    defaultValue={DEFAULT_COUNTRY}
                     render={({ field }) => (
                         <Tooltip title={COUNTRY_TOOLTIP}>
                             <Input
@@ -166,7 +177,12 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
                     name="paymentAddress.defaultAddress"
                     control={control}
                     render={({ field }) => (
-                        <Checkbox checked={field.value} onChange={field.onChange}>
+                        <Checkbox
+                            checked={field.value}
+                            onChange={(e: CheckboxChangeEvent) => {
+                                field.onChange(e);
+                            }}
+                        >
                             Сделать адресом оплаты по умолчания
                         </Checkbox>
                     )}

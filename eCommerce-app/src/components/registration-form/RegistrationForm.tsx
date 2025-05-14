@@ -6,10 +6,13 @@ import { RegistrationFormValues } from './types';
 import { PaymentAddressForm } from './PaymentAddressForm';
 import styles from './registration-form.module.scss';
 import { ShippingAddressForm } from './ShippingAddressForm';
-import { Link } from 'react-router-dom';
-import { validateDate, validatePassword } from './utils';
+import { Link, useNavigate } from 'react-router-dom';
+import { formatDate, validateDate, validatePassword } from './utils';
+import { clientSignUp } from '../../services/api/registration-api/registration-api';
+import { routes } from '../../utils/router/routes';
 
 export const RegistrationForm: FC = () => {
+    const navigate = useNavigate();
     const {
         control,
         handleSubmit,
@@ -20,8 +23,24 @@ export const RegistrationForm: FC = () => {
         mode: 'onChange',
     });
 
-    const onSubmit = (data: RegistrationFormValues) => {
-        console.log(data, 'registration');
+    const onSubmit = async (data: RegistrationFormValues) => {
+        const formattedDate = formatDate(data.date);
+
+        const customerData: RegistrationFormValues = {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            password: data.password,
+            date: formattedDate,
+            paymentAddress: data.paymentAddress,
+            shippingAddress: data.shippingAddress,
+        };
+
+        const result = await clientSignUp(customerData);
+        if (result) {
+            console.log('redirect successfull registration!');
+            navigate(routes.root);
+        }
     };
 
     return (
