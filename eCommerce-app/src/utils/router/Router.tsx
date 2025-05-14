@@ -3,6 +3,7 @@ import { MainLayout } from '../../components/main-layout/MainLayout.tsx';
 import type { FC } from 'react';
 import { routes } from './routes.ts';
 import { NotFoundPage } from '../../pages/not-found/NotFound.tsx';
+import LoginPage from '../../pages/login/Login.tsx';
 
 export const Router: FC = () => {
     const router = createBrowserRouter([
@@ -19,7 +20,7 @@ export const Router: FC = () => {
                 },
                 {
                     path: routes.login,
-                    element: <div>login</div>,
+                    element: <LoginPage />,
                 },
             ],
         },
