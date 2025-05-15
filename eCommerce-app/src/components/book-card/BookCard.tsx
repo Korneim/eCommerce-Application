@@ -21,10 +21,10 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
                 <Typography.Text style={{ textAlign: 'start' }} italic>
                     {price} ₽
                 </Typography.Text>
-                <Typography.Paragraph style={{ maxWidth: 200 }} strong>
+                <Typography.Paragraph style={{ maxWidth: 270 }} strong>
                     {title}{' '}
                 </Typography.Paragraph>
-                <Typography.Paragraph style={{ maxWidth: 200 }} ellipsis={{ rows: 2 }} type="secondary">
+                <Typography.Paragraph style={{ maxWidth: 270 }} ellipsis={{ rows: 2 }} type="secondary">
                     {description}
                 </Typography.Paragraph>
             </Flex>
