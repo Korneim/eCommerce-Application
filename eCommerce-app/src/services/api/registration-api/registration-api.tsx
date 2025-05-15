@@ -1,9 +1,10 @@
 import { BaseAddress, MyCustomerDraft } from '@commercetools/platform-sdk';
-import { apiRootRegister } from '../BuildClient';
+import { apiRootRegister, createApiClientWithPasswordFlow } from '../BuildClient';
 import { STATUS_CODE } from '../constants';
 import { RegistrationFormValues } from '../../../components/registration-form/types';
+// import { clientLogin } from '../login-api/login-api';
 
-export const clientSignUp = async (data: RegistrationFormValues) => {
+export const clientSignUp = async (data: RegistrationFormValues): Promise<boolean> => {
     const shippingAddress: BaseAddress = {
         country: data.shippingAddress.country,
         city: data.shippingAddress.city,
@@ -38,7 +39,12 @@ export const clientSignUp = async (data: RegistrationFormValues) => {
             })
             .execute();
 
-        if (response.statusCode === +STATUS_CODE.CREATED) {
+        if (response.statusCode === +STATUS_CODE.SUCCESS) {
+            createApiClientWithPasswordFlow({ username: customerDraft.email, password: customerDraft.password })
+                .me()
+                .get()
+                .execute();
+            console.log('password flow');
             return true;
         } else {
             return false;
@@ -48,3 +54,10 @@ export const clientSignUp = async (data: RegistrationFormValues) => {
         return false;
     }
 };
+
+// const data = {
+//     email: 'login@mail.ru',
+//     password: 'aA111111',
+// };
+
+// clientLogin(data);

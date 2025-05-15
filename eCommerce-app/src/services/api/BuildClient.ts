@@ -1,53 +1,32 @@
 import {
     ClientBuilder,
+    PasswordAuthMiddlewareOptions,
     type AuthMiddlewareOptions, // Required for auth
     type HttpMiddlewareOptions, // Required for sending HTTP requests
 } from '@commercetools/ts-client';
 import { createApiBuilderFromCtpClient, ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
-import { ClientType } from './types';
 
 const projectKey = import.meta.env.VITE_PROJECT_KEY;
-const authClientId = import.meta.env.VITE_CLIENT_AUTH_ID;
-const authSecret = import.meta.env.VITE_CLIENT_AUTH_SECRET;
-const authScopes = [`${import.meta.env.VITE_CLIENT_AUTH_SCOPES}`];
 const registerClientId = import.meta.env.VITE_CLIENT_REGISTER_ID;
 const registerSecret = import.meta.env.VITE_CLIENT_REGISTER_SECRET;
 const registerScopes = [`${import.meta.env.VITE_CLIENT_REGISTER_SCOPES}`];
 
-export const createApiClient = (type: ClientType) => {
-    let currentClientId: string = '';
-    let currentClientSecret: string = '';
-    let currentScopes: string[] = [];
+// Configure httpMiddlewareOptions
+const httpMiddlewareOptions: HttpMiddlewareOptions = {
+    host: import.meta.env.VITE_API_URL,
+    httpClient: fetch,
+};
 
-    switch (type) {
-        case 'auth':
-            currentClientId = authClientId;
-            currentClientSecret = authSecret;
-            currentScopes = authScopes;
-            break;
-
-        case 'register':
-            currentClientId = registerClientId;
-            currentClientSecret = registerSecret;
-            currentScopes = registerScopes;
-            break;
-    }
-
+export const createApiClient = () => {
     // Configure authMiddlewareOptions
     const authMiddlewareOptions: AuthMiddlewareOptions = {
         host: import.meta.env.VITE_AUTH_URL,
         projectKey: projectKey,
         credentials: {
-            clientId: currentClientId,
-            clientSecret: currentClientSecret,
+            clientId: registerClientId,
+            clientSecret: registerSecret,
         },
-        scopes: currentScopes,
-        httpClient: fetch,
-    };
-
-    // Configure httpMiddlewareOptions
-    const httpMiddlewareOptions: HttpMiddlewareOptions = {
-        host: import.meta.env.VITE_API_URL,
+        scopes: registerScopes,
         httpClient: fetch,
     };
 
@@ -60,13 +39,40 @@ export const createApiClient = (type: ClientType) => {
     );
 };
 
-export const createApiRoot = (type: ClientType): ByProjectKeyRequestBuilder => {
-    const client = createApiClient(type);
+export const createApiClientWithPasswordFlow = (user: {
+    username: string;
+    password: string;
+}): ByProjectKeyRequestBuilder => {
+    const authMiddlewareOptions: PasswordAuthMiddlewareOptions = {
+        host: import.meta.env.VITE_AUTH_URL,
+        projectKey: projectKey,
+        credentials: {
+            clientId: registerClientId,
+            clientSecret: registerSecret,
+            user: user,
+        },
+        scopes: registerScopes,
+        httpClient: fetch,
+    };
+
+    const client = new ClientBuilder()
+        .withPasswordFlow(authMiddlewareOptions)
+        .withHttpMiddleware(httpMiddlewareOptions)
+        .build();
+
+    const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
+        projectKey: projectKey,
+    });
+
+    return apiRoot;
+};
+
+export const createApiRoot = (): ByProjectKeyRequestBuilder => {
+    const client = createApiClient();
     const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
         projectKey: projectKey,
     });
     return apiRoot;
 };
 
-export const apiRootAuth = createApiRoot('auth');
-export const apiRootRegister = createApiRoot('register');
+export const apiRootRegister = createApiRoot();
