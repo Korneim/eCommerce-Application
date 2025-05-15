@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Flex } from 'antd';
+import { Flex, Spin } from 'antd';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
@@ -8,40 +8,59 @@ import { loginCustomer } from '../../api/auth';
 import { getCurrentCustomer } from '../../api/customer';
 import '@ant-design/v5-patch-for-react-19';
 import showModal from '../../components/modal/Modal';
+import useAuthStore from '../../store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../utils/router/routes';
 
 type LoginFormInputs = {
     email: string;
     password: string;
 };
 
-const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
-    try {
-        const arrivedData = await loginCustomer(data.email, data.password);
-        console.log('Data:', arrivedData);
-        const customersData = await getCurrentCustomer(arrivedData.access_token);
-        console.log(customersData.firstName, customersData.lastName, customersData.email);
-    } catch (error) {
-        if (error instanceof Error && error.message === 'Customer account with the given credentials not found.') {
-            showModal('error', 'Ошибка аутентификации', 'Введенные логин/пароль не найдены');
-        } else {
-            showModal('error', 'Ошибка аутентификации', 'Непредвиденная ошибка');
-        }
-        throw new Error(
-            error instanceof Error ? error.message : 'Неизвестная ошибка'
-        );
-    }
-};
-
 const LoginPage: FC = () => {
+    const navigate = useNavigate();
+    const login = useAuthStore((state) => state.login);
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<LoginFormInputs>({ mode: 'onChange' });
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [spinning, setSpinning] = useState<boolean>(false);
+
+    const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
+        setSpinning(true);
+        try {
+            const arrivedData = await loginCustomer(data.email, data.password);
+            console.log('Access token: ', arrivedData.access_token, '\n', 'Refresh token: ', arrivedData.refresh_token);
+            const customersData = await getCurrentCustomer(arrivedData.access_token);
+            console.log(
+                'User first name: ',
+                customersData.firstName,
+                '\n',
+                'User last name: ',
+                customersData.lastName,
+                '\n',
+                'User email: ',
+                customersData.email
+            );
+            login();
+            navigate(routes.root);
+        } catch (error) {
+            if (error instanceof Error && error.message === 'Customer account with the given credentials not found.') {
+                showModal('error', 'Ошибка аутентификации', 'Введенные логин/пароль не найдены');
+            } else {
+                showModal('error', 'Ошибка аутентификации', 'Непредвиденная ошибка');
+            }
+            throw new Error(error instanceof Error ? error.message : 'Неизвестная ошибка');
+        } finally {
+            setSpinning(false);
+        }
+    };
 
     return (
         <>
+            <Spin spinning={spinning} tip="Loading" size="large" fullscreen />
             <section className="login-section">
                 <span className="link-section">
                     <a href="./" className="page-link">
@@ -74,7 +93,7 @@ const LoginPage: FC = () => {
                                         const atIndex = value.indexOf('@');
                                         const dotIndex = value.lastIndexOf('.');
                                         return (
-                                            (atIndex > 0 && (dotIndex > atIndex + 1) && (dotIndex < value.length - 1)) ||
+                                            (atIndex > 0 && dotIndex > atIndex + 1 && dotIndex < value.length - 1) ||
                                             'Адрес электронной почты должен содержать доменное имя после @'
                                         );
                                     },
