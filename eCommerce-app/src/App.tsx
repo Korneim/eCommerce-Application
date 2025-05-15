@@ -16,6 +16,10 @@ export const App: FC = () => {
                         fontSize: 18,
                         fontFamily: 'Mulish',
                     },
+                    Menu: {
+                        horizontalItemSelectedColor: '#ffce1a',
+                        horizontalItemHoverColor: '#ffce1a',
+                    },
                     Carousel: {
                         arrowSize: 50,
                         arrowOffset: 20,
