@@ -5,10 +5,10 @@ import scss from './footer.module.scss';
 
 export const Footer: FC = () => {
     return (
-        <Flex justify="space-around" className={scss.footer} align="center">
+        <Flex justify="center" gap={47} className={scss.footer} align="center">
             <div className={scss.img}></div>
 
-            <Flex justify="space-between" gap={47}>
+            <Flex gap={47}>
                 <Flex vertical>
                     <Typography.Title level={3}>Контакты</Typography.Title>
                     <Typography.Text>ул. Петербургская, 19, Казань, Россия</Typography.Text>
