@@ -1,0 +1,17 @@
+.card {
+    justify-content: space-evenly;
+
+    @media (width <= 1000px) {
+        width: 100%;
+        flex-direction: column !important;
+        gap: 20px;
+    }
+}
+
+.container {
+    padding: 20px;
+}
+
+.title {
+    display: flex;
+}

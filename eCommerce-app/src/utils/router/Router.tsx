@@ -3,6 +3,7 @@ import { MainLayout } from '../../components/main-layout/MainLayout.tsx';
 import type { FC } from 'react';
 import { routes } from './routes.ts';
 import { NotFoundPage } from '../../pages/not-found/NotFound.tsx';
+import { MainPage } from '../../pages/main/MainPage.tsx';
 import { RegistrationPage } from '../../pages/registration/Registration.tsx';
 
 export const Router: FC = () => {
@@ -12,7 +13,7 @@ export const Router: FC = () => {
             children: [
                 {
                     path: routes.root,
-                    element: <div>main</div>,
+                    element: <MainPage />,
                 },
                 {
                     path: routes.register,

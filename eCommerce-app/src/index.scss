@@ -1,8 +1,7 @@
 @use './styles/globals';
 @use './styles/typography';
 @use './styles/variables';
-@use './components/button/button.module';
-@use './pages/Login/login.module';
-@use './pages/Main/main.module';
-@use 'pages/not-found/not-found.module';
-@use './pages/Registration/registration.module';
+@use './components/Button/Button.module';
+@use './pages/Login/Login.module';
+@use './pages/Not-found/not-found.module';
+@use './pages/Registration/Registration.module';
