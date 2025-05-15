@@ -2,7 +2,6 @@ import { BaseAddress, MyCustomerDraft } from '@commercetools/platform-sdk';
 import { apiRootRegister, createApiClientWithPasswordFlow } from '../BuildClient';
 import { STATUS_CODE } from '../constants';
 import { RegistrationFormValues } from '../../../components/registration-form/types';
-// import { clientLogin } from '../login-api/login-api';
 
 export const clientSignUp = async (data: RegistrationFormValues): Promise<boolean> => {
     const shippingAddress: BaseAddress = {
@@ -54,10 +53,3 @@ export const clientSignUp = async (data: RegistrationFormValues): Promise<boolea
         return false;
     }
 };
-
-// const data = {
-//     email: 'login@mail.ru',
-//     password: 'aA111111',
-// };
-
-// clientLogin(data);
