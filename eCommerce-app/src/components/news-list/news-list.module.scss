@@ -1,5 +1,5 @@
 .card {
-    justify-content: space-around;
+    justify-content: space-evenly;
 
     @media (width <= 1000px) {
         width: 100%;
@@ -9,5 +9,9 @@
 }
 
 .container {
-    margin-left: 70px;
+    padding: 20px;
+}
+
+.title {
+    display: flex;
 }

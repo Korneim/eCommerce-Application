@@ -9,17 +9,15 @@ type Props = {
 };
 
 export const BooksList: FC<Props> = ({ title, books }) => {
-    console.log(books);
-
     return (
         <Flex vertical gap={20}>
-            <Flex style={{ marginLeft: 70 }}>
-                <Typography.Title level={3}>{title}</Typography.Title>
+            <Flex>
+                <Typography.Title level={2}>{title}</Typography.Title>
             </Flex>
 
-            <Flex wrap justify="space-evenly" gap={10}>
+            <Flex wrap justify="space-evenly">
                 {books.map((book) => (
-                    <BookCard bookInfo={book} />
+                    <BookCard key={book.title} bookInfo={book} />
                 ))}
             </Flex>
         </Flex>

@@ -13,14 +13,18 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
 
     return (
         <Flex vertical gap={10} align="center" justify="space-between" className={css.card}>
-            <Image className={css.image} src={imageUrl} alt={title} height={250} width={180} preview={false} />
+            <Flex className={css.container}>
+                <Image className={css.image} src={imageUrl} alt={title} height={250} width={180} preview={false} />
+            </Flex>
 
             <Flex vertical>
                 <Typography.Text style={{ textAlign: 'start' }} italic>
                     {price} ₽
                 </Typography.Text>
-                <Typography.Paragraph strong>{title}</Typography.Paragraph>
-                <Typography.Paragraph ellipsis={{ rows: 2 }} type="secondary">
+                <Typography.Paragraph style={{ maxWidth: 200 }} strong>
+                    {title}{' '}
+                </Typography.Paragraph>
+                <Typography.Paragraph style={{ maxWidth: 200 }} ellipsis={{ rows: 2 }} type="secondary">
                     {description}
                 </Typography.Paragraph>
             </Flex>

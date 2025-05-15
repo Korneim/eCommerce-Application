@@ -16,16 +16,18 @@
 }
 
 .img {
-    width: 710px;
+    width: 1280px;
     height: 274px;
     background-image: url('../../assets/images/footerImg.png');
-    background-position: 100% 150%;
-    background-repeat: no-repeat;
-    background-size: contain;
+    background-position: 2.6% 150%;
+    background-repeat: repeat-x;
+    background-size: unset;
 
     @media (width <= 1050px) {
         width: 100%;
         height: 150px;
         background-position: bottom;
+        background-repeat: repeat-x;
+        background-size: contain;
     }
 }

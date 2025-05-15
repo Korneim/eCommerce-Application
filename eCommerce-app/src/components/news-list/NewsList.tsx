@@ -7,10 +7,12 @@ import { data } from './data.ts';
 export const NewsList: FC = () => {
     return (
         <Flex vertical className={css.container}>
-            <Typography.Title level={3}>Новости</Typography.Title>
+            <Typography.Title className={css.title} level={2}>
+                Новости
+            </Typography.Title>
             <Flex className={css.card}>
                 {data.map((item) => (
-                    <NewsCard dataInfo={item} />
+                    <NewsCard key={item.title} dataInfo={item} />
                 ))}
             </Flex>
         </Flex>
