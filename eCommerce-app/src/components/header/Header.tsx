@@ -9,13 +9,13 @@ export const Header: FC = () => {
     const navigate = useNavigate();
 
     return (
-        <Flex>
+        <Flex gap={40}>
             <Flex
                 onClick={() => {
                     navigate(routes.root);
                 }}
             >
-                <Image width={117} height={113} src={logo} preview={false} />
+                <Image width={60} height={60} src={logo} preview={false} />
             </Flex>
             <NavigateBlock />
         </Flex>

@@ -1,22 +1,40 @@
-import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import type { FC } from 'react';
 import { useState } from 'react';
+import { routes } from '../../utils/router/routes.ts';
+import css from './header.module.scss';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
     {
-        label: 'Navigation One',
-        key: '/login',
-        icon: <MailOutlined />,
+        label: 'Каталог',
+        key: routes.catalog,
     },
     {
-        label: 'Navigation Two',
-        key: '/',
-        icon: <AppstoreOutlined />,
+        label: 'Главная',
+        key: routes.root,
+    },
+    {
+        label: 'О нас',
+        key: routes.about,
+    },
+    {
+        label: 'Регистрация',
+        key: routes.register,
+    },
+    {
+        label: '',
+        key: routes.cart,
+        icon: <ShoppingCartOutlined className={css.icon} />,
+    },
+    {
+        label: '',
+        key: routes.login,
+        icon: <UserOutlined className={css.icon} />,
     },
 ];
 
@@ -30,13 +48,5 @@ export const NavigateBlock: FC = () => {
         navigate(e.key);
     };
 
-    return (
-        <Menu
-            style={{ width: '90%', height: 50, display: 'flex', justifyContent: 'space-evenly' }}
-            onClick={onClick}
-            selectedKeys={[current]}
-            mode="horizontal"
-            items={items}
-        />
-    );
+    return <Menu className={css.menu} onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
 };
