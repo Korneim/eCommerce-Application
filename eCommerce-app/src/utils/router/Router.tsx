@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import { routes } from './routes.ts';
 import { NotFoundPage } from '../../pages/not-found/NotFound.tsx';
 import LoginPage from '../../pages/login/Login.tsx';
+import { MainPage } from '../../pages/main/MainPage.tsx';
 
 export const Router: FC = () => {
     const router = createBrowserRouter([
@@ -12,7 +13,7 @@ export const Router: FC = () => {
             children: [
                 {
                     path: routes.root,
-                    element: <div>main</div>,
+                    element: <MainPage />,
                 },
                 {
                     path: routes.register,
