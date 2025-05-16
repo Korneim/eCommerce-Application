@@ -177,14 +177,7 @@ export const RegistrationForm: FC = () => {
                 </Col>
             </Row>
             <Flex justify="center" vertical align="center" gap={'10px'}>
-                <Button
-                    type="primary"
-                    style={{
-                        backgroundColor: 'var(--primary-color)',
-                        borderColor: 'none',
-                    }}
-                    htmlType="submit"
-                >
+                <Button type="primary" htmlType="submit">
                     Регистрация
                 </Button>
 
