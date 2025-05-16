@@ -7,9 +7,9 @@ interface LoginResponse {
 }
 
 export async function loginCustomer(email: string, password: string): Promise<LoginResponse> {
-    const projectKey = 'bg-bookish';
-    const clientId = '8C2YwOxEtfEZLrWjXmPTl5FH';
-    const clientSecret = '5uzr_LzYH3BL2npSO7ujYgWJdp4RAYwy';
+    const projectKey = import.meta.env.VITE_PROJECT_KEY;
+    const clientId = import.meta.env.VITE_CLIENT_AUTH_ID;
+    const clientSecret = import.meta.env.VITE_CLIENT_AUTH_SECRET;
     const credentials = btoa(`${clientId}:${clientSecret}`);
 
     function isLoginResponse(data: unknown): data is LoginResponse {
