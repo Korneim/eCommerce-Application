@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Button, Col, DatePicker, Flex, Form, Input, Row, Typography } from 'antd';
+import { Button, Col, DatePicker, Flex, Form, Input, Row, Spin, Typography } from 'antd';
 import { ERROR, LABEL, PLACEHOLDER } from './constants';
 import { RegistrationFormValues } from './types';
 import { PaymentAddressForm } from './PaymentAddressForm';
@@ -13,6 +13,7 @@ import { routes } from '../../utils/router/routes';
 
 export const RegistrationForm: FC = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const {
         control,
         handleSubmit,
@@ -25,6 +26,7 @@ export const RegistrationForm: FC = () => {
 
     const onSubmit = async (data: RegistrationFormValues) => {
         const formattedDate = formatDate(data.date);
+        setLoading(true);
 
         const customerData: RegistrationFormValues = {
             firstName: data.firstName,
@@ -35,11 +37,14 @@ export const RegistrationForm: FC = () => {
             paymentAddress: data.paymentAddress,
             shippingAddress: data.shippingAddress,
         };
-
-        const result = await clientSignUp(customerData);
-        if (result) {
-            console.log('redirect successfull registration!');
-            navigate(routes.root);
+        try {
+            const result = await clientSignUp(customerData);
+            if (result) {
+                console.log('redirect successfull registration!');
+                navigate(routes.root);
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -185,6 +190,7 @@ export const RegistrationForm: FC = () => {
                     Уже есть учетная запись? Тогда просто нажмите <Link to={'/login'}>Вход</Link>
                 </div>
             </Flex>
+            <Spin spinning={loading} tip="Loading" size="large" fullscreen />
         </Form>
     );
 };
