@@ -22,6 +22,18 @@ export const Router: FC = () => {
                     path: routes.login,
                     element: <div>login</div>,
                 },
+                {
+                    path: routes.cart,
+                    element: <div>cart</div>,
+                },
+                {
+                    path: routes.catalog,
+                    element: <div>catalog</div>,
+                },
+                {
+                    path: routes.about,
+                    element: <div>about</div>,
+                },
             ],
         },
         {
@@ -29,6 +41,5 @@ export const Router: FC = () => {
             element: <NotFoundPage />,
         },
     ]);
-
     return <RouterProvider router={router} />;
 };

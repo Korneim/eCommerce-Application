@@ -5,7 +5,7 @@ import scss from './footer.module.scss';
 
 export const Footer: FC = () => {
     return (
-        <Flex justify="center" gap={47} className={scss.footer} align="center">
+        <Flex justify="center" className={scss.footer} align="center">
             <div className={scss.img}></div>
 
             <Flex gap={67} className={scss.content}>

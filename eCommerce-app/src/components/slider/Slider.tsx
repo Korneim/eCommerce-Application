@@ -1,8 +1,9 @@
-import { Button, Carousel, Flex, Typography } from 'antd';
+import { Button, Carousel, Flex, Image, Typography } from 'antd';
 import css from './slider.module.scss';
 import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../utils/router/routes.ts';
+import bookIcon from '../../assets/images/bookIcon.png';
 
 export const Slider: FC = () => {
     const navigate = useNavigate();
@@ -53,6 +54,30 @@ export const Slider: FC = () => {
                     >
                         Войти
                     </Button>
+                </Flex>
+            </Flex>
+            <Flex className={css.four} align="center" justify="center">
+                <Flex gap={40}>
+                    <Flex>
+                        <Typography.Title className={css.sale} style={{ color: '#fff' }} level={1}>
+                            -10%
+                        </Typography.Title>
+                    </Flex>
+                    <Flex vertical align="center" justify="center">
+                        <Flex>
+                            <Typography.Title className={css.title} style={{ color: '#fff' }}>
+                                На все товары по промокоду:
+                            </Typography.Title>
+                        </Flex>
+                        <Flex>
+                            <Typography.Title className={css.promo} style={{ color: '#fff' }}>
+                                BOOKISH10
+                            </Typography.Title>
+                        </Flex>
+                        <Flex>
+                            <Image className={css.image} preview={false} src={bookIcon}></Image>
+                        </Flex>
+                    </Flex>
                 </Flex>
             </Flex>
         </Carousel>
