@@ -22,7 +22,7 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
                     {price} ₽
                 </Typography.Text>
                 <Typography.Paragraph style={{ width: 180 }} strong>
-                    {title}{' '}
+                    {title}
                 </Typography.Paragraph>
                 <Typography.Paragraph style={{ width: 180 }} ellipsis={{ rows: 2 }} type="secondary">
                     {description}
