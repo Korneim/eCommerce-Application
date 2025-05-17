@@ -8,7 +8,6 @@ export const App: FC = () => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorBgContainer: '#ffce1a',
                     colorPrimary: '#ffce1a',
                 },
                 components: {

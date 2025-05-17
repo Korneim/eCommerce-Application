@@ -4,18 +4,19 @@ import logo from '../../assets/images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../utils/router/routes.ts';
 import { NavigateBlock } from './Navigate.tsx';
+import css from './header.module.scss';
 
 export const Header: FC = () => {
     const navigate = useNavigate();
 
     return (
-        <Flex gap={40}>
+        <Flex gap={40} className={css.container}>
             <Flex
                 onClick={() => {
                     navigate(routes.root);
                 }}
             >
-                <Image width={60} height={60} src={logo} preview={false} />
+                <Image width={70} height={70} src={logo} preview={false} />
             </Flex>
             <NavigateBlock />
         </Flex>
