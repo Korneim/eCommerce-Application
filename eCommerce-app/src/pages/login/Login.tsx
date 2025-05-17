@@ -38,18 +38,7 @@ const LoginPage: FC = () => {
         setSpinning(true);
         try {
             const arrivedData = await loginCustomer(data.email, data.password);
-            console.log('Access token: ', arrivedData.access_token, '\n', 'Refresh token: ', arrivedData.refresh_token);
-            const customersData = await getCurrentCustomer(arrivedData.access_token);
-            console.log(
-                'User first name: ',
-                customersData.firstName,
-                '\n',
-                'User last name: ',
-                customersData.lastName,
-                '\n',
-                'User email: ',
-                customersData.email
-            );
+            await getCurrentCustomer(arrivedData.access_token);
             login();
             navigate(routes.root);
         } catch (error) {
