@@ -17,9 +17,7 @@ export const NewsCard: FC<Props> = ({ dataInfo }) => {
                 </Typography.Title>
                 <Typography.Text style={{ color: '#ffce1a' }}>_________</Typography.Text>
                 <Typography.Title level={5}>{subtitle}</Typography.Title>
-                <Typography.Paragraph className={css.description} ellipsis={{ rows: 4 }}>
-                    {description}
-                </Typography.Paragraph>
+                <Typography.Paragraph className={css.description}>{description}</Typography.Paragraph>
             </Flex>
             <Flex className={css.container}>
                 <Image src={imageUrl} width={150} height={200} className={css.book} preview={false}></Image>

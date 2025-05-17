@@ -4,10 +4,10 @@ import { Footer } from '../footer/Footer.tsx';
 
 export const MainLayout: FC = () => {
     return (
-        <main>
+        <>
             <div>header</div>
             <Outlet />
             <Footer />
-        </main>
+        </>
     );
 };
