@@ -23,6 +23,7 @@ export const App: FC = () => {
                     },
                     Button: {
                         solidTextColor: 'var(--btn-font-color)',
+                        defaultBorderColor: 'var(--primary-color)',
                     },
                 },
             }}

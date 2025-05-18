@@ -43,13 +43,11 @@ export const clientSignUp = async (data: RegistrationFormValues): Promise<boolea
                 .me()
                 .get()
                 .execute();
-            console.log('password flow');
             return true;
         } else {
             return false;
         }
     } catch (error) {
-        console.error(error);
         return false;
     }
 };

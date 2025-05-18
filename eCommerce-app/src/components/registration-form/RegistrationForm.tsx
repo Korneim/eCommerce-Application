@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, Col, DatePicker, Flex, Form, Input, Row, Spin, Typography } from 'antd';
-import { ERROR, LABEL, PLACEHOLDER } from './constants';
+import { ERROR, LABEL, MODAL_CONTENT, MODAL_TITLE, PLACEHOLDER } from './constants';
 import { RegistrationFormValues } from './types';
 import { PaymentAddressForm } from './PaymentAddressForm';
 import styles from './registration-form.module.scss';
@@ -10,10 +10,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import { formatDate, validateDate, validatePassword } from './utils';
 import { clientSignUp } from '../../services/api/registration-api/registration-api';
 import { routes } from '../../utils/router/routes';
+import { ModalType, ModalWindow } from '../modal-window/ModalWindow';
 
 export const RegistrationForm: FC = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+    const [modalTitle, setModalTitle] = useState('');
+    const [modalType, setModalType] = useState<ModalType>('success');
+    const [showButton, setButton] = useState(true);
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     const {
         control,
         handleSubmit,
@@ -37,11 +48,25 @@ export const RegistrationForm: FC = () => {
             paymentAddress: data.paymentAddress,
             shippingAddress: data.shippingAddress,
         };
+
         try {
             const result = await clientSignUp(customerData);
+
             if (result) {
-                console.log('redirect successfull registration!');
-                navigate(routes.root);
+                setModalTitle(MODAL_TITLE.SUCCESS);
+                setModalContent(MODAL_CONTENT.SUCCESS);
+                setIsModalOpen(true);
+                setModalType('success');
+                setButton(false);
+                setTimeout(() => {
+                    handleCancel();
+                    navigate(routes.root);
+                }, 1000);
+            } else {
+                setModalTitle(MODAL_TITLE.ERROR);
+                setModalContent(MODAL_CONTENT.ERROR);
+                setIsModalOpen(true);
+                setModalType('error');
             }
         } finally {
             setLoading(false);
@@ -191,6 +216,14 @@ export const RegistrationForm: FC = () => {
                 </div>
             </Flex>
             <Spin spinning={loading} tip="Loading" size="large" fullscreen />
+            <ModalWindow
+                type={modalType}
+                title={modalTitle}
+                content={modalContent}
+                isOpen={isModalOpen}
+                onClose={handleCancel}
+                showButton={showButton}
+            />
         </Form>
     );
 };
