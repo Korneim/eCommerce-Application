@@ -123,7 +123,7 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors, set
                     control={control}
                     render={({ field }) => (
                         <Checkbox checked={field.value} onChange={field.onChange}>
-                            Сделать адресом доставки по умолчания
+                            Сделать адресом доставки по умолчанию
                         </Checkbox>
                     )}
                 ></Controller>

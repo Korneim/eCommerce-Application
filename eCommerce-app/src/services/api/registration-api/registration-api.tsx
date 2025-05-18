@@ -3,7 +3,13 @@ import { apiRootRegister, createApiClientWithPasswordFlow } from '../BuildClient
 import { STATUS_CODE } from '../constants';
 import { RegistrationFormValues } from '../../../components/registration-form/types';
 
-export const clientSignUp = async (data: RegistrationFormValues): Promise<boolean> => {
+export interface RegistrationResult {
+    result: boolean;
+    message: string | null;
+    statusCode?: number;
+}
+
+export const clientSignUp = async (data: RegistrationFormValues): Promise<RegistrationResult | undefined> => {
     const shippingAddress: BaseAddress = {
         country: data.shippingAddress.country,
         city: data.shippingAddress.city,
@@ -43,11 +49,14 @@ export const clientSignUp = async (data: RegistrationFormValues): Promise<boolea
                 .me()
                 .get()
                 .execute();
-            return true;
-        } else {
-            return false;
+            return { result: true, message: null, statusCode: response.statusCode };
         }
-    } catch (error) {
-        return false;
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            const message = error.message;
+            return { result: false, message: message };
+        } else {
+            console.error('Ошибка при регистрации: ', error);
+        }
     }
 };

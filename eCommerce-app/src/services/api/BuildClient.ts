@@ -1,8 +1,8 @@
 import {
     ClientBuilder,
     PasswordAuthMiddlewareOptions,
-    type AuthMiddlewareOptions, // Required for auth
-    type HttpMiddlewareOptions, // Required for sending HTTP requests
+    type AuthMiddlewareOptions,
+    type HttpMiddlewareOptions,
 } from '@commercetools/ts-client';
 import { createApiBuilderFromCtpClient, ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 
@@ -11,14 +11,12 @@ const registerClientId = import.meta.env.VITE_CLIENT_REGISTER_ID;
 const registerSecret = import.meta.env.VITE_CLIENT_REGISTER_SECRET;
 const registerScopes = [`${import.meta.env.VITE_CLIENT_REGISTER_SCOPES}`];
 
-// Configure httpMiddlewareOptions
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
     host: import.meta.env.VITE_API_URL,
     httpClient: fetch,
 };
 
 export const createApiClient = () => {
-    // Configure authMiddlewareOptions
     const authMiddlewareOptions: AuthMiddlewareOptions = {
         host: import.meta.env.VITE_AUTH_URL,
         projectKey: projectKey,
@@ -30,13 +28,10 @@ export const createApiClient = () => {
         httpClient: fetch,
     };
 
-    return (
-        new ClientBuilder()
-            // .withProjectKey(projectKey) // .withProjectKey() is not required if the projectKey is included in authMiddlewareOptions
-            .withAnonymousSessionFlow(authMiddlewareOptions) //вместо withClientCredentialsFlow
-            .withHttpMiddleware(httpMiddlewareOptions)
-            .build()
-    );
+    return new ClientBuilder()
+        .withAnonymousSessionFlow(authMiddlewareOptions)
+        .withHttpMiddleware(httpMiddlewareOptions)
+        .build();
 };
 
 export const createApiClientWithPasswordFlow = (user: {

@@ -30,7 +30,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
         }
     }, [shippingAddressValues, copyAddress, setValue]); // если меняются эти значения, то данные копируются
 
-    const handleCopyAddress = (checked: boolean) => {
+    const handleCopyAddress = (checked: boolean): void => {
         if (checked) {
             const shippingAddress = getValues('shippingAddress');
 
@@ -184,7 +184,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
                                 field.onChange(e);
                             }}
                         >
-                            Сделать адресом оплаты по умолчания
+                            Сделать адресом оплаты по умолчанию
                         </Checkbox>
                     )}
                 ></Controller>

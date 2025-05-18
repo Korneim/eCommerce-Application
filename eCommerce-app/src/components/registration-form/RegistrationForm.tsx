@@ -8,11 +8,12 @@ import styles from './registration-form.module.scss';
 import { ShippingAddressForm } from './ShippingAddressForm';
 import { Link, useNavigate } from 'react-router-dom';
 import { formatDate, validateDate, validatePassword } from './utils';
-import { clientSignUp } from '../../services/api/registration-api/registration-api';
+import { clientSignUp, RegistrationResult } from '../../services/api/registration-api/registration-api';
 import { routes } from '../../utils/router/routes';
 import { ModalType, ModalWindow } from '../modal-window/ModalWindow';
 import useAuthStore from '../../store/useAuthStore';
 import { MODAL_CONTENT, MODAL_TITLE } from '../modal-window/constants';
+import { STATUS_CODE } from '../../services/api/constants';
 
 export const RegistrationForm: FC = () => {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const RegistrationForm: FC = () => {
     const [modalType, setModalType] = useState<ModalType>('success');
     const [showButton, setButton] = useState(true);
 
-    const handleCancel = () => {
+    const handleCancel = (): void => {
         setIsModalOpen(false);
     };
 
@@ -39,7 +40,7 @@ export const RegistrationForm: FC = () => {
         mode: 'onChange',
     });
 
-    const onSubmit = async (data: RegistrationFormValues) => {
+    const onSubmit = async (data: RegistrationFormValues): Promise<void> => {
         const formattedDate = formatDate(data.date);
         setLoading(true);
 
@@ -54,9 +55,9 @@ export const RegistrationForm: FC = () => {
         };
 
         try {
-            const result = await clientSignUp(customerData);
+            const result: RegistrationResult | undefined = await clientSignUp(customerData);
 
-            if (result) {
+            if (result?.statusCode === +STATUS_CODE.SUCCESS) {
                 setModalTitle(MODAL_TITLE.SUCCESS);
                 setModalContent(MODAL_CONTENT.SUCCESS);
                 setIsModalOpen(true);
@@ -69,7 +70,11 @@ export const RegistrationForm: FC = () => {
                 }, 1000);
             } else {
                 setModalTitle(MODAL_TITLE.ERROR);
-                setModalContent(MODAL_CONTENT.ERROR);
+                if (result?.message === 'There is already an existing customer with the provided email.') {
+                    setModalContent(MODAL_CONTENT.ERROR);
+                } else {
+                    setModalContent(result?.message || '');
+                }
                 setIsModalOpen(true);
                 setModalType('error');
             }
