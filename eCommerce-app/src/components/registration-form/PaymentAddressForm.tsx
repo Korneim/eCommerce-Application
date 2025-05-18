@@ -5,7 +5,7 @@ import { Checkbox, CheckboxChangeEvent, Form, Input, Tooltip, Typography } from 
 import { COUNTRY_TOOLTIP, DEFAULT_COUNTRY, ERROR, LABEL, PLACEHOLDER } from './constants';
 import { validateStreet } from './utils';
 
-export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setValue, getValues }) => {
+export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setValue, getValues, trigger }) => {
     const shippingAddressValues = useWatch({
         control,
         name: 'shippingAddress',
@@ -27,6 +27,9 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
             setValue('paymentAddress.city', shippingAddressValues.city);
             setValue('paymentAddress.street', shippingAddressValues.street);
             setValue('paymentAddress.index', shippingAddressValues.index);
+            if (trigger) {
+                trigger('paymentAddress');
+            }
         }
     }, [shippingAddressValues, copyAddress, setValue]); // если меняются эти значения, то данные копируются
 

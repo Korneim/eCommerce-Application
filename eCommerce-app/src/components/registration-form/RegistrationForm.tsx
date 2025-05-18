@@ -33,6 +33,7 @@ export const RegistrationForm: FC = () => {
         formState: { errors },
         setValue,
         getValues,
+        trigger,
     } = useForm<RegistrationFormValues>({
         mode: 'onChange',
     });
@@ -206,7 +207,13 @@ export const RegistrationForm: FC = () => {
                 </Col>
                 <Col xs={24} md={24} lg={12}>
                     <ShippingAddressForm control={control} errors={errors} setValue={setValue} getValues={getValues} />
-                    <PaymentAddressForm control={control} errors={errors} setValue={setValue} getValues={getValues} />
+                    <PaymentAddressForm
+                        control={control}
+                        errors={errors}
+                        setValue={setValue}
+                        getValues={getValues}
+                        trigger={trigger}
+                    />
                 </Col>
             </Row>
             <Flex justify="center" vertical align="center" gap={'10px'}>
