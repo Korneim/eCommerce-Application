@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, Col, DatePicker, Flex, Form, Input, Row, Spin, Typography } from 'antd';
-import { ERROR, LABEL, MODAL_CONTENT, MODAL_TITLE, PLACEHOLDER } from './constants';
+import { ERROR, LABEL, PLACEHOLDER } from './constants';
 import { RegistrationFormValues } from './types';
 import { PaymentAddressForm } from './PaymentAddressForm';
 import styles from './registration-form.module.scss';
@@ -12,6 +12,7 @@ import { clientSignUp } from '../../services/api/registration-api/registration-a
 import { routes } from '../../utils/router/routes';
 import { ModalType, ModalWindow } from '../modal-window/ModalWindow';
 import useAuthStore from '../../store/useAuthStore';
+import { MODAL_CONTENT, MODAL_TITLE } from '../modal-window/constants';
 
 export const RegistrationForm: FC = () => {
     const navigate = useNavigate();
