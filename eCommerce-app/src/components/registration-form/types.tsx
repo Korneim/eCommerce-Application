@@ -1,4 +1,4 @@
-import { Control, FieldErrors, UseFormGetValues, UseFormSetValue, UseFormTrigger } from 'react-hook-form';
+import { Control, FieldErrors, UseFormClearErrors, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 
 export interface RegistrationFormValues {
     firstName: string;
@@ -10,7 +10,6 @@ export interface RegistrationFormValues {
     shippingAddress: AddressFormValues;
 }
 
-// TODO: переместить в общие типы ? (корзина)
 export interface AddressFormValues {
     city: string;
     country: string;
@@ -25,5 +24,5 @@ export interface AddressFormProps {
     errors: FieldErrors<RegistrationFormValues>;
     setValue: UseFormSetValue<RegistrationFormValues>;
     getValues: UseFormGetValues<RegistrationFormValues>;
-    trigger?: UseFormTrigger<RegistrationFormValues>;
+    clearErrors?: UseFormClearErrors<RegistrationFormValues>;
 }

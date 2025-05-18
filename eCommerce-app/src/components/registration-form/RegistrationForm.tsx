@@ -34,7 +34,7 @@ export const RegistrationForm: FC = () => {
         formState: { errors },
         setValue,
         getValues,
-        trigger,
+        clearErrors,
     } = useForm<RegistrationFormValues>({
         mode: 'onChange',
     });
@@ -213,7 +213,7 @@ export const RegistrationForm: FC = () => {
                         errors={errors}
                         setValue={setValue}
                         getValues={getValues}
-                        trigger={trigger}
+                        clearErrors={clearErrors}
                     />
                 </Col>
             </Row>
@@ -222,7 +222,7 @@ export const RegistrationForm: FC = () => {
                     Регистрация
                 </Button>
 
-                <div>
+                <div style={{ textAlign: 'center' }}>
                     Уже есть учетная запись? Тогда просто нажмите <Link to={'/login'}>Вход</Link>
                 </div>
             </Flex>

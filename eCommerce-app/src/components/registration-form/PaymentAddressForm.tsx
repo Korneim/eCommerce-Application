@@ -5,7 +5,7 @@ import { Checkbox, CheckboxChangeEvent, Form, Input, Tooltip, Typography } from 
 import { COUNTRY_TOOLTIP, DEFAULT_COUNTRY, ERROR, LABEL, PLACEHOLDER } from './constants';
 import { validateStreet } from './utils';
 
-export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setValue, getValues, trigger }) => {
+export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setValue, getValues, clearErrors }) => {
     const shippingAddressValues = useWatch({
         control,
         name: 'shippingAddress',
@@ -27,9 +27,6 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
             setValue('paymentAddress.city', shippingAddressValues.city);
             setValue('paymentAddress.street', shippingAddressValues.street);
             setValue('paymentAddress.index', shippingAddressValues.index);
-            if (trigger) {
-                trigger('paymentAddress');
-            }
         }
     }, [shippingAddressValues, copyAddress, setValue]); // если меняются эти значения, то данные копируются
 
@@ -47,6 +44,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
             setValue('paymentAddress.street', '');
             setValue('paymentAddress.index', '');
         }
+        if (clearErrors) clearErrors('paymentAddress');
     };
 
     useEffect(() => {
@@ -96,7 +94,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
                         <Input {...field} placeholder={PLACEHOLDER.CITY} variant="filled" disabled={copyAddress} /> //если чекбокс(copyAddress) установлен то инпуты блокируются
                     )}
                 />
-                {errors.paymentAddress?.city && (
+                {!copyAddress && errors.paymentAddress?.city && (
                     <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.city.message}</div>
                 )}
             </Form.Item>
@@ -123,7 +121,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
                         </Tooltip>
                     )}
                 />
-                {errors.paymentAddress?.country && (
+                {!copyAddress && errors.paymentAddress?.country && (
                     <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.country.message}</div>
                 )}
             </Form.Item>
@@ -145,7 +143,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
                         <Input {...field} placeholder={PLACEHOLDER.STREET} variant="filled" disabled={copyAddress} />
                     )}
                 />
-                {errors.paymentAddress?.street && (
+                {!copyAddress && errors.paymentAddress?.street && (
                     <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.street.message}</div>
                 )}
             </Form.Item>
@@ -170,7 +168,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
                         <Input {...field} placeholder={PLACEHOLDER.INDEX} variant="filled" disabled={copyAddress} />
                     )}
                 />
-                {errors.paymentAddress?.index && (
+                {!copyAddress && errors.paymentAddress?.index && (
                     <div style={{ color: 'var(--error-font-color)' }}>{errors.paymentAddress.index.message}</div>
                 )}
             </Form.Item>
