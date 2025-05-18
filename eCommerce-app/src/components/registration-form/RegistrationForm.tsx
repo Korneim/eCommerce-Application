@@ -11,9 +11,11 @@ import { formatDate, validateDate, validatePassword } from './utils';
 import { clientSignUp } from '../../services/api/registration-api/registration-api';
 import { routes } from '../../utils/router/routes';
 import { ModalType, ModalWindow } from '../modal-window/ModalWindow';
+import useAuthStore from '../../store/useAuthStore';
 
 export const RegistrationForm: FC = () => {
     const navigate = useNavigate();
+    const login = useAuthStore((state) => state.login);
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
@@ -58,6 +60,7 @@ export const RegistrationForm: FC = () => {
                 setIsModalOpen(true);
                 setModalType('success');
                 setButton(false);
+                login();
                 setTimeout(() => {
                     handleCancel();
                     navigate(routes.root);
