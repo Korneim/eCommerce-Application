@@ -82,8 +82,8 @@ export const RegistrationForm: FC = () => {
             autoComplete="on"
         >
             <Row gutter={[24, 24]}>
-                <Col xs={24} md={24} lg={12}>
-                    <Typography.Title level={3}>Создать учетную запись</Typography.Title>
+                <Col xs={24} md={24} lg={12} className={styles.row}>
+                    <Typography.Title level={4}>Создать учетную запись</Typography.Title>
                     <Form.Item layout="vertical" label={LABEL.NAME} validateStatus={errors.firstName ? 'error' : ''}>
                         <Controller
                             name="firstName"

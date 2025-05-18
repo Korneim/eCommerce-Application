@@ -54,7 +54,7 @@ export const PaymentAddressForm: FC<AddressFormProps> = ({ control, errors, setV
 
     return (
         <div style={{ marginBottom: '72px' }}>
-            <Typography.Title level={3}>Адрес оплаты</Typography.Title>
+            <Typography.Title level={4}>Адрес оплаты</Typography.Title>
             <Form.Item name="remember" valuePropName="checked">
                 <Controller
                     name="paymentAddress.copyAddress"

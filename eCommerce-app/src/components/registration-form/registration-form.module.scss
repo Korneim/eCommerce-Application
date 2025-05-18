@@ -2,3 +2,13 @@
     width: 100%;
     margin: 0 auto;
 }
+
+.row {
+    display: flex !important;
+    flex-direction: column;
+    gap: 30px !important;
+
+    @media screen and (width <= 991px) {
+        gap: 5px !important;
+    }
+}

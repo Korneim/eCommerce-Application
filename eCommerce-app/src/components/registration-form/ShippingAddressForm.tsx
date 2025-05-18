@@ -20,7 +20,7 @@ export const ShippingAddressForm: FC<AddressFormProps> = ({ control, errors, set
 
     return (
         <div style={{ marginBottom: '72px' }}>
-            <Typography.Title level={3} style={{ marginBottom: '24px' }}>
+            <Typography.Title level={4} style={{ marginBottom: '24px' }}>
                 Адрес доставки
             </Typography.Title>
 
