@@ -4,6 +4,12 @@
     height: 80px;
     align-items: center;
     justify-content: end;
+
+    @media screen and (width <= 760px) {
+        & li {
+            padding-inline: 8px !important;
+        }
+    }
 }
 
 .icon {

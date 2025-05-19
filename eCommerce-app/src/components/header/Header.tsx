@@ -10,7 +10,7 @@ export const Header: FC = () => {
     const navigate = useNavigate();
 
     return (
-        <Flex gap={40} className={css.container}>
+        <Flex gap={20} className={css.container}>
             <Flex
                 onClick={() => {
                     navigate(routes.root);
