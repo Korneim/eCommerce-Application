@@ -29,7 +29,7 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
                 </Typography.Paragraph>
             </Flex>
 
-            <Button size="large" icon={<ShoppingCartOutlined />}>
+            <Button type="primary" size="large" icon={<ShoppingCartOutlined />}>
                 Add to basket
             </Button>
         </Flex>

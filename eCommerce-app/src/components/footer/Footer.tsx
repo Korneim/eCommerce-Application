@@ -23,7 +23,7 @@ export const Footer: FC = () => {
 
                     <Flex className={scss.name}>
                         <Typography.Link href="https://github.com/abeilleee" target="_blank">
-                            Maya
+                            Mayya
                         </Typography.Link>
                         <GithubOutlined className={scss.icon} />
                     </Flex>
