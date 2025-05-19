@@ -5,4 +5,5 @@ export const routes = {
     cart: '/cart',
     catalog: '/catalog',
     about: '/about',
+    profile: '/profile',
 };

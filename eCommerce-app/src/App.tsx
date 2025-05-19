@@ -8,13 +8,16 @@ export const App: FC = () => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorBgContainer: '#ffce1a',
                     colorPrimary: '#ffce1a',
                 },
                 components: {
                     Typography: {
                         fontSize: 18,
                         fontFamily: 'Mulish',
+                    },
+                    Menu: {
+                        horizontalItemSelectedColor: '#ffce1a',
+                        horizontalItemHoverColor: '#ffce1a',
                     },
                     Carousel: {
                         arrowSize: 50,
