@@ -9,6 +9,8 @@ export const App: FC = () => {
             theme={{
                 token: {
                     colorPrimary: '#ffce1a',
+                    colorPrimaryActive: 'var(--btn-active-bg-color)',
+                    colorFillSecondary: 'ffce1a',
                 },
                 components: {
                     Typography: {
@@ -22,6 +24,10 @@ export const App: FC = () => {
                     Carousel: {
                         arrowSize: 50,
                         arrowOffset: 20,
+                    },
+                    Button: {
+                        solidTextColor: 'var(--btn-font-color)',
+                        defaultBorderColor: 'var(--primary-color)',
                     },
                 },
             }}

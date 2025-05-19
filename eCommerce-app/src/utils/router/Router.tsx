@@ -5,6 +5,7 @@ import { routes } from './routes.ts';
 import { NotFoundPage } from '../../pages/not-found/NotFound.tsx';
 import LoginPage from '../../pages/login/Login.tsx';
 import { MainPage } from '../../pages/main/MainPage.tsx';
+import { RegistrationPage } from '../../pages/registration/Registration.tsx';
 
 export const Router: FC = () => {
     const router = createBrowserRouter([
@@ -17,7 +18,7 @@ export const Router: FC = () => {
                 },
                 {
                     path: routes.register,
-                    element: <div>registration</div>,
+                    element: <RegistrationPage />,
                 },
                 {
                     path: routes.login,

@@ -1,10 +1,7 @@
 @use './styles/globals';
 @use './styles/typography';
 @use './styles/variables';
-@use './components/Button/Button.module';
-@use './pages/Login/Login.module';
-@use './pages/Not-found/not-found.module';
-@use './pages/Registration/Registration.module';
+@use './pages/login/login.module';
 
 #root {
     display: flex;
