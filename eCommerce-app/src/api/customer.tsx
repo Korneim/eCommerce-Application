@@ -10,8 +10,6 @@ export async function getCurrentCustomer(token: string): Promise<Customer> {
         return typeof data === 'object' && data !== null && 'id' in data && 'email' in data;
     }
 
-    console.log(token);
-
     const response = await fetch('https://api.europe-west1.gcp.commercetools.com/bg-bookish/me', {
         headers: {
             Authorization: `Bearer ${token}`,

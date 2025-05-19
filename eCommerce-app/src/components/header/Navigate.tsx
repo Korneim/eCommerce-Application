@@ -82,8 +82,6 @@ const createLoginMenuItems = (logout: () => void): MenuItem[] => [
 export const NavigateBlock: FC = () => {
     const { isLoggedIn, logout } = useAuthStore();
 
-    console.log(isLoggedIn);
-
     const items = useMemo(() => {
         return isLoggedIn ? createLoginMenuItems(logout) : commonMenuItems;
     }, [isLoggedIn, logout]);
