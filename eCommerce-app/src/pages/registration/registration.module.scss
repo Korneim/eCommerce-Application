@@ -1,8 +1,15 @@
 .container {
+    display: flex;
     width: 100%;
     max-width: 1440px;
-    padding: 100px 0;
+    min-height: calc(100vh - 260px);
+    align-items: center;
+    padding: 60px;
     margin: 0 auto;
+
+    @media screen and (width <= 1090px) {
+        min-height: calc(100vh - 330px);
+    }
 
     @media screen and (width <= 992px) {
         & {
