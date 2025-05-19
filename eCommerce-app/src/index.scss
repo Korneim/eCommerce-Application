@@ -5,14 +5,16 @@
 
 #root {
     display: flex;
-    max-width: 80%;
+    width: 100%;
+    max-width: 1660px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 0 40px;
     margin: 0 auto;
 
-    @media screen and (width <= 800px) {
-        max-width: 90%;
+    @media screen and (width <= 1090px) {
+        padding: 0 10px;
     }
 }
 
