@@ -5,7 +5,9 @@ html {
 }
 
 .login-section {
-    margin-left: 7.8rem;
+    display: flex;
+    min-height: calc(100vh - 373px);
+    align-items: center;
 }
 
 .page-link,
@@ -23,7 +25,6 @@ html {
 }
 
 .login-container {
-    margin-top: 4.4rem;
     row-gap: 2.9rem;
 }
 

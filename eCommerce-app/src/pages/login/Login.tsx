@@ -1,16 +1,17 @@
 import type { FC } from 'react';
 import { useState, useEffect } from 'react';
-import { Flex, Spin } from 'antd';
+import { Flex, Spin, Button } from 'antd';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { loginCustomer } from '../../api/auth';
-import { getCurrentCustomer } from '../../api/customer';
-import '@ant-design/v5-patch-for-react-19';
-import showModal from '../../components/modal/Modal';
+import { loginCustomer } from '../../services/api/login-api/auth';
+import { getCurrentCustomer } from '../../services/api/login-api/customer';
 import useAuthStore from '../../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../utils/router/routes';
+import type { ModalType } from '../../components/modal-window/ModalWindow';
+import { ModalWindow } from '../../components/modal-window/ModalWindow';
+import css from './login.module.scss'
 
 type LoginFormInputs = {
     email: string;
@@ -33,6 +34,14 @@ const LoginPage: FC = () => {
     } = useForm<LoginFormInputs>({ mode: 'onChange' });
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [spinning, setSpinning] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+    const [modalTitle, setModalTitle] = useState('');
+    const [modalType, setModalType] = useState<ModalType>('success');
+
+    const handleCancel = (): void => {
+        setIsModalOpen(false);
+    };
 
     const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
         setSpinning(true);
@@ -43,11 +52,16 @@ const LoginPage: FC = () => {
             navigate(routes.root);
         } catch (error) {
             if (error instanceof Error && error.message === 'Customer account with the given credentials not found.') {
-                showModal('error', 'Ошибка аутентификации', 'Введенные логин/пароль не найдены');
+                setIsModalOpen(true);
+                setModalTitle('Ошибка аутентификации');
+                setModalType('error');
+                setModalContent('Введенные логин/пароль не найдены');
             } else {
-                showModal('error', 'Ошибка аутентификации', 'Непредвиденная ошибка');
+                setIsModalOpen(true);
+                setModalTitle('Ошибка аутентификации');
+                setModalType('error');
+                setModalContent('Непредвиденная ошибка');
             }
-            throw new Error(error instanceof Error ? error.message : 'Неизвестная ошибка');
         } finally {
             setSpinning(false);
         }
@@ -56,24 +70,16 @@ const LoginPage: FC = () => {
     return (
         <>
             <Spin spinning={spinning} tip="Loading" size="large" fullscreen />
-            <section className="login-section">
-                <span className="link-section">
-                    <a href="./" className="page-link">
-                        Главная
-                    </a>{' '}
-                    &gt;{' '}
-                    <a href="./login" className="page-link">
-                        Вход
-                    </a>
-                </span>
-                <Flex vertical align="center" className="login-container">
-                    <h1 className="enter-message">Войти</h1>
-                    <span className="welcome-message">Добро пожаловать! Пожалуйста авторизуйтесь:</span>
-                    <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className="inputs-form">
+            <section className={`${css["login-section"]}`}>
+                <Flex vertical align="center" className={`${css["login-container"]}`}>
+                    <h1 className={`${css["enter-message"]}`}>Войти</h1>
+                    <span className={`${css["welcome-message"]}`}>Добро пожаловать! Пожалуйста авторизуйтесь:</span>
+                    <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className={`${css["inputs-form"]}`}>
                         <input
                             type="text"
                             placeholder="Введите e-mail"
-                            className={`login-input ${errors.email ? 'error-input' : ''}`}
+                            autoComplete="current-login"
+                            className={`${css["login-input"]} ${errors.email ? css["error-input"] : ""}`}
                             {...register('email', {
                                 required: 'Это поле должно быть заполнено',
                                 validate: {
@@ -95,14 +101,14 @@ const LoginPage: FC = () => {
                                 },
                             })}
                         />
-                        {errors.email && <span className="error-text">{errors.email.message}</span>}
+                        {errors.email && <span className={css["error-text"]}>{errors.email.message}</span>}
 
-                        <div className="password-wrapper">
+                        <div className={`${css["password-wrapper"]}`}>
                             <input
                                 type={showPassword ? 'text' : 'password'}
                                 placeholder="Введите пароль"
                                 autoComplete="current-password"
-                                className={`password-input ${errors.password ? 'error-input' : ''}`}
+                                className={`${css["password-input"]} ${errors.password ? css["error-input"] : ""}`}
                                 {...register('password', {
                                     required: 'Пароль обязателен',
                                     validate: {
@@ -123,41 +129,48 @@ const LoginPage: FC = () => {
                                         noLeadingTrailingWhitespace: (value) =>
                                             value.trim() === value ||
                                             'Пароль не должен начинаться или заканчиваться пробелами',
-
-                                        hasSpecialCharacters: (value) =>
-                                            /[!"#$%&()*,.:<>?@^{|}]/.test(value) ||
-                                            'Пароль должен содержать хотя бы один спецсимвол (!@#$%^&*)',
                                     },
                                 })}
                             />
                             <button
                                 type="button"
-                                className="toggle-password"
+                                className={`${css["toggle-password"]}`}
                                 onClick={() => setShowPassword((prev) => !prev)}
                             >
                                 {showPassword ? <FiEyeOff /> : <FiEye />}
                             </button>
                         </div>
 
-                        {errors.password && <span className="error-text">{errors.password.message}</span>}
+                        {errors.password && <span className={`${css["error-text"]}`}>{errors.password.message}</span>}
 
-                        <Flex justify="space-around" className="buttons-container">
-                            <button type="submit" className="login-button">
+                        <Flex justify="space-around" className={`${css["buttons-container"]}`}>
+                            <Button
+                                type='primary'
+                                htmlType="submit"
+                                className={`${css["login-button"]}`}
+                            >
                                 Войти
-                            </button>
-                            <button
-                                type="button"
-                                className="register-button"
+                            </Button>
+                            <Button
+                                htmlType="button"
+                                className={`${css["register-button"]}`}
                                 onClick={() => {
                                     navigate(routes.register);
                                 }}
                             >
                                 Регистрация
-                            </button>
+                            </Button>
                         </Flex>
                     </form>
                 </Flex>
             </section>
+            <ModalWindow
+                type={modalType}
+                title={modalTitle}
+                content={modalContent}
+                isOpen={isModalOpen}
+                onClose={handleCancel}
+            />
         </>
     );
 };
