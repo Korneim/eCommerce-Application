@@ -10,6 +10,10 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+
+    @media screen and (width <= 800px) {
+        max-width: 90%;
+    }
 }
 
 body {

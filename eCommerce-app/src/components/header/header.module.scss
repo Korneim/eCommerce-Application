@@ -10,6 +10,18 @@
             padding-inline: 8px !important;
         }
     }
+
+    @media screen and (width <= 550px) {
+        & li {
+            padding-inline: 4px !important;
+        }
+    }
+
+    @media screen and (width <= 530px) {
+        & {
+            width: 80%;
+        }
+    }
 }
 
 .icon {
