@@ -13,7 +13,8 @@
         "commitlint": "commitlint --edit",
         "stylelint": "stylelint '**/*{.css,.scss}'",
         "stylelint:fix": "stylelint '**/*{.css,.scss}' --fix",
-        "test": "jest"
+        "test": "jest",
+        "test:coverage": "jest --coverage"
     },
     "dependencies": {
         "@ant-design/v5-patch-for-react-19": "^1.0.3",
