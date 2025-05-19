@@ -20,6 +20,7 @@ type LoginFormInputs = {
 
 const LoginPage: FC = () => {
     const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+    const setAccessToken = useAuthStore((state) => state.setAccessToken);
     const navigate = useNavigate();
     useEffect(() => {
         if (isLoggedIn) {
@@ -48,6 +49,7 @@ const LoginPage: FC = () => {
         try {
             const arrivedData = await loginCustomer(data.email, data.password);
             await getCurrentCustomer(arrivedData.access_token);
+            setAccessToken(arrivedData.access_token);
             login();
             navigate(routes.root);
         } catch (error) {
