@@ -8,9 +8,14 @@
 
 .icon {
   padding-left: 4px;
-  font-size: 40px;;
+  font-size: 19px !important;
+
 }
 
 .container {
-  width: 90%;
+  width: 100%;
+
+  :hover {
+    cursor: pointer
+  }
 }

@@ -1,6 +1,6 @@
 import { LogoutOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Flex, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import type { FC } from 'react';
 import { useMemo, useState } from 'react';
@@ -35,11 +35,11 @@ const commonMenuItems: MenuItem[] = [
     {
         label: '',
         key: routes.login,
-        icon: <UserOutlined className={css.icon} />,
+        icon: <UserOutlined size={45} className={css.icon} />,
     },
 ];
 
-const loginMenuItems: MenuItem[] = [
+const createLoginMenuItems = (logout: () => void): MenuItem[] => [
     {
         label: 'Каталог',
         key: routes.catalog,
@@ -59,29 +59,39 @@ const loginMenuItems: MenuItem[] = [
     {
         label: '',
         key: routes.cart,
-        icon: <ShoppingCartOutlined className={css.icon} />,
+        icon: <ShoppingCartOutlined size={45} className={css.icon} />,
     },
     {
         label: '',
-        key: routes.root,
-        icon: <LogoutOutlined className={css.icon} onClick={() => {}} />,
+        key: '',
+        icon: (
+            <Flex
+                style={{ width: '35px', height: '35px' }}
+                justify={'center'}
+                align={'center'}
+                onClick={() => {
+                    logout();
+                }}
+            >
+                <LogoutOutlined size={45} className={css.icon} />
+            </Flex>
+        ),
     },
 ];
 
 export const NavigateBlock: FC = () => {
-    const { isLoggedIn } = useAuthStore();
+    const { isLoggedIn, logout } = useAuthStore();
 
     console.log(isLoggedIn);
 
     const items = useMemo(() => {
-        return isLoggedIn ? [...loginMenuItems] : [...commonMenuItems];
+        return isLoggedIn ? createLoginMenuItems(logout) : commonMenuItems;
     }, [isLoggedIn]);
 
     const [current, setCurrent] = useState('/');
     const navigate = useNavigate();
 
     const onClick: MenuProps['onClick'] = (e) => {
-        console.log('click ', e);
         setCurrent(e.key);
         navigate(e.key);
     };
