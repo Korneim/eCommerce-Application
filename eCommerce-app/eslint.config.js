@@ -49,7 +49,7 @@ export default tseslint.config(
                     },
                 },
             ],
-            'unicorn/better-regex': 'warn',
+            'unicorn/better-regex': 'off',
             'unicorn/prefer-module': 'off',
             'unicorn/no-array-for-each': 'off',
             'unicorn/prevent-abbreviations': 'off', //doesn't let use 'i' in for loop

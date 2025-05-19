@@ -14,6 +14,7 @@ export const Slider: FC = () => {
                 <Flex className={css.content} gap={40}>
                     <Typography.Text className={css.text}>Вдохновение на каждой странице!</Typography.Text>
                     <Button
+                        type="primary"
                         size="large"
                         className={css.button}
                         onClick={() => {
@@ -31,6 +32,7 @@ export const Slider: FC = () => {
                         Твоя книжная полка ждет тебя! Регистрация в один клик.
                     </Typography.Text>
                     <Button
+                        type="primary"
                         size="large"
                         className={css.button}
                         onClick={() => {
@@ -47,6 +49,7 @@ export const Slider: FC = () => {
                     <Typography.Text className={css.text}>Мир книг у вас под рукой. Войдите!</Typography.Text>
                     <Button
                         size="large"
+                        type="primary"
                         className={css.button}
                         onClick={() => {
                             navigate(routes.login);

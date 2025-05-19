@@ -1,4 +1,5 @@
 import {
+    Client,
     ClientBuilder,
     PasswordAuthMiddlewareOptions,
     type AuthMiddlewareOptions,
@@ -16,7 +17,7 @@ const httpMiddlewareOptions: HttpMiddlewareOptions = {
     httpClient: fetch,
 };
 
-export const createApiClient = () => {
+export const createApiClient = (): Client => {
     const authMiddlewareOptions: AuthMiddlewareOptions = {
         host: import.meta.env.VITE_AUTH_URL,
         projectKey: projectKey,
