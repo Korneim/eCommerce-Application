@@ -7,6 +7,6 @@ export default {
     ],
     plugins: ['stylelint-order', 'stylelint-scss'],
     rules: {
-        'no-empty-source': null,
+        'no-empty-source': undefined,
     },
 };

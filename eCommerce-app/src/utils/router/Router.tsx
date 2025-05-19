@@ -24,6 +24,18 @@ export const Router: FC = () => {
                     path: routes.login,
                     element: <LoginPage />,
                 },
+                {
+                    path: routes.cart,
+                    element: <div>cart</div>,
+                },
+                {
+                    path: routes.catalog,
+                    element: <div>catalog</div>,
+                },
+                {
+                    path: routes.about,
+                    element: <div>about</div>,
+                },
             ],
         },
         {

@@ -1,9 +1,7 @@
 .wrapper {
+    width: 100%;
     flex-direction: column;
     justify-content: center;
-    margin: 15px 0 110px 110px;
-
-    @media (width <= 1050px) {
-        margin: 0 20px;
-    }
+    padding: 0 15px;
+    margin: 0 auto;
 }

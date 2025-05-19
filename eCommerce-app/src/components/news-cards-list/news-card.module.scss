@@ -1,10 +1,10 @@
 .card {
-    width: 900px;
+    width: 100%;
     align-items: center;
     justify-content: center;
     gap: 100px;
 
-    @media (width <= 1400px) {
+    @media (width <= 1560px) {
         width: 100%;
         flex-direction: column !important;
         gap: 20px;
