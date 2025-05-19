@@ -6,7 +6,7 @@ import { Header } from '../header/Header.tsx';
 export const MainLayout: FC = () => {
     return (
         <>
-            <Header/>
+            <Header />
             <Outlet />
             <Footer />
         </>

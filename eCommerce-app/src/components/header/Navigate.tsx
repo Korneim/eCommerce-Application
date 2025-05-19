@@ -86,7 +86,7 @@ export const NavigateBlock: FC = () => {
 
     const items = useMemo(() => {
         return isLoggedIn ? createLoginMenuItems(logout) : commonMenuItems;
-    }, [isLoggedIn]);
+    }, [isLoggedIn, logout]);
 
     const [current, setCurrent] = useState('/');
     const navigate = useNavigate();
