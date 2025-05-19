@@ -1,16 +1,19 @@
-import { FC, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import type { FC} from 'react';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Button, Col, DatePicker, Flex, Form, Input, Row, Spin, Typography } from 'antd';
 import { ERROR, LABEL, PLACEHOLDER } from './constants';
-import { RegistrationFormValues } from './types';
+import type { RegistrationFormValues } from './types';
 import { PaymentAddressForm } from './PaymentAddressForm';
 import styles from './registration-form.module.scss';
 import { ShippingAddressForm } from './ShippingAddressForm';
 import { Link, useNavigate } from 'react-router-dom';
 import { formatDate, validateDate, validatePassword } from './utils';
-import { clientSignUp, RegistrationResult } from '../../services/api/registration-api/registration-api';
+import type { RegistrationResult } from '../../services/api/registration-api/registrationApi.ts';
+import { clientSignUp } from '../../services/api/registration-api/registrationApi.ts';
 import { routes } from '../../utils/router/routes';
-import { ModalType, ModalWindow } from '../modal-window/ModalWindow';
+import type { ModalType} from '../modal-window/ModalWindow';
+import { ModalWindow } from '../modal-window/ModalWindow';
 import useAuthStore from '../../store/useAuthStore';
 import { MODAL_CONTENT, MODAL_TITLE } from '../modal-window/constants';
 import { STATUS_CODE } from '../../services/api/constants';
@@ -101,7 +104,7 @@ export const RegistrationForm: FC = () => {
                             rules={{
                                 required: ERROR.NAME,
                                 pattern: {
-                                    value: /^[a-zA-Zа-яА-Я\u00C0-\u017FёЁ]+$/, //только буквы
+                                    value: /^[A-Za-z\u00C0-\u017FЁА-яё]+$/, //только буквы
                                     message: ERROR.INCORRECT_SYMBOLS,
                                 },
                             }}
@@ -125,7 +128,7 @@ export const RegistrationForm: FC = () => {
                             rules={{
                                 required: ERROR.LASTNAME,
                                 pattern: {
-                                    value: /^[a-zA-Zа-яА-Я\u00C0-\u017FёЁ]+$/,
+                                    value: /^[A-Za-z\u00C0-\u017FЁА-яё]+$/,
                                     message: ERROR.INCORRECT_SYMBOLS,
                                 },
                             }}
@@ -149,7 +152,7 @@ export const RegistrationForm: FC = () => {
                             rules={{
                                 required: ERROR.REQUIRED_FIELD,
                                 pattern: {
-                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    value: /^[\w%+.-]+@[\d.a-z-]+\.[a-z]{2,}$/i,
                                     message: `${ERROR.INCORRECT_FORMAT} ${LABEL.EMAIL}`,
                                 },
                             }}
