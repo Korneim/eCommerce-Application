@@ -1,10 +1,12 @@
 .first,
 .second,
-.third {
+.third,
+.four {
     display: flex !important;
     width: 100%;
-    height: 650px;
+    height: 400px;
     align-items: center;
+    justify-content: center;
     background-repeat: no-repeat;
     background-size: cover;
     color: #000;
@@ -13,11 +15,28 @@
 .text {
     font-size: 40px;
     line-height: 1;
+
+    @media (width <= 1000px) {
+        font-size: 32px;
+    }
+
+    @media (width <= 660px) {
+        font-size: 24px;
+    }
+
+    @media (width <= 500px) {
+        font-size: 20px;
+    }
 }
 
 .button {
     width: 160px;
     align-self: center;
+
+    @media (width <= 500px) {
+        width: 120px;
+        font-size: 10px;
+    }
 }
 
 .first {
@@ -28,12 +47,27 @@
 .second {
     justify-content: flex-end;
     background-image: url('../../assets/images/secondSlide.png');
+
+    @media (width <= 880px) {
+        background-position: 50%;
+        font-size: 20px;
+    }
+
+    @media (width <= 500px) {
+        background-position: 50%;
+        font-size: 20px;
+    }
 }
 
 .third {
     justify-content: flex-start;
     background-image: url('../../assets/images/thirdSlide.png');
     background-position: 80% 50%;
+}
+
+.four {
+    background: linear-gradient(360deg, #feaf38 19%, #ffce1a 100%);
+    text-shadow: 3px 11px 10px #c3811e;
 }
 
 .content {
@@ -43,4 +77,48 @@
     padding: 30px;
     font-size: 40px !important;
     text-align: center;
+}
+
+.sale {
+    font-size: 96px !important;
+
+    @media (width <= 1100px) {
+        font-size: 40px !important;
+    }
+
+    @media (width <= 570px) {
+        font-size: 30px !important;
+    }
+}
+
+.title {
+    font-size: 32px !important;
+
+    @media (width <= 1100px) {
+        font-size: 20px !important;
+    }
+
+    @media (width <= 570px) {
+        font-size: 10px !important;
+    }
+}
+
+.promo {
+    font-size: 40px !important;
+    letter-spacing: 0.4rem;
+
+    @media (width <= 1100px) {
+        font-size: 30px !important;
+    }
+
+    @media (width <= 570px) {
+        font-size: 20px !important;
+    }
+}
+
+.image {
+    @media (width <= 570px) {
+        width: 60px !important;
+        height: 60px !important;
+    }
 }
