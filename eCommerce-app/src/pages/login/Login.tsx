@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Flex, Spin } from 'antd';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -18,13 +18,7 @@ type LoginFormInputs = {
 };
 
 const LoginPage: FC = () => {
-    const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
     const navigate = useNavigate();
-    useEffect(() => {
-        if (isLoggedIn) {
-            navigate(routes.root);
-        }
-    }, [isLoggedIn, navigate]);
     const login = useAuthStore((state) => state.login);
     const {
         register,
