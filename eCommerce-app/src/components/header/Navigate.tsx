@@ -7,6 +7,7 @@ import { useMemo, useState } from 'react';
 import { routes } from '../../utils/router/routes.ts';
 import css from './header.module.scss';
 import useAuthStore from '../../store/useAuthStore.tsx';
+import { revokeAllTokens } from '../../services/api/logout/revokeToken.tsx';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -39,7 +40,7 @@ const commonMenuItems: MenuItem[] = [
     },
 ];
 
-const createLoginMenuItems = (logout: () => void): MenuItem[] => [
+const createLoginMenuItems = (logout: () => void, clearAccessToken: () => void, accessToken: string | undefined): MenuItem[] => [
     {
         label: 'Каталог',
         key: routes.catalog,
@@ -71,6 +72,10 @@ const createLoginMenuItems = (logout: () => void): MenuItem[] => [
                 align={'center'}
                 onClick={() => {
                     logout();
+                    if (accessToken) {
+                        revokeAllTokens(accessToken);
+                    }
+                    clearAccessToken();
                 }}
             >
                 <LogoutOutlined size={45} className={css.icon} />
@@ -80,11 +85,11 @@ const createLoginMenuItems = (logout: () => void): MenuItem[] => [
 ];
 
 export const NavigateBlock: FC = () => {
-    const { isLoggedIn, logout } = useAuthStore();
+    const { isLoggedIn, logout, accessToken, clearAccessToken } = useAuthStore();
 
     const items = useMemo(() => {
-        return isLoggedIn ? createLoginMenuItems(logout) : commonMenuItems;
-    }, [isLoggedIn, logout]);
+        return isLoggedIn ? createLoginMenuItems(logout, clearAccessToken, accessToken) : commonMenuItems;
+    }, [isLoggedIn, logout, clearAccessToken, accessToken]);
 
     const [current, setCurrent] = useState('/');
     const navigate = useNavigate();
