@@ -1,4 +1,4 @@
-import type { FC} from 'react';
+import type { FC } from 'react';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Col, DatePicker, Flex, Form, Input, Row, Spin, Typography } from 'antd';
@@ -12,7 +12,7 @@ import { formatDate, validateDate, validatePassword } from './utils';
 import type { RegistrationResult } from '../../services/api/registration-api/registrationApi.ts';
 import { clientSignUp } from '../../services/api/registration-api/registrationApi.ts';
 import { routes } from '../../utils/router/routes';
-import type { ModalType} from '../modal-window/ModalWindow';
+import type { ModalType } from '../modal-window/ModalWindow';
 import { ModalWindow } from '../modal-window/ModalWindow';
 import useAuthStore from '../../store/useAuthStore';
 import { MODAL_CONTENT, MODAL_TITLE } from '../modal-window/constants';
@@ -91,7 +91,7 @@ export const RegistrationForm: FC = () => {
             layout="vertical"
             name="RegistrationForm"
             className={styles.form}
-            onFinish={handleSubmit(onSubmit)}
+            onFinish={() => void handleSubmit(onSubmit)}
             autoComplete="on"
         >
             <Row gutter={[24, 24]}>
