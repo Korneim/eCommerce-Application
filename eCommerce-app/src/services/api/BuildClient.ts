@@ -1,11 +1,11 @@
 import {
+    type AuthMiddlewareOptions,
     Client,
     ClientBuilder,
-    PasswordAuthMiddlewareOptions,
-    type AuthMiddlewareOptions,
     type HttpMiddlewareOptions,
+    PasswordAuthMiddlewareOptions,
 } from '@commercetools/ts-client';
-import { createApiBuilderFromCtpClient, ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
+import { ByProjectKeyRequestBuilder, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
 const projectKey = import.meta.env.VITE_PROJECT_KEY;
 const registerClientId = import.meta.env.VITE_CLIENT_REGISTER_ID;
@@ -15,6 +15,22 @@ const registerScopes = [`${import.meta.env.VITE_CLIENT_REGISTER_SCOPES}`];
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
     host: import.meta.env.VITE_API_URL,
     httpClient: fetch,
+};
+// нужно для анонимного доступа к странице каталога
+export const createAnonymousApiClient = (): Client => {
+    return new ClientBuilder()
+        .withAnonymousSessionFlow({
+            host: import.meta.env.VITE_AUTH_URL,
+            projectKey: import.meta.env.VITE_PROJECT_KEY,
+            credentials: {
+                clientId: import.meta.env.VITE_CLIENT_ID,
+                clientSecret: import.meta.env.VITE_CLIENT_SECRET,
+            },
+            scopes: [import.meta.env.VITE_SCOPES],
+            httpClient: fetch,
+        })
+        .withHttpMiddleware(httpMiddlewareOptions)
+        .build();
 };
 
 export const createApiClient = (): Client => {
