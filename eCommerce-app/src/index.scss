@@ -1,8 +1,26 @@
 @use './styles/globals';
 @use './styles/typography';
 @use './styles/variables';
-@use './components/Button/Button.module';
-@use './pages/Login/Login.module';
-@use './pages/Main/Main.module';
-@use './pages/Not-found/Not-found';
-@use './pages/Registration/Registration.module';
+@use './pages/login/login.module';
+
+#root {
+    display: flex;
+    width: 100%;
+    max-width: 1660px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px;
+    margin: 0 auto;
+
+    @media screen and (width <= 1090px) {
+        padding: 0 10px;
+    }
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

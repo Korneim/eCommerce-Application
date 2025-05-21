@@ -25,9 +25,9 @@ export default tseslint.config(
         rules: {
             ...reactHooks.configs.recommended.rules,
             'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-
+            '@typescript-eslint/no-floating-promises': 'off',
             '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'never' }],
-            '@typescript-eslint/consistent-type-imports': 'error',
+            '@typescript-eslint/consistent-type-imports': 'off',
             '@typescript-eslint/explicit-function-return-type': 'error',
             '@typescript-eslint/explicit-member-accessibility': [
                 'error',
@@ -49,7 +49,7 @@ export default tseslint.config(
                     },
                 },
             ],
-            'unicorn/better-regex': 'warn',
+            'unicorn/better-regex': 'off',
             'unicorn/prefer-module': 'off',
             'unicorn/no-array-for-each': 'off',
             'unicorn/prevent-abbreviations': 'off', //doesn't let use 'i' in for loop
@@ -61,6 +61,7 @@ export default tseslint.config(
             'unicorn/no-for-loop': 'off', //doesn't let use 'for' loop, O_O
             'unicorn/prefer-math-min-max': 'off', //doesn't let use ternary operator
             'unicorn/prefer-spread': 'off',
+            'unicorn/no-null': 'off',
         },
     }
 );

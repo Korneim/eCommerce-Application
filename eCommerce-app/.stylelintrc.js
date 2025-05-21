@@ -6,5 +6,7 @@ export default {
         'stylelint-config-idiomatic-order',
     ],
     plugins: ['stylelint-order', 'stylelint-scss'],
-    rules: {},
+    rules: {
+        'no-empty-source': undefined,
+    },
 };
