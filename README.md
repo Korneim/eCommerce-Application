@@ -27,7 +27,7 @@ B&G Bookish is an online bookstore powered by CommerceTools.
 * categorization and sorting 🗂️
 — all designed to make the shopping experience smooth and enjoyable 🎯.
 
-The application was created as part of [JavaScript/Front-end 2024Q4](https://rs.school/courses/javascript-ru) ([eCommerce Application](https://github.com/rolling-scopes-school/tasks/tree/master/tasks/eCommerce-Application)) by [@abeilleee](https://github.com/abeilleee), [@Korneim](https://github.com/Korneim) and [@redinar](https://github.com/redinar)
+The application was created as part of [JavaScript/Front-end 2024Q4](https://rs.school/courses/javascript-ru) ([eCommerce Application](https://github.com/rolling-scopes-school/tasks/tree/master/tasks/eCommerce-Application)) by [@Korneim](https://github.com/Korneim) and [@redinar](https://github.com/redinar)
 
 ## 🛠️ Technologies
 
@@ -51,7 +51,7 @@ The application was created as part of [JavaScript/Front-end 2024Q4](https://rs.
 
 1. Clone the repository on your computer
 ```bash
-git clone https://github.com/abeilleee/eCommerce-Application.git
+git clone https://github.com/Korneim/eCommerce-Application.git
 ```
 2. Navigate to the project directory
 ```bash
