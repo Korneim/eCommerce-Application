@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { routes } from '../../utils/router/routes';
 import type { ModalType } from '../../components/modal-window/ModalWindow';
 import { ModalWindow } from '../../components/modal-window/ModalWindow';
-import css from './login.module.scss'
+import css from './login.module.scss';
 
 type LoginFormInputs = {
     email: string;
@@ -72,16 +72,16 @@ const LoginPage: FC = () => {
     return (
         <>
             <Spin spinning={spinning} tip="Loading" size="large" fullscreen />
-            <section className={`${css["login-section"]}`}>
-                <Flex vertical align="center" className={`${css["login-container"]}`}>
-                    <h1 className={`${css["enter-message"]}`}>Войти</h1>
-                    <span className={`${css["welcome-message"]}`}>Добро пожаловать! Пожалуйста авторизуйтесь:</span>
-                    <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className={`${css["inputs-form"]}`}>
+            <section className={`${css['login-section']}`}>
+                <Flex vertical align="center" className={`${css['login-container']}`}>
+                    <h1 className={`${css['enter-message']}`}>Войти</h1>
+                    <span className={`${css['welcome-message']}`}>Добро пожаловать! Пожалуйста авторизуйтесь:</span>
+                    <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className={`${css['inputs-form']}`}>
                         <input
                             type="text"
                             placeholder="Введите e-mail"
                             autoComplete="current-login"
-                            className={`${css["login-input"]} ${errors.email ? css["error-input"] : ""}`}
+                            className={`${css['login-input']} ${errors.email ? css['error-input'] : ''}`}
                             {...register('email', {
                                 required: 'Это поле должно быть заполнено',
                                 validate: {
@@ -103,14 +103,14 @@ const LoginPage: FC = () => {
                                 },
                             })}
                         />
-                        {errors.email && <span className={css["error-text"]}>{errors.email.message}</span>}
+                        {errors.email && <span className={css['error-text']}>{errors.email.message}</span>}
 
-                        <div className={`${css["password-wrapper"]}`}>
+                        <div className={`${css['password-wrapper']}`}>
                             <input
                                 type={showPassword ? 'text' : 'password'}
                                 placeholder="Введите пароль"
                                 autoComplete="current-password"
-                                className={`${css["password-input"]} ${errors.password ? css["error-input"] : ""}`}
+                                className={`${css['password-input']} ${errors.password ? css['error-input'] : ''}`}
                                 {...register('password', {
                                     required: 'Пароль обязателен',
                                     validate: {
@@ -136,26 +136,22 @@ const LoginPage: FC = () => {
                             />
                             <button
                                 type="button"
-                                className={`${css["toggle-password"]}`}
+                                className={`${css['toggle-password']}`}
                                 onClick={() => setShowPassword((prev) => !prev)}
                             >
                                 {showPassword ? <FiEyeOff /> : <FiEye />}
                             </button>
                         </div>
 
-                        {errors.password && <span className={`${css["error-text"]}`}>{errors.password.message}</span>}
+                        {errors.password && <span className={`${css['error-text']}`}>{errors.password.message}</span>}
 
-                        <Flex justify="space-around" className={`${css["buttons-container"]}`}>
-                            <Button
-                                type='primary'
-                                htmlType="submit"
-                                className={`${css["login-button"]}`}
-                            >
+                        <Flex justify="space-around" className={`${css['buttons-container']}`}>
+                            <Button type="primary" htmlType="submit" className={`${css['login-button']}`}>
                                 Войти
                             </Button>
                             <Button
                                 htmlType="button"
-                                className={`${css["register-button"]}`}
+                                className={`${css['register-button']}`}
                                 onClick={() => {
                                     navigate(routes.register);
                                 }}
