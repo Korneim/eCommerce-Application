@@ -16,7 +16,7 @@ export const Header: FC = () => {
                     navigate(routes.root);
                 }}
             >
-                <Image width={70} height={70} src={logo} preview={false} />
+                <Image width={100} height={100} src={logo} preview={false} />
             </Flex>
             <NavigateBlock />
         </Flex>

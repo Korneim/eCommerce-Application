@@ -22,7 +22,7 @@ export async function getAllProducts(): Promise<Product[]> {
         return response.body.results;
     } catch (error: unknown) {
         const errorMessage =
-            error instanceof Error ? error.message : (typeof error === 'string' ? error : 'Неизвестная ошибка');
+            error instanceof Error ? error.message : typeof error === 'string' ? error : 'Неизвестная ошибка';
 
         console.error('Ошибка при получении продуктов:', errorMessage);
         throw new Error(errorMessage);

@@ -19,16 +19,18 @@ interface ProductAttribute {
 export const mapCatalogData = (data: Product[] = []): Book[] => {
     return data.map((el) => {
         const currentData = el.masterData?.current;
+        console.log(currentData);
         if (!currentData) return getDefaultBook();
 
         const { name, description, masterVariant } = currentData;
+        console.log(name.ru);
 
         const authorAttr = masterVariant?.attributes?.find((attr: ProductAttribute) => attr.name === 'author');
 
         const author = authorAttr
-            ? (typeof authorAttr.value === 'string'
+            ? typeof authorAttr.value === 'string'
                 ? authorAttr.value
-                : 'Неизвестный автор')
+                : 'Неизвестный автор'
             : 'Неизвестный автор';
 
         const priceObj = masterVariant?.prices?.[0];
