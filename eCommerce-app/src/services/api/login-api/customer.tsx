@@ -5,12 +5,14 @@ export interface Customer {
     lastName?: string;
 }
 
+const projectKey = import.meta.env.VITE_PROJECT_KEY;
+
 export async function getCurrentCustomer(token: string): Promise<Customer> {
     function isCustomer(data: unknown): data is Customer {
         return typeof data === 'object' && data !== null && 'id' in data && 'email' in data;
     }
 
-    const response = await fetch('https://api.europe-west1.gcp.commercetools.com/bookish-bg/me', {
+    const response = await fetch(`https://api.europe-west1.gcp.commercetools.com/${projectKey}/me`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
