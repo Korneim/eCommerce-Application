@@ -120,6 +120,7 @@ const UserProfilePage: FC = () => {
         <>
             {customer ? (
                 <>
+<<<<<<< HEAD
                     <ModalWindow
                         type={modalType}
                         title={modalTitle}
@@ -247,13 +248,27 @@ const UserProfilePage: FC = () => {
                                 <p>Адреса не найдены.</p>
                             )}
                         </div>
+=======
+                    <h1>Добро пожаловать, {customer.firstName}!</h1>
+                    <div>
+                        <p>Имя: {customer.firstName}</p>
+                        <p>Фамилия: {customer.lastName}</p>
+                        <p>Email: {customer.email}</p>
+>>>>>>> 12e4174 (feat: retrieving customer data from api)
                     </div>
                 </>
             ) : (
                 <Spin />
             )}
         </>
+<<<<<<< HEAD
     );
 };
 
 export default UserProfilePage;
+=======
+    )
+}
+
+export default UserProfilePage;
+>>>>>>> 12e4174 (feat: retrieving customer data from api)
