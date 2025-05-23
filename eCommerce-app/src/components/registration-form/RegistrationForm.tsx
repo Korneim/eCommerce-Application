@@ -17,10 +17,12 @@ import { ModalWindow } from '../modal-window/ModalWindow';
 import useAuthStore from '../../store/useAuthStore';
 import { MODAL_CONTENT, MODAL_TITLE } from '../modal-window/constants';
 import { STATUS_CODE } from '../../services/api/constants';
+import { loginCustomer } from '../../services/api/login-api/auth.tsx';
 
 export const RegistrationForm: FC = () => {
     const navigate = useNavigate();
     const login = useAuthStore((state) => state.login);
+    const setAccessToken = useAuthStore((state) => state.setAccessToken);
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
@@ -66,6 +68,8 @@ export const RegistrationForm: FC = () => {
                 setIsModalOpen(true);
                 setModalType('success');
                 setButton(false);
+                const arrivedData = await loginCustomer(customerData.email, customerData.password);
+                setAccessToken(arrivedData.access_token);
                 login();
                 setTimeout(() => {
                     handleCancel();
