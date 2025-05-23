@@ -1,72 +1,41 @@
-import React, { useState } from 'react';
-import {
-    AppstoreOutlined,
-    ContainerOutlined,
-    DesktopOutlined,
-    MailOutlined,
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    PieChartOutlined,
-} from '@ant-design/icons';
-import { Button, Menu, MenuProps, Typography } from 'antd';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { Flex, TreeSelect, Typography } from 'antd';
+import css from './menu.module.scss';
+import { mapCategories, TreeNode } from '../../pages/catalog/mapCategories.ts';
+import { getAllCategories } from '../../pages/catalog/getAllBooks.ts';
 
-type MenuItem = Required<MenuProps>['items'][number];
+// type MenuItem = Required<MenuProps>['items'][number];
 
-const items: MenuItem[] = [
-    { key: '1', icon: <PieChartOutlined />, label: 'Option 1' },
-    { key: '2', icon: <DesktopOutlined />, label: 'Option 2' },
-    { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
-    {
-        key: 'sub1',
-        label: 'Navigation One',
-        icon: <MailOutlined />,
-        children: [
-            { key: '5', label: 'Option 5' },
-            { key: '6', label: 'Option 6' },
-            { key: '7', label: 'Option 7' },
-            { key: '8', label: 'Option 8' },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-];
+export const MenuFilter: FC = () => {
+    const [category, setCategory] = useState<TreeNode[]>([]);
 
-export const MenuFilter: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(false);
+    const loadCategories = useCallback(async () => {
+        try {
+            const data = await getAllCategories();
+            const mappedCategories = mapCategories(data);
+            setCategory(mappedCategories);
+        } catch (error) {
+            console.error('Ошибка загрузки:', error);
+        }
+    }, []);
 
-    const toggleCollapsed = (): void => {
-        setCollapsed(!collapsed);
-    };
+    useEffect(() => {
+        loadCategories();
+    }, [loadCategories]);
+
+    // function handleChange(): void {}
 
     return (
-        <div style={{ width: 256 }}>
-            <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
-                {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </Button>
-            <Typography.Title level={2}>КНИГИ</Typography.Title>
-
-            <Menu
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                mode="inline"
-                inlineCollapsed={collapsed}
-                items={items}
+        <Flex vertical className={css.container}>
+            <Typography.Paragraph strong>Категории</Typography.Paragraph>
+            <TreeSelect
+                title="Категории"
+                size="middle"
+                treeCheckable
+                placeholder="Выберите категории"
+                // onChange={handleChange}
+                treeData={category}
             />
-        </div>
+        </Flex>
     );
 };
