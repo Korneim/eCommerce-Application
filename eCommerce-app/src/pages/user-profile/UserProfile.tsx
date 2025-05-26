@@ -20,6 +20,7 @@ const isValidName = (name: string): boolean => {
     return name === name.trim() && nameRegex.test(name);
 }
 
+
 const UserProfilePage: FC = () => {
     const minAge = 13;
     const [emailError, setEmailError] = useState('');
@@ -28,6 +29,7 @@ const UserProfilePage: FC = () => {
     const accessToken = useAuthStore((state) => state.accessToken);
     const [customer, setCustomer] = useState<Customer | null>(null);
     const [isEditMode, setIsEditMode] = useState(false);
+<<<<<<< HEAD
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
     const [modalTitle, setModalTitle] = useState('');
@@ -38,6 +40,8 @@ const UserProfilePage: FC = () => {
         email: '',
         dateOfBirth: '',
     });
+=======
+>>>>>>> 63b8e4a (feat: add edit personal data button functionality)
     const [formValues, setFormValues] = useState({
         firstName: '',
         lastName: '',
@@ -61,14 +65,22 @@ const UserProfilePage: FC = () => {
 
     useEffect(() => {
         if (customer) {
+<<<<<<< HEAD
               const values = {
+=======
+            setFormValues({
+>>>>>>> 63b8e4a (feat: add edit personal data button functionality)
                 firstName: customer.firstName || '',
                 lastName: customer.lastName || '',
                 email: customer.email || '',
                 dateOfBirth: customer.dateOfBirth || '',
+<<<<<<< HEAD
             };
             setFormValues(values);
             setInitialValues(values);
+=======
+            });
+>>>>>>> 63b8e4a (feat: add edit personal data button functionality)
         }
     }, [customer]);
 
@@ -77,6 +89,7 @@ const UserProfilePage: FC = () => {
             try {
                 if (!accessToken) return;
                 await updateCustomerPersonalData(accessToken, formValues);
+<<<<<<< HEAD
             }
             catch (error) {
                 if (error instanceof Error && error.message === 'duplicate_email') {
@@ -100,10 +113,17 @@ const UserProfilePage: FC = () => {
                     setEmailError('');
                     setIsEditMode(false);
                 }
+=======
+            } 
+            catch (error) {
+                if (error instanceof Error)
+                throw new Error(error.message);
+>>>>>>> 63b8e4a (feat: add edit personal data button functionality)
             }
         }
         setIsEditMode(!isEditMode);
     };
+<<<<<<< HEAD
 
     const handleCancelEdit = (): void => {
         setFormValues(initialValues);
@@ -116,6 +136,8 @@ const UserProfilePage: FC = () => {
     const handleCancel = (): void => {
         setIsModalOpen(false);
     };
+=======
+>>>>>>> 63b8e4a (feat: add edit personal data button functionality)
     return (
         <>
             {customer ? (
@@ -132,6 +154,7 @@ const UserProfilePage: FC = () => {
                         <div className={`${css['personal-info-section']}`}>
                             <h2>Личная информация</h2>
                             <label className={css['input-label']}>Имя</label>
+<<<<<<< HEAD
                             <Input
                                 value={formValues.firstName}
                                 style={{ marginBottom: '1rem' }}
@@ -211,6 +234,42 @@ const UserProfilePage: FC = () => {
                                     Отменить
                                 </Button>
                             )}
+=======
+                            <Input 
+                                value={formValues.firstName} 
+                                style={{ marginBottom: '1rem' }} 
+                                disabled={!isEditMode}
+                                onChange={(e) => setFormValues({ ...formValues, firstName: e.target.value })}
+                            >
+                            </Input>
+                            <label className={css['input-label']}>Фамилия</label>
+                            <Input 
+                                value={formValues.lastName} 
+                                style={{ marginBottom: '1rem' }} 
+                                disabled={!isEditMode}
+                                onChange={(e) => setFormValues({ ...formValues, lastName: e.target.value })}
+                            >
+                            </Input>
+                            <label className={css['input-label']}>Email</label>
+                            <Input 
+                                value={formValues.email} 
+                                style={{ marginBottom: '1rem' }} 
+                                disabled={!isEditMode}
+                                onChange={(e) => setFormValues({ ...formValues, email: e.target.value })}
+                            >
+                            </Input>
+                            <label className={css['input-label']}>Дата рождения</label>
+                            <Input 
+                                value={formValues.dateOfBirth} 
+                                style={{ marginBottom: '1rem' }} 
+                                disabled={!isEditMode}
+                                onChange={(e) => setFormValues({ ...formValues, dateOfBirth: e.target.value })}
+                            >
+                            </Input>
+                            <Button type="primary" onClick={handleEditToggle}>
+                                {isEditMode ? 'Сохранить' : 'Редактировать'}
+                            </Button>
+>>>>>>> 63b8e4a (feat: add edit personal data button functionality)
                         </div>
                         <div className={`${css['addresses-section']}`}>
                             <h2>Адреса</h2>
