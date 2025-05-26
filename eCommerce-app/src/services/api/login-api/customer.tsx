@@ -65,8 +65,6 @@ export async function updateCustomerPersonalData(
   }
 }
 
-const projectKey = import.meta.env.VITE_PROJECT_KEY;
-
 export async function getCurrentCustomer(token: string): Promise<Customer> {
     function isCustomer(data: unknown): data is Customer {
         return typeof data === 'object' && data !== null && 'id' in data && 'email' in data;
