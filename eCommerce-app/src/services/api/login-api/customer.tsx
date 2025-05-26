@@ -3,6 +3,18 @@ export interface Customer {
     email: string;
     firstName?: string;
     lastName?: string;
+    addresses?: Address[];
+    dateOfBirth: string;
+    defaultShippingAddressId: string;
+    defaultBillingAddressId: string;
+}
+
+interface Address {
+    city: string;
+    country: string;
+    postalCode: string;
+    streetName: string;
+    id: string;
 }
 
 const projectKey = import.meta.env.VITE_PROJECT_KEY;
