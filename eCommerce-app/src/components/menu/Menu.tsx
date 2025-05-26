@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { Flex, TreeSelect, Typography } from 'antd';
 import css from './menu.module.scss';
 import { mapCategories, TreeNode } from '../../pages/catalog/mapCategories.ts';
@@ -6,7 +6,11 @@ import { getAllCategories } from '../../pages/catalog/getAllBooks.ts';
 
 // type MenuItem = Required<MenuProps>['items'][number];
 
-export const MenuFilter: FC = () => {
+type Props = {
+    setSelectedIds: Dispatch<SetStateAction<string[]>>;
+};
+
+export const MenuFilter: FC<Props> = ({ setSelectedIds }) => {
     const [category, setCategory] = useState<TreeNode[]>([]);
 
     const loadCategories = useCallback(async () => {
@@ -23,7 +27,9 @@ export const MenuFilter: FC = () => {
         loadCategories();
     }, [loadCategories]);
 
-    // function handleChange(): void {}
+    function handleChange(selectedIds: string[]): void {
+        setSelectedIds(selectedIds);
+    }
 
     return (
         <Flex vertical className={css.container}>
@@ -33,7 +39,7 @@ export const MenuFilter: FC = () => {
                 size="middle"
                 treeCheckable
                 placeholder="Выберите категории"
-                // onChange={handleChange}
+                onChange={handleChange}
                 treeData={category}
             />
         </Flex>

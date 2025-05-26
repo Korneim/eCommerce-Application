@@ -11,7 +11,6 @@ export const mapCategories = (data: Category[] = []): TreeNode[] => {
     const resultObject: Record<string, TreeNode> = {};
 
     const filteredParentArray = data.filter((el) => !el.parent);
-    console.log(filteredParentArray, 'asd');
 
     filteredParentArray.map((el) => {
         const node: TreeNode = {
