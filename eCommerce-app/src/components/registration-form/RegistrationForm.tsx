@@ -91,7 +91,7 @@ export const RegistrationForm: FC = () => {
             layout="vertical"
             name="RegistrationForm"
             className={styles.form}
-            onFinish={handleSubmit(onSubmit)}
+            onFinish={() => void handleSubmit(onSubmit)}
             autoComplete="on"
         >
             <Row gutter={[24, 24]}>

@@ -15,7 +15,7 @@ export const BooksList: FC<Props> = ({ title, books }) => {
                 <Typography.Title level={2}>{title}</Typography.Title>
             </Flex>
 
-            <Flex wrap justify="space-evenly" style={{ width: '100%' }}>
+            <Flex wrap justify="space-evenly" gap={20} style={{ width: '100%' }}>
                 {books.map((book) => (
                     <BookCard key={book.title} bookInfo={book} />
                 ))}

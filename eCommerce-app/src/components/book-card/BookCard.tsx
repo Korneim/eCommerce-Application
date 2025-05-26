@@ -21,7 +21,7 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
                 <Typography.Text style={{ textAlign: 'start' }} italic>
                     {price} ₽
                 </Typography.Text>
-                <Typography.Paragraph style={{ width: 180 }} strong>
+                <Typography.Paragraph style={{ width: 180 }} ellipsis={{ rows: 2 }} strong>
                     {title}
                 </Typography.Paragraph>
                 <Typography.Paragraph style={{ width: 180 }} ellipsis={{ rows: 2 }} type="secondary">

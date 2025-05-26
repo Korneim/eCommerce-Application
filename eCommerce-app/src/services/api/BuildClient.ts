@@ -16,6 +16,7 @@ const httpMiddlewareOptions: HttpMiddlewareOptions = {
     host: import.meta.env.VITE_API_URL,
     httpClient: fetch,
 };
+
 // нужно для анонимного доступа к странице каталога
 export const createAnonymousApiClient = (): Client => {
     return new ClientBuilder()
