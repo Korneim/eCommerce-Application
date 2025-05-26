@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useState } from 'react';
-import { Flex, TreeSelect, Typography } from 'antd';
+import { Flex, TreeSelect } from 'antd';
 import css from './menu.module.scss';
 import { mapCategories, TreeNode } from '../../pages/catalog/mapCategories.ts';
 import { getAllCategories } from '../../pages/catalog/getAllBooks.ts';
@@ -33,7 +33,6 @@ export const MenuFilter: FC<Props> = ({ setSelectedIds }) => {
 
     return (
         <Flex vertical className={css.container}>
-            <Typography.Paragraph strong>Категории</Typography.Paragraph>
             <TreeSelect
                 title="Категории"
                 size="middle"

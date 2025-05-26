@@ -4,7 +4,9 @@ import { createAnonymousApiClient } from '../../services/api/BuildClient.ts';
 export async function getPaginatedProducts(
     page: number,
     pageSize: number,
-    selectedIds: string[]
+    selectedIds: string[],
+    selectedSort: string,
+    searchText: string
 ): Promise<{ products: ProductProjection[]; total: number }> {
     try {
         const anonimus = createAnonymousApiClient();
@@ -13,15 +15,20 @@ export async function getPaginatedProducts(
         });
 
         const offset = (page - 1) * pageSize;
+        const filter =
+            selectedIds.length > 0 ? [`categories.id: ${selectedIds.map((id) => `"${id}"`).join(', ')}`] : undefined;
 
-        const whereCondition = `categories(id in (${selectedIds?.map((id) => `"${id}"`).join(', ')}))`;
         const response = await apiRoot
             .productProjections()
+            .search()
             .get({
                 queryArgs: {
-                    where: selectedIds && selectedIds.length > 0 ? whereCondition : undefined,
+                    filter,
                     limit: pageSize,
                     offset: offset,
+                    priceCurrency: 'RUB',
+                    sort: selectedSort && selectedSort.length > 0 ? selectedSort : undefined,
+                    [`text.ru`]: searchText || undefined,
                 },
             })
             .execute();

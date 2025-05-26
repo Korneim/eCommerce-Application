@@ -5,6 +5,8 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { mapCatalogData } from './mapCatalogData.ts';
 import { BooksList } from '../../components/book-list/BooksList.tsx';
 import { MenuFilter } from '../../components/menu/Menu.tsx';
+import { SelectMenu } from '../../components/select/SelectMenu.tsx';
+import css from './catalog.module.scss';
 
 export const CatalogPage: FC = () => {
     const [products, setProducts] = useState<ProductProjection[]>([]);
@@ -13,11 +15,19 @@ export const CatalogPage: FC = () => {
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
+    const [selectedSort, setSelectedSort] = useState<string>('');
+    const [searchText, setSearchText] = useState<string>('');
 
     const loadProducts = useCallback(async () => {
         setIsLoading(true);
         try {
-            const { products, total } = await getPaginatedProducts(currentPage, pageSize, selectedIds);
+            const { products, total } = await getPaginatedProducts(
+                currentPage,
+                pageSize,
+                selectedIds,
+                selectedSort,
+                searchText
+            );
             setProducts(products);
             setTotal(total);
         } catch (error) {
@@ -25,11 +35,11 @@ export const CatalogPage: FC = () => {
         } finally {
             setIsLoading(false);
         }
-    }, [currentPage, pageSize, selectedIds]);
+    }, [currentPage, pageSize, selectedIds, selectedSort, searchText]);
 
     useEffect(() => {
         loadProducts();
-    }, [loadProducts, selectedIds]);
+    }, [loadProducts, selectedIds, selectedSort, searchText]);
 
     const mappedBooks = useMemo(() => {
         return products ? mapCatalogData(products) : [];
@@ -43,14 +53,23 @@ export const CatalogPage: FC = () => {
     };
 
     return (
-        <Flex vertical style={{ width: '100%', minHeight: '100vh', paddingTop: 20 }}>
-            <Flex vertical align={'end'}>
-                <Flex style={{ width: '40%', paddingTop: 20 }}>
-                    <Input.Search placeholder="Поиск" variant="filled" />
+        <Flex vertical className={css.block}>
+            <Flex vertical gap={10}>
+                <Flex align={'end'} justify={'space-between'} className={css.filters} gap={10}>
+                    <SelectMenu setSelectedSort={setSelectedSort} />
+                    <MenuFilter setSelectedIds={setSelectedIds} />
+                    <Input.Search
+                        style={{ width: '30%' }}
+                        className={css.search}
+                        placeholder="Поиск"
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        onSearch={() => {
+                            setCurrentPage(1);
+                            loadProducts();
+                        }}
+                    />
                 </Flex>
-            </Flex>
-            <Flex vertical>
-                <MenuFilter setSelectedIds={setSelectedIds} />
                 <Flex vertical align={'center'}>
                     <BooksList title="Каталог" books={mappedBooks} />;
                     <Pagination
