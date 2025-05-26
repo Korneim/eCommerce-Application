@@ -4,11 +4,15 @@ import useAuthStore from '../../store/useAuthStore';
 import type { Customer } from '../../services/api/login-api/customer';
 import { updateCustomerPersonalData } from '../../services/api/login-api/customer';
 import { getCurrentCustomer } from '../../services/api/login-api/customer';
-import { Spin, Input, Card, Button, DatePicker } from 'antd';
+import { Spin, Input, Card, Button, DatePicker, Modal } from 'antd';
 import css from './user-profile.module.scss';
 import dayjs, { Dayjs } from 'dayjs';
 import { ModalWindow } from '../../components/modal-window/ModalWindow';
 import type { ModalType } from '../../components/modal-window/ModalWindow';
+
+interface NewCustomer {
+    version: number;
+}
 
 const isValidEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,7 +22,12 @@ const isValidEmail = (email: string): boolean => {
 const isValidName = (name: string): boolean => {
     const nameRegex = /^[A-Za-z\u00C0-\u017FЁА-яё]+$/;
     return name === name.trim() && nameRegex.test(name);
-}
+};
+
+const isValidPassword = (password: string): boolean => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return password === password.trim() && passwordRegex.test(password);
+};
 
 const UserProfilePage: FC = () => {
     const minAge = 13;
@@ -32,6 +41,11 @@ const UserProfilePage: FC = () => {
     const [modalContent, setModalContent] = useState('');
     const [modalTitle, setModalTitle] = useState('');
     const [modalType, setModalType] = useState<ModalType>('success');
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
     const [initialValues, setInitialValues] = useState({
         firstName: '',
         lastName: '',
@@ -61,7 +75,7 @@ const UserProfilePage: FC = () => {
 
     useEffect(() => {
         if (customer) {
-              const values = {
+            const values = {
                 firstName: customer.firstName || '',
                 lastName: customer.lastName || '',
                 email: customer.email || '',
@@ -77,8 +91,7 @@ const UserProfilePage: FC = () => {
             try {
                 if (!accessToken) return;
                 await updateCustomerPersonalData(accessToken, formValues);
-            }
-            catch (error) {
+            } catch (error) {
                 if (error instanceof Error && error.message === 'duplicate_email') {
                     setIsModalOpen(true);
                     setModalType('error');
@@ -120,6 +133,116 @@ const UserProfilePage: FC = () => {
         <>
             {customer ? (
                 <>
+                    <Modal
+                        title="Изменить пароль"
+                        open={isPasswordModalOpen}
+                        onCancel={() => {
+                            setIsPasswordModalOpen(false);
+                            setOldPassword('');
+                            setNewPassword('');
+                            setConfirmPassword('');
+                            setPasswordError('');
+                        }}
+                        onOk={() => {
+                            void (async (): Promise<void> => {
+                                if (newPassword !== confirmPassword) {
+                                    setPasswordError('Пароли не совпадают');
+                                    return;
+                                }
+
+                                if (newPassword.length < 8) {
+                                    setPasswordError('Пароль должен быть не короче 8 символов');
+                                    return;
+                                }
+
+                                try {
+                                    if (!accessToken) return;
+
+                                    const projectKey = import.meta.env.VITE_PROJECT_KEY;
+                                    const customerRes = await fetch(
+                                        `https://api.europe-west1.gcp.commercetools.com/${projectKey}/me`,
+                                        {
+                                            headers: {
+                                                Authorization: `Bearer ${accessToken}`,
+                                            },
+                                        }
+                                    );
+
+                                    async function parseJsonResponse<T>(response: Response): Promise<T> {
+                                        const text = await response.text();
+                                        const data: T = JSON.parse(text);
+                                        return data;
+                                    }
+                                    const customer = await parseJsonResponse<NewCustomer>(customerRes);
+
+                                    const response = await fetch(
+                                        `https://api.europe-west1.gcp.commercetools.com/${projectKey}/me/password`,
+                                        {
+                                            method: 'POST',
+                                            headers: {
+                                                Authorization: `Bearer ${accessToken}`,
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                                version: customer.version,
+                                                currentPassword: oldPassword,
+                                                newPassword: newPassword,
+                                            }),
+                                        }
+                                    );
+
+                                    if (!response.ok) {
+                                        setPasswordError('Ошибка: возможно, старый пароль введён неверно');
+                                        return;
+                                    }
+
+                                    setIsPasswordModalOpen(false);
+                                    setOldPassword('');
+                                    setNewPassword('');
+                                    setConfirmPassword('');
+                                    setPasswordError('');
+                                } catch (error) {
+                                    setPasswordError('Не удалось изменить пароль');
+                                    if (error instanceof Error) throw new Error(error.message);
+                                }
+                            })();
+                        }}
+                        okText="Сохранить"
+                        cancelText="Отмена"
+                        okButtonProps={{ disabled: !!passwordError }}
+                    >
+                        <label>Старый пароль</label>
+                        <Input.Password
+                            value={oldPassword}
+                            onChange={(e) => setOldPassword(e.target.value)}
+                            style={{ marginBottom: '1rem' }}
+                        />
+
+                        <label>Новый пароль</label>
+                        <Input.Password
+                            value={newPassword}
+                            onChange={(e) => {
+                                setNewPassword(e.target.value);
+                                if (isValidPassword(e.target.value)) {
+                                    setPasswordError('');
+                                } else {
+                                    setPasswordError(
+                                        'Пароль должен содержать одну строчную букву a-z, одну большую A-Z, и одну цифру, а также не содержать пробелов в начале и конце строки'
+                                    );
+                                }
+                            }}
+                            style={{ marginBottom: '1rem' }}
+                        />
+
+                        <label>Подтвердите новый пароль</label>
+                        <Input.Password
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            style={{ marginBottom: '1rem' }}
+                        />
+
+                        {passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
+                    </Modal>
                     <ModalWindow
                         type={modalType}
                         title={modalTitle}
@@ -139,16 +262,14 @@ const UserProfilePage: FC = () => {
                                 status={firstNameError ? 'error' : ''}
                                 onChange={(e) => {
                                     const newFirstName = e.target.value;
-                                    setFormValues({ ...formValues, firstName: newFirstName })
+                                    setFormValues({ ...formValues, firstName: newFirstName });
                                     if (isValidName(newFirstName)) {
                                         setFirstNameError('');
                                     } else {
                                         setFirstNameError('Поле должно содержать только буквы');
                                     }
-                                }
-                            }
-                            >
-                            </Input>
+                                }}
+                            ></Input>
                             <div style={{ color: 'red', marginBottom: '1rem' }}>{firstNameError}</div>
                             <label className={css['input-label']}>Фамилия</label>
                             <Input
@@ -158,16 +279,14 @@ const UserProfilePage: FC = () => {
                                 status={lastNameError ? 'error' : ''}
                                 onChange={(e) => {
                                     const newLastName = e.target.value;
-                                    setFormValues({ ...formValues, lastName: newLastName })
+                                    setFormValues({ ...formValues, lastName: newLastName });
                                     if (isValidName(newLastName)) {
                                         setLastNameError('');
                                     } else {
                                         setLastNameError('Поле должно содержать только буквы');
                                     }
-                                }
-                            }
-                            >
-                            </Input>
+                                }}
+                            ></Input>
                             <div style={{ color: 'red', marginBottom: '1rem' }}>{lastNameError}</div>
                             <label className={css['input-label']}>Email</label>
                             <Input
@@ -183,27 +302,29 @@ const UserProfilePage: FC = () => {
                                     } else {
                                         setEmailError('Введите корректный email');
                                     }
-                                }
-                            }
-                            >
-                            </Input>
+                                }}
+                            ></Input>
                             <div style={{ color: 'red', marginBottom: '1rem' }}>{emailError}</div>
                             <label className={css['input-label']}>Дата рождения</label>
                             <DatePicker
-                            value={formValues.dateOfBirth ? dayjs(formValues.dateOfBirth) : null}
-                            disabled={!isEditMode}
-                            onChange={(date) => {
-                                setFormValues({
-                                ...formValues,
-                                dateOfBirth: date ? date.format('YYYY-MM-DD') : '',
-                                });
-                            }}
-                            disabledDate={(current: Dayjs) =>
-                                current && current.isAfter(dayjs().subtract(minAge, 'year'), 'day')
-                            }
-                            style={{ marginBottom: '1rem', width: '100%' }}
+                                value={formValues.dateOfBirth ? dayjs(formValues.dateOfBirth) : null}
+                                disabled={!isEditMode}
+                                onChange={(date) => {
+                                    setFormValues({
+                                        ...formValues,
+                                        dateOfBirth: date ? date.format('YYYY-MM-DD') : '',
+                                    });
+                                }}
+                                disabledDate={(current: Dayjs) =>
+                                    current && current.isAfter(dayjs().subtract(minAge, 'year'), 'day')
+                                }
+                                style={{ marginBottom: '1rem', width: '100%' }}
                             />
-                            <Button type="primary" onClick={() => void handleEditToggle()} disabled={!!emailError || !!firstNameError || !!lastNameError}>
+                            <Button
+                                type="primary"
+                                onClick={() => void handleEditToggle()}
+                                disabled={!!emailError || !!firstNameError || !!lastNameError}
+                            >
                                 {isEditMode ? 'Сохранить' : 'Редактировать'}
                             </Button>
                             {isEditMode && (
@@ -211,6 +332,9 @@ const UserProfilePage: FC = () => {
                                     Отменить
                                 </Button>
                             )}
+                            <Button style={{ marginLeft: '1rem' }} onClick={() => setIsPasswordModalOpen(true)}>
+                                Изменить пароль
+                            </Button>
                         </div>
                         <div className={`${css['addresses-section']}`}>
                             <h2>Адреса</h2>
