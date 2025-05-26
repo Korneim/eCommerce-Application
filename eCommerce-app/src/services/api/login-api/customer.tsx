@@ -54,6 +54,13 @@ export async function updateCustomerPersonalData(
   });
 
   if (!response.ok) {
+    const errorBody = await response.json();
+
+      if (
+        errorBody?.message === 'There is already an existing customer with the provided email.'
+      ) {
+    throw new Error('duplicate_email');
+  }
     throw new Error('Не удалось обновить пользователя');
   }
 }
