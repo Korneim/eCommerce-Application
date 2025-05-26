@@ -4,8 +4,6 @@ import css from './menu.module.scss';
 import { mapCategories, TreeNode } from '../../pages/catalog/mapCategories.ts';
 import { getAllCategories } from '../../pages/catalog/getAllBooks.ts';
 
-// type MenuItem = Required<MenuProps>['items'][number];
-
 type Props = {
     setSelectedIds: Dispatch<SetStateAction<string[]>>;
 };
