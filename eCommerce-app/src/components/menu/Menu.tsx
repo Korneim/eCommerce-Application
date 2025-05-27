@@ -15,6 +15,7 @@ export const MenuFilter: FC<Props> = ({ setSelectedIds }) => {
         try {
             const data = await getAllCategories();
             const mappedCategories = mapCategories(data);
+            console.log(mappedCategories);
             setCategory(mappedCategories);
         } catch (error) {
             console.error('Ошибка загрузки:', error);

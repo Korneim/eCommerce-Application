@@ -32,7 +32,6 @@ export async function getPaginatedProducts(
                 },
             })
             .execute();
-
         return {
             products: response.body.results,
             total: response.body.total || 0,

@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const BookCard: FC<Props> = ({ bookInfo }) => {
-    const { title, imageUrl, price, description } = bookInfo;
+    const { title, imageUrl, price, discountPrice, description } = bookInfo;
 
     return (
         <Flex vertical gap={10} align="center" justify="space-between" className={css.card}>
@@ -18,10 +18,20 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
             </Flex>
 
             <Flex vertical>
-                <Typography.Text style={{ textAlign: 'start' }} italic>
-                    {price} ₽
-                </Typography.Text>
-                <Typography.Paragraph style={{ width: 180 }} ellipsis={{ rows: 2 }} strong>
+                <Flex justify={'space-between'}>
+                    <Typography.Text className={discountPrice ? css.old : ''} style={{ textAlign: 'start' }} italic>
+                        {price} ₽
+                    </Typography.Text>
+                    {discountPrice !== 0 && (
+                        <>
+                            <Typography.Text style={{ color: 'red' }}>→</Typography.Text>
+                            <Typography.Text className={css.discount} style={{ textAlign: 'start' }} italic>
+                                {discountPrice} ₽
+                            </Typography.Text>
+                        </>
+                    )}
+                </Flex>
+                <Typography.Paragraph style={{ width: 180, minHeight: 50 }} ellipsis={{ rows: 2 }} strong>
                     {title}
                 </Typography.Paragraph>
                 <Typography.Paragraph style={{ width: 180 }} ellipsis={{ rows: 2 }} type="secondary">

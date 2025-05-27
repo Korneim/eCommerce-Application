@@ -36,7 +36,7 @@ export const CatalogPage: FC = () => {
             setIsLoading(false);
         }
     }, [currentPage, pageSize, selectedIds, selectedSort, searchText]);
-
+    console.log(products);
     useEffect(() => {
         loadProducts();
     }, [loadProducts, selectedIds, selectedSort, searchText]);
@@ -51,7 +51,7 @@ export const CatalogPage: FC = () => {
             setPageSize(size);
         }
     };
-
+    console.log(selectedIds);
     return (
         <Flex vertical className={css.block}>
             <Flex vertical gap={10}>
@@ -70,8 +70,9 @@ export const CatalogPage: FC = () => {
                         }}
                     />
                 </Flex>
+
                 <Flex vertical align={'center'}>
-                    <BooksList title="Каталог" books={mappedBooks} />;
+                    <BooksList title="Каталог" books={mappedBooks} />
                     <Pagination
                         current={currentPage}
                         pageSize={pageSize}

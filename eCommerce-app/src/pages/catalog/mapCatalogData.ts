@@ -7,6 +7,7 @@ const getDefaultBook = (): Book => ({
     title: 'Без названия',
     author: 'Неизвестный автор',
     price: 0,
+    discountPrice: 0,
     imageUrl: defaultBook,
     description: 'Нет описания',
 });
@@ -31,11 +32,13 @@ export const mapCatalogData = (data: ProductProjection[] = []): Book[] => {
 
         const priceObj = currentData?.prices?.[0];
         const price = priceObj?.value?.centAmount ? Number(priceObj.value.centAmount) / 100 : 0;
+        const discount = Number(currentData?.prices?.[0].discounted?.value.centAmount) / 100;
 
         return {
             title: el.name?.ru || 'Без названия',
             author: author,
             price: price,
+            discountPrice: discount || 0,
             imageUrl: currentData?.images?.[0]?.url || defaultBook,
             description: el.description?.ru || 'Нет описания',
         };
