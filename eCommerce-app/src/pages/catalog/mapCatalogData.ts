@@ -1,4 +1,4 @@
-import type { Product } from '@commercetools/platform-sdk';
+import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import defaultBook from '../../assets/images/defaultBook.png';
 import { Book } from '../../components/book-list/types.ts';
@@ -7,6 +7,7 @@ const getDefaultBook = (): Book => ({
     title: 'Без названия',
     author: 'Неизвестный автор',
     price: 0,
+    discountPrice: 0,
     imageUrl: defaultBook,
     description: 'Нет описания',
 });
@@ -16,14 +17,12 @@ interface ProductAttribute {
     value: string;
 }
 
-export const mapCatalogData = (data: Product[] = []): Book[] => {
+export const mapCatalogData = (data: ProductProjection[] = []): Book[] => {
     return data.map((el) => {
-        const currentData = el.masterData?.current;
+        const currentData = el.masterVariant;
         if (!currentData) return getDefaultBook();
 
-        const { name, description, masterVariant } = currentData;
-
-        const authorAttr = masterVariant?.attributes?.find((attr: ProductAttribute) => attr.name === 'author');
+        const authorAttr = currentData?.attributes?.find((attr: ProductAttribute) => attr.name === 'author');
 
         const author = authorAttr
             ? (typeof authorAttr.value === 'string'
@@ -31,15 +30,17 @@ export const mapCatalogData = (data: Product[] = []): Book[] => {
                 : 'Неизвестный автор')
             : 'Неизвестный автор';
 
-        const priceObj = masterVariant?.prices?.[0];
+        const priceObj = currentData?.prices?.[0];
         const price = priceObj?.value?.centAmount ? Number(priceObj.value.centAmount) / 100 : 0;
+        const discount = Number(currentData?.prices?.[0].discounted?.value.centAmount) / 100;
 
         return {
-            title: name?.ru || 'Без названия',
+            title: el.name?.ru || 'Без названия',
             author: author,
             price: price,
-            imageUrl: masterVariant?.images?.[0]?.url || defaultBook,
-            description: description?.ru || 'Нет описания',
+            discountPrice: discount || 0,
+            imageUrl: currentData?.images?.[0]?.url || defaultBook,
+            description: el.description?.ru || 'Нет описания',
         };
     });
 };

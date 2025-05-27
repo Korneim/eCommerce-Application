@@ -1,18 +1,21 @@
-import { FC, useCallback, useEffect, useState } from 'react';
-import { Flex, TreeSelect, Typography } from 'antd';
+import { Dispatch, FC, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Flex, TreeSelect } from 'antd';
 import css from './menu.module.scss';
 import { mapCategories, TreeNode } from '../../pages/catalog/mapCategories.ts';
 import { getAllCategories } from '../../pages/catalog/getAllBooks.ts';
 
-// type MenuItem = Required<MenuProps>['items'][number];
+type Props = {
+    setSelectedIds: Dispatch<SetStateAction<string[]>>;
+};
 
-export const MenuFilter: FC = () => {
+export const MenuFilter: FC<Props> = ({ setSelectedIds }) => {
     const [category, setCategory] = useState<TreeNode[]>([]);
 
     const loadCategories = useCallback(async () => {
         try {
             const data = await getAllCategories();
             const mappedCategories = mapCategories(data);
+            console.log(mappedCategories);
             setCategory(mappedCategories);
         } catch (error) {
             console.error('Ошибка загрузки:', error);
@@ -23,17 +26,18 @@ export const MenuFilter: FC = () => {
         loadCategories();
     }, [loadCategories]);
 
-    // function handleChange(): void {}
+    function handleChange(selectedIds: string[]): void {
+        setSelectedIds(selectedIds);
+    }
 
     return (
         <Flex vertical className={css.container}>
-            <Typography.Paragraph strong>Категории</Typography.Paragraph>
             <TreeSelect
                 title="Категории"
                 size="middle"
                 treeCheckable
                 placeholder="Выберите категории"
-                // onChange={handleChange}
+                onChange={handleChange}
                 treeData={category}
             />
         </Flex>

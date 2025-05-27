@@ -1,10 +1,13 @@
-import { Category, createApiBuilderFromCtpClient, Product } from '@commercetools/platform-sdk';
+import { Category, createApiBuilderFromCtpClient, ProductProjection } from '@commercetools/platform-sdk';
 import { createAnonymousApiClient } from '../../services/api/BuildClient.ts';
 
 export async function getPaginatedProducts(
     page: number,
-    pageSize: number
-): Promise<{ products: Product[]; total: number }> {
+    pageSize: number,
+    selectedIds: string[],
+    selectedSort: string,
+    searchText: string
+): Promise<{ products: ProductProjection[]; total: number }> {
     try {
         const anonimus = createAnonymousApiClient();
         const apiRoot = createApiBuilderFromCtpClient(anonimus).withProjectKey({
@@ -12,18 +15,23 @@ export async function getPaginatedProducts(
         });
 
         const offset = (page - 1) * pageSize;
+        const filter =
+            selectedIds.length > 0 ? [`categories.id: ${selectedIds.map((id) => `"${id}"`).join(', ')}`] : undefined;
 
         const response = await apiRoot
-            .products()
+            .productProjections()
+            .search()
             .get({
                 queryArgs: {
+                    filter,
                     limit: pageSize,
                     offset: offset,
-                    sort: 'id asc',
+                    priceCurrency: 'RUB',
+                    sort: selectedSort && selectedSort.length > 0 ? selectedSort : undefined,
+                    [`text.ru`]: searchText || undefined,
                 },
             })
             .execute();
-
         return {
             products: response.body.results,
             total: response.body.total || 0,
