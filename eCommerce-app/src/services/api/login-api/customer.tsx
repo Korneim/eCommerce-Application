@@ -9,7 +9,7 @@ export interface Customer {
     defaultBillingAddressId: string;
 }
 
-interface Address {
+export interface Address {
     city: string;
     country: string;
     postalCode: string;
@@ -61,6 +61,56 @@ export async function updateCustomerPersonalData(
         }
         throw new Error('Не удалось обновить пользователя');
     }
+}
+
+export async function updateCustomerAddress(
+  token: string,
+  addressId: string,
+  newAddress: {
+    city: string;
+    streetName: string;
+    postalCode: string;
+    country: string;
+  }
+): Promise<void> {
+  const projectKey = import.meta.env.VITE_PROJECT_KEY;
+
+  const getResponse = await fetch(`https://api.europe-west1.gcp.commercetools.com/${projectKey}/me`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!getResponse.ok) {
+    throw new Error('Не удалось получить данные пользователя');
+  }
+
+  const customerData = await getResponse.json();
+  const currentVersion = customerData.version;
+
+
+  const response = await fetch(`https://api.europe-west1.gcp.commercetools.com/${projectKey}/me`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      version: currentVersion,
+      actions: [
+        {
+          action: 'changeAddress',
+          addressId,
+          address: newAddress,
+        },
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Не удалось обновить адрес');
+  }
 }
 
 export async function getCurrentCustomer(token: string): Promise<Customer> {

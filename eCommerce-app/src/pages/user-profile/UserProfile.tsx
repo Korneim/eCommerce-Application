@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import useAuthStore from '../../store/useAuthStore';
-import type { Customer } from '../../services/api/login-api/customer';
+import type { Customer, Address } from '../../services/api/login-api/customer';
 import { updateCustomerPersonalData } from '../../services/api/login-api/customer';
 import { getCurrentCustomer } from '../../services/api/login-api/customer';
-import { Spin, Input, Card, Button, DatePicker, Modal } from 'antd';
+import { Spin, Input, Card, Button, DatePicker, Modal, message } from 'antd';
 import css from './user-profile.module.scss';
 import dayjs, { Dayjs } from 'dayjs';
 import { ModalWindow } from '../../components/modal-window/ModalWindow';
@@ -37,6 +37,7 @@ const UserProfilePage: FC = () => {
     const accessToken = useAuthStore((state) => state.accessToken);
     const [customer, setCustomer] = useState<Customer | null>(null);
     const [isEditMode, setIsEditMode] = useState(false);
+    const [editableAddressIndex, setEditableAddressIndex] = useState<number | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
     const [modalTitle, setModalTitle] = useState('');
@@ -46,6 +47,7 @@ const UserProfilePage: FC = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [messageApi, contextHolder] = message.useMessage();
     const [initialValues, setInitialValues] = useState({
         firstName: '',
         lastName: '',
@@ -57,6 +59,13 @@ const UserProfilePage: FC = () => {
         lastName: '',
         email: '',
         dateOfBirth: '',
+    });
+
+    const [addressFormValues, setAddressFormValues] = useState({
+        city: '',
+        streetName: '',
+        postalCode: '',
+        country: '',
     });
     useEffect(() => {
         const fetchCustomer = async (): Promise<void> => {
@@ -91,6 +100,10 @@ const UserProfilePage: FC = () => {
             try {
                 if (!accessToken) return;
                 await updateCustomerPersonalData(accessToken, formValues);
+                messageApi.open({
+                    type: 'success',
+                    content: 'Данные успешно обновлены',
+                })
             } catch (error) {
                 if (error instanceof Error && error.message === 'duplicate_email') {
                     setIsModalOpen(true);
@@ -129,10 +142,21 @@ const UserProfilePage: FC = () => {
     const handleCancel = (): void => {
         setIsModalOpen(false);
     };
+
+    const handleEditAdress = (index: number, address: Address): void => {
+        setEditableAddressIndex(index);
+          setAddressFormValues({
+          city: address.city,
+          streetName: address.streetName,
+          postalCode: address.postalCode,
+          country: 'RU'
+  });
+    }
     return (
         <>
             {customer ? (
                 <>
+                    {contextHolder}
                     <Modal
                         title="Изменить пароль"
                         open={isPasswordModalOpen}
@@ -147,11 +171,6 @@ const UserProfilePage: FC = () => {
                             void (async (): Promise<void> => {
                                 if (newPassword !== confirmPassword) {
                                     setPasswordError('Пароли не совпадают');
-                                    return;
-                                }
-
-                                if (newPassword.length < 8) {
-                                    setPasswordError('Пароль должен быть не короче 8 символов');
                                     return;
                                 }
 
@@ -195,6 +214,11 @@ const UserProfilePage: FC = () => {
                                         setPasswordError('Ошибка: возможно, старый пароль введён неверно');
                                         return;
                                     }
+
+                                    messageApi.open({
+                                        type: 'success',
+                                        content: 'Пароль успешно изменён',
+                                    })
 
                                     setIsPasswordModalOpen(false);
                                     setOldPassword('');
@@ -346,16 +370,53 @@ const UserProfilePage: FC = () => {
                                         style={{ marginBottom: '1rem' }}
                                     >
                                         <p>
-                                            <strong>Город:</strong> {address.city}
+                                              <strong>Город: </strong>
+                                                {editableAddressIndex === index ? (
+                                                    <Input
+                                                        value={address.city}
+                                                        style={{ width: '200px' }}
+                                                        onChange={(e) => {
+                                                            const newCity = e.target.value;
+                                                            setAddressFormValues({ ...addressFormValues, city: newCity });
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    address.city
+                                                )}
                                         </p>
                                         <p>
-                                            <strong>Улица:</strong> {address.streetName}
+                                              <strong>Улица: </strong>
+                                                {editableAddressIndex === index ? (
+                                                    <Input
+                                                        value={address.streetName}
+                                                        style={{ width: '200px' }}
+                                                    />
+                                                ) : (
+                                                    address.streetName
+                                                )}
                                         </p>
                                         <p>
-                                            <strong>Индекс:</strong> {address.postalCode}
+                                              <strong>Индекс: </strong>
+                                                {editableAddressIndex === index ? (
+                                                    <Input
+                                                        value={address.postalCode}
+                                                        style={{ width: '200px' }}
+                                                    />
+                                                ) : (
+                                                    address.postalCode
+                                                )}
                                         </p>
                                         <p>
-                                            <strong>Страна:</strong> {address.country}
+                                              <strong>Страна: </strong>
+                                                {editableAddressIndex === index ? (
+                                                    <Input
+                                                        value={'Россия'}
+                                                        style={{ width: '200px' }}
+                                                        disabled
+                                                    />
+                                                ) : (
+                                                    'Россия'
+                                                )}
                                         </p>
 
                                         {customer.defaultShippingAddressId === address.id && (
@@ -365,6 +426,10 @@ const UserProfilePage: FC = () => {
                                         {customer.defaultBillingAddressId === address.id && (
                                             <p style={{ color: 'blue' }}>💳 Адрес для оплаты (по умолчанию)</p>
                                         )}
+
+                                        <Button onClick={() => handleEditAdress(index, address)}>
+                                            {editableAddressIndex === index ? 'Сохранить' : 'Изменить'}
+                                        </Button>
                                     </Card>
                                 ))
                             ) : (
