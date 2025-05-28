@@ -33,7 +33,6 @@ const isValidPassword = (password: string): boolean => {
     return password === password.trim() && passwordRegex.test(password);
 };
 
-
 const UserProfilePage: FC = () => {
     const [spinning, setSpinning] = useState<boolean>(false);
     const minAge = 13;
