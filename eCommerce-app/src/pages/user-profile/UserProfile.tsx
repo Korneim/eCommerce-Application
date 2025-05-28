@@ -1,17 +1,21 @@
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
+import { loginCustomer } from '../../services/api/login-api/auth';
 import useAuthStore from '../../store/useAuthStore';
-import type { Customer, Address } from '../../services/api/login-api/customer';
+import type { Customer } from '../../services/api/login-api/customer';
 import { updateCustomerPersonalData } from '../../services/api/login-api/customer';
 import { getCurrentCustomer } from '../../services/api/login-api/customer';
-import { Spin, Input, Card, Button, DatePicker, Modal, message } from 'antd';
+import { Spin, Input, Button, DatePicker, Modal, message } from 'antd';
 import css from './user-profile.module.scss';
 import dayjs, { Dayjs } from 'dayjs';
 import { ModalWindow } from '../../components/modal-window/ModalWindow';
 import type { ModalType } from '../../components/modal-window/ModalWindow';
+import AddressSection from './Adresses';
+import GlobalSpinner from '../../components/user-profile/GlobalSpinner';
 
 interface NewCustomer {
     version: number;
+    email: string;
 }
 
 const isValidEmail = (email: string): boolean => {
@@ -31,6 +35,7 @@ const isValidPassword = (password: string): boolean => {
 
 
 const UserProfilePage: FC = () => {
+    const [spinning, setSpinning] = useState<boolean>(false);
     const minAge = 13;
     const [emailError, setEmailError] = useState('');
     const [firstNameError, setFirstNameError] = useState('');
@@ -38,7 +43,6 @@ const UserProfilePage: FC = () => {
     const accessToken = useAuthStore((state) => state.accessToken);
     const [customer, setCustomer] = useState<Customer | null>(null);
     const [isEditMode, setIsEditMode] = useState(false);
-    const [editableAddressIndex, setEditableAddressIndex] = useState<number | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
     const [modalTitle, setModalTitle] = useState('');
@@ -62,12 +66,6 @@ const UserProfilePage: FC = () => {
         dateOfBirth: '',
     });
 
-    const [addressFormValues, setAddressFormValues] = useState({
-        city: '',
-        streetName: '',
-        postalCode: '',
-        country: '',
-    });
     useEffect(() => {
         const fetchCustomer = async (): Promise<void> => {
             if (!accessToken) return;
@@ -98,6 +96,7 @@ const UserProfilePage: FC = () => {
 
     const handleEditToggle = async (): Promise<void> => {
         if (isEditMode) {
+            setSpinning(true);
             try {
                 if (!accessToken) return;
                 await updateCustomerPersonalData(accessToken, formValues);
@@ -127,6 +126,8 @@ const UserProfilePage: FC = () => {
                     setEmailError('');
                     setIsEditMode(false);
                 }
+            } finally {
+                setSpinning(false);
             }
         }
         setIsEditMode(!isEditMode);
@@ -144,20 +145,12 @@ const UserProfilePage: FC = () => {
         setIsModalOpen(false);
     };
 
-    const handleEditAdress = (index: number, address: Address): void => {
-        setEditableAddressIndex(index);
-          setAddressFormValues({
-          city: address.city,
-          streetName: address.streetName,
-          postalCode: address.postalCode,
-          country: 'RU'
-  });
-    }
     return (
         <>
             {customer ? (
                 <>
                     {contextHolder}
+                    <GlobalSpinner spinning={spinning} />
                     <Modal
                         title="Изменить пароль"
                         open={isPasswordModalOpen}
@@ -174,10 +167,9 @@ const UserProfilePage: FC = () => {
                                     setPasswordError('Пароли не совпадают');
                                     return;
                                 }
-
+                                setSpinning(true);
                                 try {
                                     if (!accessToken) return;
-
                                     const projectKey = import.meta.env.VITE_PROJECT_KEY;
                                     const customerRes = await fetch(
                                         `https://api.europe-west1.gcp.commercetools.com/${projectKey}/me`,
@@ -216,6 +208,10 @@ const UserProfilePage: FC = () => {
                                         return;
                                     }
 
+                                    const newTokenData = await loginCustomer(customer.email, newPassword);
+                                    const { setAccessToken } = useAuthStore.getState();
+                                    setAccessToken(newTokenData.access_token);
+
                                     messageApi.open({
                                         type: 'success',
                                         content: 'Пароль успешно изменён',
@@ -229,6 +225,8 @@ const UserProfilePage: FC = () => {
                                 } catch (error) {
                                     setPasswordError('Не удалось изменить пароль');
                                     if (error instanceof Error) throw new Error(error.message);
+                                } finally {
+                                    setSpinning(false);
                                 }
                             })();
                         }}
@@ -257,6 +255,7 @@ const UserProfilePage: FC = () => {
                                 }
                             }}
                             style={{ marginBottom: '1rem' }}
+                            status={passwordError ? 'error' : ''}
                         />
 
                         <label>Подтвердите новый пароль</label>
@@ -361,82 +360,7 @@ const UserProfilePage: FC = () => {
                                 Изменить пароль
                             </Button>
                         </div>
-                        <div className={`${css['addresses-section']}`}>
-                            <h2>Адреса</h2>
-                            {customer.addresses?.length ? (
-                                customer.addresses.map((address, index) => (
-                                    <Card
-                                        key={address.id}
-                                        title={`Адрес ${index + 1}`}
-                                        style={{ marginBottom: '1rem' }}
-                                    >
-                                        <p>
-                                              <strong>Город: </strong>
-                                                {editableAddressIndex === index ? (
-                                                    <Input
-                                                        value={address.city}
-                                                        style={{ width: '200px' }}
-                                                        onChange={(e) => {
-                                                            const newCity = e.target.value;
-                                                            setAddressFormValues({ ...addressFormValues, city: newCity });
-                                                        }}
-                                                    />
-                                                ) : (
-                                                    address.city
-                                                )}
-                                        </p>
-                                        <p>
-                                              <strong>Улица: </strong>
-                                                {editableAddressIndex === index ? (
-                                                    <Input
-                                                        value={address.streetName}
-                                                        style={{ width: '200px' }}
-                                                    />
-                                                ) : (
-                                                    address.streetName
-                                                )}
-                                        </p>
-                                        <p>
-                                              <strong>Индекс: </strong>
-                                                {editableAddressIndex === index ? (
-                                                    <Input
-                                                        value={address.postalCode}
-                                                        style={{ width: '200px' }}
-                                                    />
-                                                ) : (
-                                                    address.postalCode
-                                                )}
-                                        </p>
-                                        <p>
-                                              <strong>Страна: </strong>
-                                                {editableAddressIndex === index ? (
-                                                    <Input
-                                                        value={'Россия'}
-                                                        style={{ width: '200px' }}
-                                                        disabled
-                                                    />
-                                                ) : (
-                                                    'Россия'
-                                                )}
-                                        </p>
-
-                                        {customer.defaultShippingAddressId === address.id && (
-                                            <p style={{ color: 'green' }}>🚚 Адрес доставки (по умолчанию)</p>
-                                        )}
-
-                                        {customer.defaultBillingAddressId === address.id && (
-                                            <p style={{ color: 'blue' }}>💳 Адрес для оплаты (по умолчанию)</p>
-                                        )}
-
-                                        <Button onClick={() => handleEditAdress(index, address)}>
-                                            {editableAddressIndex === index ? 'Сохранить' : 'Изменить'}
-                                        </Button>
-                                    </Card>
-                                ))
-                            ) : (
-                                <p>Адреса не найдены.</p>
-                            )}
-                        </div>
+                        <AddressSection></AddressSection>
                     </div>
                 </>
             ) : (
