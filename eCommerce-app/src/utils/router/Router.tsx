@@ -8,6 +8,7 @@ import { MainPage } from '../../pages/main/MainPage.tsx';
 import { RegistrationPage } from '../../pages/registration/Registration.tsx';
 import useAuthStore from '../../store/useAuthStore';
 import { CatalogPage } from '../../pages/catalog/Catalog.tsx';
+import { ProductPage } from '../../pages/product/ProductPage.tsx';
 
 export const Router: FC = () => {
     const { isLoggedIn } = useAuthStore();
@@ -52,6 +53,10 @@ export const Router: FC = () => {
                 {
                     path: routes.profile,
                     element: <div>profile</div>,
+                },
+                {
+                    path: routes.product,
+                    element: <ProductPage />,
                 },
             ],
         },

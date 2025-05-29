@@ -6,4 +6,5 @@ export const routes = {
     catalog: '/catalog',
     about: '/about',
     profile: '/profile',
+    product: '/product/:productId',
 };

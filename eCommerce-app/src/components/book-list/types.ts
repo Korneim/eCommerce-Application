@@ -5,4 +5,5 @@ export type Book = {
     price: number;
     imageUrl: string;
     description: string;
+    id: string;
 };
