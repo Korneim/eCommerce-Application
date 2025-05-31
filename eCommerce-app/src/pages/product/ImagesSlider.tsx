@@ -1,6 +1,6 @@
 import { Carousel, Modal, Image, Spin } from 'antd';
 import { FC, useState, useEffect } from 'react';
-import styles from './ProductImageSlider.module.css';
+import styles from './productImageSlider.module.scss';
 
 interface ProductImageSliderProps {
     images: string[];
@@ -19,17 +19,21 @@ export const ProductImageSlider: FC<ProductImageSliderProps> = ({ images }) => {
             const loadImages = async (): Promise<void> => {
                 const promises = images.map((img: string) => {
                     return new Promise<string>((resolve) => {
-                        const imgObj: HTMLImageElement = document.createElement('img');;
+                        const imgObj: HTMLImageElement = document.createElement('img');
                         imgObj.src = img;
-                        imgObj.addEventListener('load', () => {
-                            resolve(img);
-                        }, { once: true });
-                    })
-                })
+                        imgObj.addEventListener(
+                            'load',
+                            () => {
+                                resolve(img);
+                            },
+                            { once: true }
+                        );
+                    });
+                });
                 const loaded = await Promise.all(promises);
                 setLoadedImages(loaded);
                 setLoading(false);
-            }
+            };
             loadImages();
         }
     }, [images]);
@@ -37,12 +41,12 @@ export const ProductImageSlider: FC<ProductImageSliderProps> = ({ images }) => {
     if (loading) {
         return <Spin size="large" className={styles.spinner} />;
     }
-    const showModal = (index: number) : void => {
+    const showModal = (index: number): void => {
         setCurrentSlide(index);
         setIsModalOpen(true);
     };
 
-    const handleCancel = () : void => {
+    const handleCancel = (): void => {
         setIsModalOpen(false);
     };
 

@@ -1,6 +1,64 @@
+.product-container {
+    column-gap: 5rem;
+}
+
 .characteristics-name,
 .characteristics-values,
 .characteristics-container,
-.description-container {
+.description-container,
+.additional-chars-name,
+.additional-chars-values {
     flex-direction: column;
+}
+
+h1 {
+    font-size: 2.6rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+.characteristics-name,
+.characteristics-values,
+.additional-chars-name,
+.additional-chars-values {
+    font-size: 1.4rem;
+    row-gap: 1.5rem;
+}
+
+.characteristics,
+.additional-chars {
+    column-gap: 2.5rem;
+}
+
+.description {
+    max-width: 53.6rem;
+    font-size: 1.4rem;
+}
+
+.additional-chars-container {
+    width: 100%;
+    flex-direction: column;
+    margin-left: 33rem;
+}
+
+.additional-chars-wrapper {
+    flex-direction: row;
+    column-gap: 7rem;
+}
+
+.characteristics-wrapper {
+    column-gap: 4rem;
+}
+
+.price-card {
+    text-align: center;
+}
+
+.price-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 2rem;
 }

@@ -1,4 +1,4 @@
-import {  createApiBuilderFromCtpClient, Product } from '@commercetools/platform-sdk';
+import { createApiBuilderFromCtpClient, Product } from '@commercetools/platform-sdk';
 import { createAnonymousApiClient } from '../../services/api/BuildClient.ts';
 
 export default async function getBook(productId: string): Promise<{ product: Product }> {
@@ -8,14 +8,10 @@ export default async function getBook(productId: string): Promise<{ product: Pro
             projectKey: import.meta.env.VITE_PROJECT_KEY,
         });
 
-        const response = await apiRoot
-            .products()
-            .withId({ ID: productId })
-            .get()
-            .execute();
+        const response = await apiRoot.products().withId({ ID: productId }).get().execute();
         return {
-            product: response.body
-        }
+            product: response.body,
+        };
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
         console.error('Ошибка при получении продукта:', errorMessage);
