@@ -3,16 +3,28 @@ import { Button, Flex, Image, Typography } from 'antd';
 import type { Book } from '../book-list/types.ts';
 import css from './book-card.module.scss';
 import { ShoppingCartOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     bookInfo: Book;
 };
 
 export const BookCard: FC<Props> = ({ bookInfo }) => {
-    const { title, imageUrl, price, discountPrice, description } = bookInfo;
+    const navigate = useNavigate();
+    const { title, imageUrl, price, discountPrice, description, id } = bookInfo;
+    const productUrl = `/product/${id}`;
 
     return (
-        <Flex vertical gap={10} align="center" justify="space-between" className={css.card}>
+        <Flex
+            vertical
+            gap={10}
+            align="center"
+            justify="space-between"
+            className={css.card}
+            onClick={() => {
+                navigate(productUrl);
+            }}
+        >
             <Flex className={css.container}>
                 <Image className={css.image} src={imageUrl} alt={title} height={250} width={180} preview={false} />
             </Flex>
