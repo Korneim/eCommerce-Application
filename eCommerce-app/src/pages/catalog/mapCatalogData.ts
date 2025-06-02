@@ -26,9 +26,9 @@ export const mapCatalogData = (data: ProductProjection[] = []): Book[] => {
         const authorAttr = currentData?.attributes?.find((attr: ProductAttribute) => attr.name === 'author');
 
         const author = authorAttr
-            ? (typeof authorAttr.value === 'string'
+            ? typeof authorAttr.value === 'string'
                 ? authorAttr.value
-                : 'Неизвестный автор')
+                : 'Неизвестный автор'
             : 'Неизвестный автор';
 
         const priceObj = currentData?.prices?.[0];

@@ -102,7 +102,7 @@ const UserProfilePage: FC = () => {
                 messageApi.open({
                     type: 'success',
                     content: 'Данные успешно обновлены',
-                })
+                });
             } catch (error) {
                 if (error instanceof Error && error.message === 'duplicate_email') {
                     setIsModalOpen(true);
@@ -214,7 +214,7 @@ const UserProfilePage: FC = () => {
                                     messageApi.open({
                                         type: 'success',
                                         content: 'Пароль успешно изменён',
-                                    })
+                                    });
 
                                     setIsPasswordModalOpen(false);
                                     setOldPassword('');

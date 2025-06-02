@@ -37,6 +37,13 @@
     "noImplicitAny": true
   },
   "include": [
-    "src"
+    "src",
+    "jest.config.ts",
+    "jest.setup.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "coverage"
   ]
 }
