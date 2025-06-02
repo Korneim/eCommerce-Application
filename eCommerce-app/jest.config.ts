@@ -3,6 +3,7 @@ import type { Config } from 'jest';
 const config: Config = {
     preset: 'ts-jest',
     testEnvironment: 'jsdom',
+
     setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
     moduleNameMapper: {
         '\\.(css|scss|sass|less|module\\.css|module\\.scss)$': 'identity-obj-proxy',
@@ -12,7 +13,7 @@ const config: Config = {
         '^.+\\.tsx?$': [
             'ts-jest',
             {
-                tsconfig: 'tsconfig.json',
+                tsconfig: 'tsconfig.app.json',
             },
         ],
     },
