@@ -17,7 +17,8 @@
     "module": "ESNext",
     "types": [
       "jest",
-      "@testing-library/jest-dom"
+      "@testing-library/jest-dom",
+      "node"
     ],
     "esModuleInterop": true,
     "skipLibCheck": true,
