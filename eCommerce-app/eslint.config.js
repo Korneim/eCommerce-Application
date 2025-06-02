@@ -6,15 +6,12 @@ import tseslint from 'typescript-eslint';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 
 export default tseslint.config(
-    { ignores: ['dist'] },
+    {
+        ignores: ['dist', 'node_modules/', 'dist/', './src/__tests__', 'coverage/', 'jest.setup.ts', 'coverage/'],
+    },
     {
         extends: [js.configs.recommended, ...tseslint.configs.recommendedTypeChecked],
         files: ['**/*.{ts,tsx}'],
-        ignorePatterns: [
-            "node_modules/",
-            "dist/",
-            "*.test.ts"
-        ],
         languageOptions: {
             ecmaVersion: 2020,
             globals: globals.browser,

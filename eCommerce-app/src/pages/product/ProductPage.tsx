@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import getBook from './getBook';
 import { Product } from '@commercetools/platform-sdk';
 import { ProductImageSlider } from './ImagesSlider';
-import { Flex, Card, Button } from 'antd';
+import { Button, Card, Flex } from 'antd';
 import css from './productPage.module.scss';
 
 interface ProductAttribute {
@@ -97,7 +97,7 @@ export const ProductPage: FC = () => {
     }, [firstPrice]);
     console.log(book);
     return (
-        <>
+        <Flex className={css.wrapper} vertical>
             <Flex justify="center" className={`${css['product-container']}`}>
                 {<ProductImageSlider images={imagesArray ?? []} />}
                 <Flex className={`${css['description-container']}`}>
@@ -182,6 +182,6 @@ export const ProductPage: FC = () => {
                     </Flex>
                 </Flex>
             </Flex>
-        </>
+        </Flex>
     );
 };

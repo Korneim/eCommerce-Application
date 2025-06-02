@@ -53,7 +53,7 @@ export const Router: FC = () => {
                 },
                 {
                     path: routes.profile,
-                    element: <UserProfilePage/>,
+                    element: <UserProfilePage />,
                 },
                 {
                     path: routes.product,
