@@ -59,10 +59,6 @@ export const Router: FC = () => {
                     path: routes.product,
                     element: <ProductPage />,
                 },
-                {
-                    path: routes.product,
-                    element: <ProductPage />,
-                },
             ],
         },
         {
