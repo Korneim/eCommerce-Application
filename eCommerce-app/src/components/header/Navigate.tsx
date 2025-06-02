@@ -40,7 +40,11 @@ const commonMenuItems: MenuItem[] = [
     },
 ];
 
-const createLoginMenuItems = (logout: () => void, clearAccessToken: () => void, accessToken: string | undefined): MenuItem[] => [
+const createLoginMenuItems = (
+    logout: () => void,
+    clearAccessToken: () => void,
+    accessToken: string | undefined
+): MenuItem[] => [
     {
         label: 'Каталог',
         key: routes.catalog,

@@ -1,88 +1,79 @@
 .footer {
-    width: 100%;
-    justify-content: center;
-    padding: 0 20px;
-    margin-bottom: 10px;
-    gap: 30px;
+    width: 70%;
+    height: 274px;
+    padding: 20px;
+    gap: 47px;
 
-    @media screen and (width <= 1090px) {
-        flex-direction: column;
-        margin-top: 50px;
-        margin-bottom: 0;
-        gap: 0;
-    }
-
-    @media screen and (width <= 470px) {
-        padding: 5px;
-    }
-}
-
-.img {
-    width: 80vw;
-    height: 179px;
-    background-image: url('../../assets/images/books.png');
-    background-repeat: repeat-x;
-
-    @media screen and (width <= 1090px) {
-        width: 100%;
-        height: 170px;
-    }
-}
-
-.content {
-    width: 100%;
-    justify-content: space-around;
-
-    @media screen and (width <= 1090px) {
-        justify-content: space-around;
-        padding: 20px;
-        border-radius: 8px;
-        background: linear-gradient(360deg, #feaf38 19%, #ffce1a 100%);
-        color: #fff;
-        gap: 20px;
-    }
-}
-
-.title {
-    margin: 0;
-
-    @media screen and (width <= 1090px) {
-        color: #fff !important;
-    }
-}
-
-.adreses {
-    font-size: 16px;
-
-    @media screen and (width <= 550px) {
-        font-size: 12px;
-    }
-}
-
-.name {
-    width: 90px;
-    justify-content: space-between;
-}
-
-.link {
-    font-size: 16px;
-
-    @media screen and (width <= 1090px) {
-        color: #fff !important;
-    }
-
-    @media screen and (width <= 550px) {
-        font-size: 12px;
+    @media (width <= 1000px) {
+        flex-wrap: wrap;
+        gap: 5px;
     }
 }
 
 .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 24px;
+    font-size: 24px;
+}
 
-    & svg {
-        width: 18px;
-        height: 18px;
+.about {
+    max-width: 30%;
+}
+
+.img {
+    width: 1280px;
+    max-width: 1280px;
+    height: 274px;
+    background-image: url('../../assets/images/footerImg.png');
+    background-position: 2.6% 150%;
+    background-repeat: repeat-x;
+
+    @media (width <= 1310px) {
+        width: 100%;
+        height: 150px;
+        background-position: bottom;
+        background-repeat: repeat-x;
+        background-size: contain;
     }
+
+    @media (width <= 1000px) {
+        height: 100px;
+    }
+}
+
+.contacts > * {
+    max-width: 100%;
+
+    @media (width <= 743px) {
+        font-size: 14px !important;
+    }
+}
+
+.content {
+    max-width: 35%;
+    flex-direction: row;
+
+    @media (width <= 1050px) {
+        width: 100%;
+        justify-content: space-between;
+        gap: 0;
+    }
+}
+
+.name > * {
+    width: 100px;
+    justify-content: space-between;
+
+    @media (width <= 743px) {
+        font-size: 14px !important;
+    }
+}
+
+.title {
+    @media (width <= 743px) {
+        font-size: 14px !important;
+    }
+}
+
+.adreses {
+    width: 100%;
 }

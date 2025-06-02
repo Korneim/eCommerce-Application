@@ -8,7 +8,7 @@ export const App: FC = () => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#ffce1a',
+                    colorPrimary: '#6941c2',
                     colorPrimaryActive: 'var(--btn-active-bg-color)',
                     colorFillSecondary: 'ffce1a',
                 },
@@ -18,8 +18,8 @@ export const App: FC = () => {
                         fontFamily: 'Mulish',
                     },
                     Menu: {
-                        horizontalItemSelectedColor: '#ffce1a',
-                        horizontalItemHoverColor: '#ffce1a',
+                        horizontalItemSelectedColor: '#6941c2',
+                        horizontalItemHoverColor: '#6941c2',
                     },
                     Carousel: {
                         arrowSize: 50,

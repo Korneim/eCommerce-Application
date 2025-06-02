@@ -1,0 +1,9 @@
+.container {
+    width: 50%;
+    flex-direction: column !important;
+    gap: 20px;
+
+    @media (width <= 600px) {
+        width: 100% !important;
+    }
+}

@@ -6,12 +6,8 @@ html {
 
 .login-section {
     display: flex;
-    min-height: calc(100vh - 260px);
+    min-height: calc(100vh - 373px);
     align-items: center;
-
-    @media screen and (width <= 1090px) {
-        min-height: calc(100vh - 330px);
-    }
 }
 
 .page-link,

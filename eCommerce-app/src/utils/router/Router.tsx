@@ -1,4 +1,3 @@
-// utils/router/Router.tsx
 import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom';
 import { MainLayout } from '../../components/main-layout/MainLayout.tsx';
 import type { FC } from 'react';
@@ -8,6 +7,9 @@ import LoginPage from '../../pages/login/Login.tsx';
 import { MainPage } from '../../pages/main/MainPage.tsx';
 import { RegistrationPage } from '../../pages/registration/Registration.tsx';
 import useAuthStore from '../../store/useAuthStore';
+import { CatalogPage } from '../../pages/catalog/Catalog.tsx';
+import UserProfilePage from '../../pages/user-profile/UserProfile.tsx';
+import { ProductPage } from '../../pages/product/ProductPage.tsx';
 
 export const Router: FC = () => {
     const { isLoggedIn } = useAuthStore();
@@ -43,7 +45,7 @@ export const Router: FC = () => {
                 },
                 {
                     path: routes.catalog,
-                    element: <div>catalog</div>,
+                    element: <CatalogPage />,
                 },
                 {
                     path: routes.about,
@@ -51,7 +53,11 @@ export const Router: FC = () => {
                 },
                 {
                     path: routes.profile,
-                    element: <div>profile</div>,
+                    element: <UserProfilePage/>,
+                },
+                {
+                    path: routes.product,
+                    element: <ProductPage />,
                 },
             ],
         },

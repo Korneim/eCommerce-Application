@@ -13,9 +13,9 @@ export const NotFoundPage: FC = () => {
     }
 
     return (
-        <Flex justify="center" align="center" vertical className={css.container}>
+        <Flex justify="center" align="center" gap={20} vertical className={css.container}>
             <img src={error} className={css.image} alt="Error 404"></img>
-            <Button onClick={handleReturn} size="large">
+            <Button type={'primary'} onClick={handleReturn} size="large">
                 Back to main
             </Button>
         </Flex>
