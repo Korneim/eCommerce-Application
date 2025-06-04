@@ -35,7 +35,6 @@ export const MainPage: FC = () => {
         }
     }, []);
 
-    console.log(products);
     useEffect(() => {
         loadBest();
     }, [loadBest]);
@@ -59,7 +58,6 @@ export const MainPage: FC = () => {
         }
     }, []);
 
-    console.log(products);
     useEffect(() => {
         loadRecommended();
     }, [loadRecommended]);

@@ -19,7 +19,6 @@ export const CatalogPage: FC = () => {
     const [searchText, setSearchText] = useState<string>('');
 
     const loadProducts = useCallback(async () => {
-        console.log(selectedIds);
         setIsLoading(true);
         try {
             const { products, total } = await getPaginatedProducts(
@@ -52,7 +51,6 @@ export const CatalogPage: FC = () => {
             setPageSize(size);
         }
     };
-    console.log(selectedIds);
     return (
         <Flex vertical className={css.block}>
             <Flex vertical gap={10}>
