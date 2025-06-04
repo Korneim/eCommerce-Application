@@ -4,6 +4,8 @@ import type { Book } from '../book-list/types.ts';
 import css from './book-card.module.scss';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { useCartStore } from '../../pages/main/MainPage.tsx';
+import { createAdminApiRoot } from '../../services/api/BuildClient.ts';
 
 type Props = {
     bookInfo: Book;
@@ -13,6 +15,34 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
     const navigate = useNavigate();
     const { title, imageUrl, price, discountPrice, description, id } = bookInfo;
     const productUrl = `/product/${id}`;
+    const { cartId } = useCartStore();
+
+    const handleCartClick = async (): Promise<void> => {
+        const apiRoot = createAdminApiRoot();
+        if (cartId)
+            try {
+                await apiRoot
+                    .carts()
+                    .withId({ ID: cartId })
+                    .post({
+                        body: {
+                            version: 1,
+                            actions: [
+                                {
+                                    action: 'addLineItem',
+                                    productId: bookInfo.id,
+                                    quantity: 1,
+                                },
+                            ],
+                        },
+                    })
+                    .execute();
+
+                console.log('Товар добавлен в корзину');
+            } catch (error) {
+                console.error('Ошибка при добавлении в корзину:', error);
+            }
+    };
 
     return (
         <Flex
@@ -51,7 +81,14 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
                 </Typography.Paragraph>
             </Flex>
 
-            <Button type="primary" size="large" icon={<ShoppingCartOutlined />}>
+            <Button
+                type="primary"
+                size="large"
+                icon={<ShoppingCartOutlined />}
+                onClick={() => {
+                    handleCartClick();
+                }}
+            >
                 Add to basket
             </Button>
         </Flex>

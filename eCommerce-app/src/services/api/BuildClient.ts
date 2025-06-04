@@ -52,6 +52,24 @@ export const createApiClient = (): Client => {
         .build();
 };
 
+export const createAdminApiClient = (): Client => {
+    const authMiddlewareOptions: AuthMiddlewareOptions = {
+        host: import.meta.env.VITE_AUTH_URL,
+        projectKey: projectKey,
+        credentials: {
+            clientId: import.meta.env.VITE_ADMIN_ID,
+            clientSecret: import.meta.env.VITE_ADMIN_SECRET,
+        },
+        scopes: [import.meta.env.VITE_ADMIN_SCOPES],
+        httpClient: fetch,
+    };
+
+    return new ClientBuilder()
+        .withAnonymousSessionFlow(authMiddlewareOptions)
+        .withHttpMiddleware(httpMiddlewareOptions)
+        .build();
+};
+
 export const createApiClientWithPasswordFlow = (user: {
     username: string;
     password: string;
@@ -88,4 +106,17 @@ export const createApiRoot = (): ByProjectKeyRequestBuilder => {
     return apiRoot;
 };
 
+export const createAdminApiRoot = (): ByProjectKeyRequestBuilder => {
+    const client = createAdminApiClient();
+    const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
+        projectKey: projectKey,
+    });
+    return apiRoot;
+};
+
 export const apiRootRegister = createApiRoot();
+
+export const getAnonymousId = (): string => {
+    const anonymousId = crypto.randomUUID();
+    return anonymousId;
+};
