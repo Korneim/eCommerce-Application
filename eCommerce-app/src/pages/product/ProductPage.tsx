@@ -79,7 +79,6 @@ export const ProductPage: FC = () => {
     const bookPages = getAttributeValue(bookMaster?.attributes, 'pages', { type: 'number' });
     const bookGenre = getAttributeValue(bookMaster?.attributes, 'genre', { type: 'string' });
     const bookPrice = book?.masterData.current.masterVariant.prices;
-    console.log(bookPrice);
     const [hasDiscount, setHasDiscount] = useState(false);
     const [price, setPrice] = useState<number>(0);
     const [discountedPrice, setDiscountedPrice] = useState<number | null>(null);
@@ -95,7 +94,6 @@ export const ProductPage: FC = () => {
         }
         setPrice(firstPrice.value.centAmount / 100);
     }, [firstPrice]);
-    console.log(book);
     return (
         <Flex className={css.wrapper} vertical>
             <Flex justify="center" className={`${css['product-container']}`}>

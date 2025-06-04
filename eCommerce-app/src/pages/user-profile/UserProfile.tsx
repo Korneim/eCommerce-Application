@@ -3,13 +3,12 @@ import { useEffect, useState } from 'react';
 import { loginCustomer } from '../../services/api/login-api/auth';
 import useAuthStore from '../../store/useAuthStore';
 import type { Customer } from '../../services/api/login-api/customer';
-import { updateCustomerPersonalData } from '../../services/api/login-api/customer';
-import { getCurrentCustomer } from '../../services/api/login-api/customer';
-import { Spin, Input, Button, DatePicker, Modal, message } from 'antd';
+import { getCurrentCustomer, updateCustomerPersonalData } from '../../services/api/login-api/customer';
+import { Button, DatePicker, Input, message, Modal, Spin } from 'antd';
 import css from './user-profile.module.scss';
 import dayjs, { Dayjs } from 'dayjs';
-import { ModalWindow } from '../../components/modal-window/ModalWindow';
 import type { ModalType } from '../../components/modal-window/ModalWindow';
+import { ModalWindow } from '../../components/modal-window/ModalWindow';
 import AddressSection from './Adresses';
 import GlobalSpinner from '../../components/user-profile/GlobalSpinner';
 
@@ -71,7 +70,6 @@ const UserProfilePage: FC = () => {
             try {
                 const customerData = await getCurrentCustomer(accessToken);
                 setCustomer(customerData);
-                console.log(customerData);
             } catch (error) {
                 console.error('Ошибка при загрузке профиля', error);
             }
@@ -184,6 +182,7 @@ const UserProfilePage: FC = () => {
                                         const data: T = JSON.parse(text);
                                         return data;
                                     }
+
                                     const customer = await parseJsonResponse<NewCustomer>(customerRes);
 
                                     const response = await fetch(
