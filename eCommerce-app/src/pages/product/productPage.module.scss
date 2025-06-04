@@ -19,10 +19,15 @@ h2 {
 .characteristics-values,
 .additional-chars-name,
 .additional-chars-values {
-  width: 150px;
+  min-width: 30%;
   font-size: 1.4rem;
   row-gap: 1.5rem;
 }
+
+.characteristics-name > * {
+  height: 40px;
+}
+
 
 .characteristics,
 .additional-chars {
@@ -30,14 +35,11 @@ h2 {
 }
 
 
-.characteristics-values {
-  width: 150px;
+.characteristics-values > * {
+  min-height: 40px;
+  text-align: center
 }
 
-.characteristics,
-.characteristics-values {
-  width: 150px;
-}
 
 .description-container {
   width: 100%;
