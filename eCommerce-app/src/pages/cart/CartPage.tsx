@@ -27,6 +27,10 @@ export const CartPage: FC = () => {
         }
     }, [anonymousId, setCartVersion]);
 
+    const handleItemRemoved = useCallback(() => {
+        loadCartBooks();
+    }, [loadCartBooks]);
+
     useEffect(() => {
         loadCartBooks();
     }, [loadCartBooks]);
@@ -40,7 +44,7 @@ export const CartPage: FC = () => {
     return (
         <Flex vertical gap={20}>
             {books.map((book) => (
-                <CartItem key={book.title} books={book} />
+                <CartItem key={book.title} onItemRemoved={handleItemRemoved} books={book} />
             ))}
             <Typography.Text>{`Итого : ${(totalPrice / 100).toString()} ₽`}</Typography.Text>
         </Flex>

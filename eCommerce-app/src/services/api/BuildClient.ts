@@ -39,10 +39,10 @@ export const createApiClient = (): Client => {
         host: import.meta.env.VITE_AUTH_URL,
         projectKey: projectKey,
         credentials: {
-            clientId: registerClientId,
-            clientSecret: registerSecret,
+            clientId: import.meta.env.VITE_ADMIN_ID,
+            clientSecret: import.meta.env.VITE_ADMIN_SECRET,
         },
-        scopes: registerScopes,
+        scopes: [import.meta.env.VITE_ADMIN_SCOPES],
         httpClient: fetch,
     };
 

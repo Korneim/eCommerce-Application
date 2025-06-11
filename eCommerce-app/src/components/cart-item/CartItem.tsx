@@ -7,17 +7,55 @@ import { useCartStore } from '../../App.tsx';
 
 type Props = {
     books: CartBook;
+    onItemRemoved: () => void;
 };
 
-export const CartItem: FC<Props> = ({ books }) => {
+export const CartItem: FC<Props> = ({ books, onItemRemoved }) => {
     const { title, price, imageUrl, author, discountPrice, quantity, id } = books;
     const [localQuantity, setLocalQuantity] = useState(quantity);
     const [isUpdating, setIsUpdating] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const { version, cartId, setCartVersion } = useCartStore();
 
+    const handleRemoveItem = useCallback((): void => {
+        const removeItem = async (): Promise<void> => {
+            if (!cartId || !version) return;
+
+            setIsDeleting(true);
+            const apiRoot = createAdminApiRoot();
+
+            try {
+                const response = await apiRoot
+                    .carts()
+                    .withId({ ID: cartId })
+                    .post({
+                        body: {
+                            version: version,
+                            actions: [
+                                {
+                                    action: 'removeLineItem',
+                                    lineItemId: id,
+                                },
+                            ],
+                        },
+                    })
+                    .execute();
+
+                setCartVersion(response.body.version);
+                onItemRemoved();
+            } catch (error) {
+                console.error('Ошибка при удалении товара:', error);
+            } finally {
+                setIsDeleting(false);
+            }
+        };
+
+        removeItem().catch(console.error);
+    }, [cartId, id, version, setCartVersion, onItemRemoved]);
+
     const handleQuantityChange = useCallback(
-        async (newQuantity: number) => {
+        async (newQuantity: number): Promise<void> => {
             if (newQuantity === null || newQuantity < 1) return;
 
             setIsUpdating(true);
@@ -62,7 +100,7 @@ export const CartItem: FC<Props> = ({ books }) => {
             setIsUpdating(true);
             const timer = setTimeout(() => {
                 handleQuantityChange(value);
-            }, 500);
+            }, 300);
 
             return (): void => clearTimeout(timer);
         },
@@ -93,7 +131,9 @@ export const CartItem: FC<Props> = ({ books }) => {
             <Flex vertical>
                 <InputNumber min={1} value={localQuantity} onChange={onChange} disabled={isUpdating} />
             </Flex>
-            <Button icon={<DeleteOutlined />}>Удалить товар</Button>
+            <Button icon={<DeleteOutlined />} onClick={handleRemoveItem} loading={isDeleting}>
+                Удалить товар
+            </Button>
         </Flex>
     );
 };
