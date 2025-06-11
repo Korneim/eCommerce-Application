@@ -3,7 +3,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { getCart, mappedCart } from './getCart.ts';
 import { LineItem } from '@commercetools/platform-sdk';
 import { useCartStore } from '../../App.tsx';
-import { CartItem } from '../../components/cart/CartItem.tsx';
+import { CartItem } from '../../components/cart-item/CartItem.tsx';
 
 export const CartPage: FC = () => {
     const [products, setProducts] = useState<LineItem[]>([]);

@@ -45,7 +45,7 @@ export const App: FC = () => {
                 const newCart = await createAnonymousCart(anonymousId);
                 setCartId(newCart.id);
                 setCartVersion(newCart.version);
-                console.log(newCart.version, 'versia cart');
+                console.log(newCart.version, 'versia cart-item');
             }
         };
         fetchCart();
