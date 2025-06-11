@@ -10,7 +10,7 @@ import useAuthStore from '../../store/useAuthStore';
 import { CatalogPage } from '../../pages/catalog/Catalog.tsx';
 import UserProfilePage from '../../pages/user-profile/UserProfile.tsx';
 import { ProductPage } from '../../pages/product/ProductPage.tsx';
-import { CartPage } from '../../pages/cart/Cart.tsx';
+import { CartPage } from '../../pages/cart/CartPage.tsx';
 
 export const Router: FC = () => {
     const { isLoggedIn } = useAuthStore();

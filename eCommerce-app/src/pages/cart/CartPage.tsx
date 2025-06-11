@@ -1,11 +1,13 @@
-import { Flex } from 'antd';
+import { Flex, Typography } from 'antd';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { getCart, mappedCart } from './getCart.ts';
 import { LineItem } from '@commercetools/platform-sdk';
 import { useCartStore } from '../../App.tsx';
+import { CartItem } from '../../components/cart/CartItem.tsx';
 
 export const CartPage: FC = () => {
     const [products, setProducts] = useState<LineItem[]>([]);
+    const [totalPrice, settTotalPrice] = useState(0);
 
     const { anonymousId, cartId, setCartVersion } = useCartStore();
     console.log(cartId, 'currentCart');
@@ -19,6 +21,7 @@ export const CartPage: FC = () => {
             const data = cart?.results[0]?.lineItems;
             console.log(cart.results[0].version, 'verssss');
             console.log(cart.results[0].anonymousId, 'anonymousIdverssss');
+            settTotalPrice(cart.results[0].totalPrice.centAmount);
 
             setProducts(data);
         }
@@ -34,5 +37,12 @@ export const CartPage: FC = () => {
         console.log(books, '3to todvar');
     }, [books]);
 
-    return <Flex>rere</Flex>;
+    return (
+        <Flex vertical gap={20}>
+            {books.map((book) => (
+                <CartItem key={book.title} books={book} />
+            ))}
+            <Typography.Text>{`Итого : ${(totalPrice / 100).toString()} ₽`}</Typography.Text>
+        </Flex>
+    );
 };

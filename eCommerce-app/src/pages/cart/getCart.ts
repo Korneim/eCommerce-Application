@@ -33,7 +33,7 @@ export const getCart = async (anonymousId?: string) => {
 };
 
 export const mappedCart = (data: LineItem[]): CartBook[] => {
-    console.log(data, 'data');
+    console.log(data, 'datacart');
 
     return data?.map((el) => {
         const { name, price, variant } = el;
@@ -45,11 +45,18 @@ export const mappedCart = (data: LineItem[]): CartBook[] => {
                 : 'Неизвестный автор')
             : 'Неизвестный автор';
 
+        const discountedPrice = price.discounted?.value.centAmount;
+        const quantity = el.quantity;
+        const id = el.id;
+
         return {
             title: name.ru,
             price: price.value.centAmount,
             author: author || '',
             imageUrl: variant.images?.[0].url || '',
+            discountPrice: discountedPrice || 0,
+            quantity: quantity,
+            id: id,
         };
     });
 };

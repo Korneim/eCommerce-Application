@@ -9,4 +9,7 @@ export type Book = {
     version: number;
 };
 
-export type CartBook = Pick<Book, 'title' | 'author' | 'price' | 'imageUrl'>;
+export type CartBook = Pick<Book, 'title' | 'author' | 'price' | 'imageUrl' | 'discountPrice'> & {
+    quantity: number;
+    id: string;
+};
