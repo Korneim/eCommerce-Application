@@ -4,8 +4,8 @@ import type { Book } from '../book-list/types.ts';
 import css from './book-card.module.scss';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { useCartStore } from '../../pages/main/MainPage.tsx';
 import { createAdminApiRoot } from '../../services/api/BuildClient.ts';
+import { useCartStore } from '../../App.tsx';
 
 type Props = {
     bookInfo: Book;
@@ -14,30 +14,34 @@ type Props = {
 export const BookCard: FC<Props> = ({ bookInfo }) => {
     const navigate = useNavigate();
     const { title, imageUrl, price, discountPrice, description, id } = bookInfo;
+    const { version } = useCartStore();
+
     const productUrl = `/product/${id}`;
     const { cartId } = useCartStore();
+    const { setCartVersion } = useCartStore();
 
     const handleCartClick = async (): Promise<void> => {
         const apiRoot = createAdminApiRoot();
-        if (cartId)
+        console.log(version, 'clicl');
+        if (cartId && version)
             try {
-                await apiRoot
+                const response = await apiRoot
                     .carts()
                     .withId({ ID: cartId })
                     .post({
                         body: {
-                            version: 1,
+                            version: version,
                             actions: [
                                 {
                                     action: 'addLineItem',
-                                    productId: bookInfo.id,
+                                    productId: id,
                                     quantity: 1,
                                 },
                             ],
                         },
                     })
                     .execute();
-
+                setCartVersion(response.body.version);
                 console.log('Товар добавлен в корзину');
             } catch (error) {
                 console.error('Ошибка при добавлении в корзину:', error);
@@ -85,7 +89,8 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
                 type="primary"
                 size="large"
                 icon={<ShoppingCartOutlined />}
-                onClick={() => {
+                onClick={(event) => {
+                    event.stopPropagation();
                     handleCartClick();
                 }}
             >

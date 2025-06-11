@@ -7,25 +7,9 @@ import css from './main-page.module.scss';
 import { getPaginatedProducts } from '../catalog/getAllBooks.ts';
 import { mapCatalogData } from '../catalog/mapCatalogData.ts';
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { createAnonymousCart } from '../cart/getCart.ts';
-import { create } from 'zustand';
-import { getAnonymousId } from '../../services/api/BuildClient.ts';
 
 const selectedIds = ['3659ba76-2698-4c1a-8a2f-dfcdff9fb07a'];
 const recommendedSelectedIds = ['2cb390e9-14bb-49da-bd43-eb9943b7a103'];
-
-type CartStore = {
-    cartId: string | null;
-    anonymousId: string | null;
-    setCartId: (id: string) => void;
-    setAnonimusId: (id: string) => void;
-};
-export const useCartStore = create<CartStore>((set) => ({
-    cartId: null,
-    anonymousId: null,
-    setCartId: (id): void => set({ cartId: id }),
-    setAnonimusId: (id): void => set({ anonymousId: id }),
-}));
 
 export const MainPage: FC = () => {
     const [recommendedProducts, setrecommendedProducts] = useState<ProductProjection[]>([]);
@@ -35,22 +19,6 @@ export const MainPage: FC = () => {
     const pageSize = 4;
     const selectedSort = '';
     const searchText = '';
-
-    const { cartId, anonymousId, setCartId, setAnonimusId } = useCartStore();
-
-    useEffect(() => {
-        const fetchCart = async (): Promise<void> => {
-            if (!anonymousId) {
-                const newAnonimusId = getAnonymousId();
-                setAnonimusId(newAnonimusId);
-            }
-            if (anonymousId && !cartId) {
-                const newCart = await createAnonymousCart(anonymousId);
-                setCartId(newCart.id);
-            }
-        };
-        fetchCart();
-    }, [anonymousId, cartId, setAnonimusId, setCartId]);
 
     const loadBest = useCallback(async () => {
         try {

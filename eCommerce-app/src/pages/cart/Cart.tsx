@@ -1,19 +1,28 @@
 import { Flex } from 'antd';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { getCart, mappedCart } from './getCart.ts';
-import { useCartStore } from '../main/MainPage.tsx';
 import { LineItem } from '@commercetools/platform-sdk';
+import { useCartStore } from '../../App.tsx';
 
 export const CartPage: FC = () => {
     const [products, setProducts] = useState<LineItem[]>([]);
 
-    const { anonymousId, cartId } = useCartStore();
+    const { anonymousId, cartId, setCartVersion } = useCartStore();
+    console.log(cartId, 'currentCart');
+    console.log(anonymousId, 'anonu');
 
     const loadCartBooks = useCallback(async () => {
-        const cart = await getCart(anonymousId);
-        const data = cart?.results[0]?.lineItems;
-        setProducts(data);
-    }, [anonymousId]);
+        if (anonymousId) {
+            const cart = await getCart(anonymousId);
+            setCartVersion(cart?.results[0]?.version);
+
+            const data = cart?.results[0]?.lineItems;
+            console.log(cart.results[0].version, 'verssss');
+            console.log(cart.results[0].anonymousId, 'anonymousIdverssss');
+
+            setProducts(data);
+        }
+    }, [anonymousId, setCartVersion]);
 
     useEffect(() => {
         loadCartBooks();
@@ -22,8 +31,8 @@ export const CartPage: FC = () => {
     const books = useMemo(() => mappedCart(products), [products]);
 
     useEffect(() => {
-        console.log(books);
+        console.log(books, '3to todvar');
     }, [books]);
 
-    return <Flex></Flex>;
+    return <Flex>rere</Flex>;
 };
