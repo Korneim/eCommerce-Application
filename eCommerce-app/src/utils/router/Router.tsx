@@ -11,6 +11,7 @@ import { CatalogPage } from '../../pages/catalog/Catalog.tsx';
 import UserProfilePage from '../../pages/user-profile/UserProfile.tsx';
 import { ProductPage } from '../../pages/product/ProductPage.tsx';
 import AboutUsPage from '../../pages/about-us/aboutUs.tsx';
+import { CartPage } from '../../pages/cart/CartPage.tsx';
 
 export const Router: FC = () => {
     const { isLoggedIn } = useAuthStore();
@@ -42,7 +43,7 @@ export const Router: FC = () => {
                 },
                 {
                     path: routes.cart,
-                    element: <div>cart</div>,
+                    element: <CartPage />,
                 },
                 {
                     path: routes.catalog,

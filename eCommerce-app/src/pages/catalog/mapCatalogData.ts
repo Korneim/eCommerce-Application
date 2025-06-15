@@ -11,6 +11,7 @@ const getDefaultBook = (): Book => ({
     imageUrl: defaultBook,
     description: 'Нет описания',
     id: '',
+    version: 1,
 });
 
 interface ProductAttribute {
@@ -30,11 +31,11 @@ export const mapCatalogData = (data: ProductProjection[] = []): Book[] => {
                 ? authorAttr.value
                 : 'Неизвестный автор'
             : 'Неизвестный автор';
-
         const priceObj = currentData?.prices?.[0];
         const price = priceObj?.value?.centAmount ? Number(priceObj.value.centAmount) / 100 : 0;
         const discount = Number(currentData?.prices?.[0].discounted?.value.centAmount) / 100;
         const id = el.id;
+        const version = el.version;
 
         return {
             title: el.name?.ru || 'Без названия',
@@ -44,6 +45,7 @@ export const mapCatalogData = (data: ProductProjection[] = []): Book[] => {
             imageUrl: currentData?.images?.[0]?.url || defaultBook,
             description: el.description?.ru || 'Нет описания',
             id: id,
+            version: version,
         };
     });
 };
