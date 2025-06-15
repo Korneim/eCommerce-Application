@@ -39,13 +39,11 @@ export const App: FC = () => {
             if (!anonymousId) {
                 const newAnonimusId = getAnonymousId();
                 setAnonimusId(newAnonimusId);
-                console.log(newAnonimusId, 'versia newAnonimusId');
             }
             if (anonymousId && !cartId) {
                 const newCart = await createAnonymousCart(anonymousId);
                 setCartId(newCart.id);
                 setCartVersion(newCart.version);
-                console.log(newCart.version, 'versia cart-item');
             }
         };
         fetchCart();

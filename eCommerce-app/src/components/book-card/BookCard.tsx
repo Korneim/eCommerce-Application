@@ -22,7 +22,6 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
 
     const handleCartClick = async (): Promise<void> => {
         const apiRoot = createAdminApiRoot();
-        console.log(version, 'clicl');
         if (cartId && version)
             try {
                 const response = await apiRoot
@@ -42,7 +41,6 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
                     })
                     .execute();
                 setCartVersion(response.body.version);
-                console.log('Товар добавлен в корзину');
             } catch (error) {
                 console.error('Ошибка при добавлении в корзину:', error);
             }

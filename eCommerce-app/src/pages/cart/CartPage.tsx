@@ -12,9 +12,7 @@ export const CartPage: FC = () => {
     const [products, setProducts] = useState<LineItem[]>([]);
     const [totalPrice, settTotalPrice] = useState(0);
 
-    const { anonymousId, cartId, setCartVersion } = useCartStore();
-    console.log(cartId, 'currentCart');
-    console.log(anonymousId, 'anonu');
+    const { anonymousId, setCartVersion } = useCartStore();
 
     const loadCartBooks = useCallback(async () => {
         if (anonymousId) {
@@ -22,8 +20,6 @@ export const CartPage: FC = () => {
             setCartVersion(cart?.results[0]?.version);
 
             const data = cart?.results[0]?.lineItems;
-            console.log(cart.results[0].version, 'verssss');
-            console.log(cart.results[0].anonymousId, 'anonymousIdverssss');
             settTotalPrice(cart.results[0].totalPrice.centAmount);
 
             setProducts(data);
@@ -39,10 +35,6 @@ export const CartPage: FC = () => {
     }, [loadCartBooks]);
 
     const books = useMemo(() => mappedCart(products), [products]);
-
-    useEffect(() => {
-        console.log(books, '3to todvar');
-    }, [books]);
 
     return (
         <Flex vertical gap={20}>

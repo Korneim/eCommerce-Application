@@ -33,16 +33,14 @@ export const getCart = async (anonymousId?: string) => {
 };
 
 export const mappedCart = (data: LineItem[]): CartBook[] => {
-    console.log(data, 'datacart');
-
     return data?.map((el) => {
         const { name, price, variant } = el;
         const authorAttr = variant?.attributes?.find((attr) => attr.name === 'author');
 
         const author = authorAttr
-            ? (typeof authorAttr.value === 'string'
+            ? typeof authorAttr.value === 'string'
                 ? authorAttr.value
-                : 'Неизвестный автор')
+                : 'Неизвестный автор'
             : 'Неизвестный автор';
 
         const discountedPrice = price.discounted?.value.centAmount;
