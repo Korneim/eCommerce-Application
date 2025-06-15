@@ -1,42 +1,32 @@
 .slidercontainer {
-    max-width: 80%;
+    max-width: 300px;
+    height: 100%;
+    flex-direction: row;
     margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
 }
 
 .productimage {
     width: 100%;
-    height: auto;
-    max-height: 40rem;
+    height: 200px;
     border-radius: 0.4rem;
     cursor: pointer;
     object-fit: contain;
-
-    @media (width <= 768px) {
-        max-height: 50vh;
-    }
-
-    @media (width <= 576px) {
-        max-height: 40vh;
-    }
 }
 
 .slide {
     display: flex !important;
-    min-width: 100%;
-    height: 40rem;
-    min-height: 40rem;
+    width: 100%;
+    height: 400px;
     align-items: center;
     justify-content: center !important;
     padding: 2rem !important;
+    border-radius: 20px;
     background: #fff;
 }
 
-.imagemodal {
-    max-width: 90%;
-}
-
 .enlargedimage {
-    width: 100%;
     height: auto;
     max-height: 70vh;
     object-fit: contain;
@@ -44,9 +34,6 @@
 
 .modalslide {
     display: flex !important;
-    min-width: 100%;
-    height: 80vh;
-    min-height: 80vh;
     align-items: center !important;
     justify-content: center !important;
 }
@@ -90,7 +77,6 @@
 .modalcarousel {
     .slick-arrow {
         z-index: 1;
-        width: 4rem;
         height: 4rem;
         border-radius: 50%;
         background: rgb(0 0 0 / 50%);

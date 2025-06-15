@@ -1,9 +1,54 @@
-import type { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { ConfigProvider } from 'antd';
 import { Router } from './utils/router/Router.tsx';
 import '@ant-design/v5-patch-for-react-19';
+import { getAnonymousId } from './services/api/BuildClient.ts';
+import { createAnonymousCart } from './pages/cart/getCart.ts';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+type CartStore = {
+    cartId: string | null;
+    anonymousId: string | null;
+    version: number | null;
+    setCartId: (id: string) => void;
+    setAnonimusId: (id: string) => void;
+    setCartVersion: (id: number) => void;
+};
+export const useCartStore = create<CartStore>()(
+    persist(
+        (set) => ({
+            cartId: null,
+            anonymousId: null,
+            version: null,
+            setCartId: (id): void => set({ cartId: id }),
+            setAnonimusId: (id): void => set({ anonymousId: id }),
+            setCartVersion: (id): void => set({ version: id }),
+        }),
+        {
+            name: 'cart-storage',
+        }
+    )
+);
 
 export const App: FC = () => {
+    const { cartId, anonymousId, setCartId, setAnonimusId, setCartVersion } = useCartStore();
+
+    useEffect(() => {
+        const fetchCart = async (): Promise<void> => {
+            if (!anonymousId) {
+                const newAnonimusId = getAnonymousId();
+                setAnonimusId(newAnonimusId);
+            }
+            if (anonymousId && !cartId) {
+                const newCart = await createAnonymousCart(anonymousId);
+                setCartId(newCart.id);
+                setCartVersion(newCart.version);
+            }
+        };
+        fetchCart();
+    }, [anonymousId, cartId, setAnonimusId, setCartId, setCartVersion]);
+
     return (
         <ConfigProvider
             theme={{

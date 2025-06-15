@@ -1,13 +1,12 @@
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import useAuthStore from '../../store/useAuthStore';
-import type { Customer, Address } from '../../services/api/login-api/customer';
-import { updateCustomerAddress } from '../../services/api/login-api/customer';
-import { getCurrentCustomer } from '../../services/api/login-api/customer';
-import { Spin, Input, Card, Button, message } from 'antd';
+import type { Address, Customer } from '../../services/api/login-api/customer';
+import { getCurrentCustomer, updateCustomerAddress } from '../../services/api/login-api/customer';
+import { Button, Card, Input, message, Spin } from 'antd';
 import css from './user-profile.module.scss';
-import { ModalWindow } from '../../components/modal-window/ModalWindow';
 import type { ModalType } from '../../components/modal-window/ModalWindow';
+import { ModalWindow } from '../../components/modal-window/ModalWindow';
 import GlobalSpinner from '../../components/user-profile/GlobalSpinner';
 
 const isValidCity = (city: string): boolean => {
@@ -45,7 +44,6 @@ const AddressSection: FC = () => {
             try {
                 const customerData = await getCurrentCustomer(accessToken);
                 setCustomer(customerData);
-                console.log(customerData);
             } catch (error) {
                 console.error('Ошибка при загрузке профиля', error);
             }
@@ -93,7 +91,6 @@ const AddressSection: FC = () => {
         setCityError('');
         setPostalCodeError('');
         setEditableAddressIndex(index);
-        console.log(address.id);
     };
 
     return (
@@ -122,7 +119,6 @@ const AddressSection: FC = () => {
                                                 style={{ width: '200px' }}
                                                 status={cityError ? 'error' : ''}
                                                 onChange={(e) => {
-                                                    console.log(customer.addresses);
                                                     setAddressFormValues({
                                                         ...addressFormValues,
                                                         city: e.target.value,

@@ -4,6 +4,8 @@ import type { Book } from '../book-list/types.ts';
 import css from './book-card.module.scss';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { createAdminApiRoot } from '../../services/api/BuildClient.ts';
+import { useCartStore } from '../../App.tsx';
 
 type Props = {
     bookInfo: Book;
@@ -12,7 +14,37 @@ type Props = {
 export const BookCard: FC<Props> = ({ bookInfo }) => {
     const navigate = useNavigate();
     const { title, imageUrl, price, discountPrice, description, id } = bookInfo;
+    const { version } = useCartStore();
+
     const productUrl = `/product/${id}`;
+    const { cartId } = useCartStore();
+    const { setCartVersion } = useCartStore();
+
+    const handleCartClick = async (): Promise<void> => {
+        const apiRoot = createAdminApiRoot();
+        if (cartId && version)
+            try {
+                const response = await apiRoot
+                    .carts()
+                    .withId({ ID: cartId })
+                    .post({
+                        body: {
+                            version: version,
+                            actions: [
+                                {
+                                    action: 'addLineItem',
+                                    productId: id,
+                                    quantity: 1,
+                                },
+                            ],
+                        },
+                    })
+                    .execute();
+                setCartVersion(response.body.version);
+            } catch (error) {
+                console.error('Ошибка при добавлении в корзину:', error);
+            }
+    };
 
     return (
         <Flex
@@ -51,7 +83,15 @@ export const BookCard: FC<Props> = ({ bookInfo }) => {
                 </Typography.Paragraph>
             </Flex>
 
-            <Button type="primary" size="large" icon={<ShoppingCartOutlined />}>
+            <Button
+                type="primary"
+                size="large"
+                icon={<ShoppingCartOutlined />}
+                onClick={(event) => {
+                    event.stopPropagation();
+                    handleCartClick();
+                }}
+            >
                 Add to basket
             </Button>
         </Flex>
