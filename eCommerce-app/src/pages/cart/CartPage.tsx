@@ -1,11 +1,14 @@
-import { Flex, Typography } from 'antd';
+import { Button, Flex, Typography } from 'antd';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { getCart, mappedCart } from './getCart.ts';
 import { LineItem } from '@commercetools/platform-sdk';
 import { useCartStore } from '../../App.tsx';
 import { CartItem } from '../../components/cart-item/CartItem.tsx';
+import { routes } from '../../utils/router/routes.ts';
+import { useNavigate } from 'react-router-dom';
 
 export const CartPage: FC = () => {
+    const navigate = useNavigate();
     const [products, setProducts] = useState<LineItem[]>([]);
     const [totalPrice, settTotalPrice] = useState(0);
 
@@ -43,9 +46,20 @@ export const CartPage: FC = () => {
 
     return (
         <Flex vertical gap={20}>
-            {books.map((book) => (
-                <CartItem key={book.title} onItemRemoved={handleItemRemoved} books={book} />
-            ))}
+            {books?.length ? (
+                books.map((book) => <CartItem key={book.title} onItemRemoved={handleItemRemoved} books={book} />)
+            ) : (
+                <Flex vertical gap={20}>
+                    <Typography>Ваша корзина пуста.</Typography>
+                    <Button
+                        onClick={() => {
+                            navigate(routes.catalog);
+                        }}
+                    >
+                        Вернунуться в каталог
+                    </Button>
+                </Flex>
+            )}
             <Typography.Text>{`Итого : ${(totalPrice / 100).toString()} ₽`}</Typography.Text>
         </Flex>
     );
