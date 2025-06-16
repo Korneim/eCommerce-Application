@@ -74,7 +74,7 @@
   }
 }
 
-.modalcarousel {
+.modalcarousel
     .slick-arrow {
         z-index: 1;
         height: 4rem;
@@ -82,6 +82,7 @@
         background: rgb(0 0 0 / 50%);
         color: #fff;
         font-size: 2.4rem;
+
 
     &:hover {
       background: rgb(0 0 0 / 80%);
