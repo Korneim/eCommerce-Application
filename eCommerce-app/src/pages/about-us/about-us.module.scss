@@ -1,0 +1,100 @@
+.about-us-container {
+    max-width: 120rem;
+    margin: 0 auto;
+
+    .about-us-title {
+        margin-bottom: 2.4rem;
+        text-align: center;
+    }
+
+    .team-description {
+        max-width: 80rem;
+        margin: 0 auto 3.2rem;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .team-members-container {
+        width: 100%;
+        margin-bottom: 4.8rem;
+    }
+
+    .team-member-card {
+        min-width: 30rem;
+        max-width: 100%;
+        flex: 1 1 100%;
+
+        @media (width >= 576px) {
+            max-width: calc(50% - 1.6rem);
+            flex: 1 1 calc(50% - 1.6rem);
+        }
+
+        @media (width >= 992px) {
+            max-width: calc(33.333% - 1.6rem);
+            flex: 1 1 calc(33.333% - 1.6rem);
+        }
+    }
+
+    .card {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+
+            .ant-card-cover {
+                overflow: hidden;
+                height: 45rem !important;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: top center;
+                }
+            }
+
+            .ant-card-body {
+                display: flex;
+                flex: 1;
+                flex-direction: column;
+            }
+    }
+
+    .contributions {
+        flex-grow: 1;
+        margin: 1.6rem 0;
+
+        ul {
+            padding: 0;
+            margin: 0.8rem 0 0 1.6rem;
+            font-size: 1.6rem;
+        }
+    }
+
+    .github-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .rsschool-logo {
+        padding-top: 4rem;
+        border-top: 0.1rem solid #f0f0f0;
+        margin-top: 4rem;
+        text-align: center;
+
+        a {
+            display: inline-block;
+            margin-bottom: 1.6rem;
+            transition: opacity 0.3s;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        .rsschool-text {
+            margin-bottom: 0;
+            color: #666;
+        }
+    }
+}

@@ -43,7 +43,6 @@ export const CatalogPage: FC = () => {
     const mappedBooks = useMemo(() => {
         return products ? mapCatalogData(products) : [];
     }, [products]);
-
     const handlePageChange = (page: number, size: number): void => {
         if (page !== currentPage || size !== pageSize) {
             setCurrentPage(page);

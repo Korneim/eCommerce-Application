@@ -4,99 +4,98 @@
 .description-container,
 .additional-chars-name,
 .additional-chars-values {
-  flex-direction: column;
+    flex-direction: column;
 }
 
 h1 {
-  font-size: 2.6rem;
+    font-size: 2.6rem;
 }
 
 h2 {
-  font-size: 2rem;
+    font-size: 2rem;
 }
 
 .characteristics-name,
 .characteristics-values,
 .additional-chars-name,
 .additional-chars-values {
-  min-width: 30%;
-  font-size: 1.4rem;
-  row-gap: 1.5rem;
+
+    min-width: 30%;
+    font-size: 1.4rem;
+    row-gap: 1.5rem;
 }
 
 .characteristics-name > * {
-  height: 40px;
+    height: 40px;
 }
-
 
 .characteristics,
 .additional-chars {
-  column-gap: 2.5rem;
+    column-gap: 2.5rem;
 }
 
-
 .characteristics-values > * {
-  min-height: 40px;
-  text-align: center
+    min-height: 40px;
+    text-align: center;
 }
 
 
 .description-container {
-  width: 100%;
+    width: 100%;
 }
 
 .description {
-  width: 60%;
-  font-size: 1.4rem;
+    width: 60%;
+    font-size: 1.4rem;
 
-  @media (width <= 700px) {
-    width: 100%;
-  }
+    @media (width <= 700px) {
+        width: 100%;
+    }
 }
 
 .additional-chars-container {
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
 }
 
 .characteristics-wrapper {
-  gap: 4rem;
+    gap: 4rem;
 }
 
 .price-card {
-  text-align: center;
+    text-align: center;
 }
 
 .price-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 2rem;
 }
 
 .wrapper {
-  width: 80%;
-  align-items: center;
-  gap: 50px;
+    width: 80%;
+    align-items: center;
+    gap: 50px;
 }
 
 .product-container {
-  @media (width <= 700px) {
-    flex-wrap: wrap;
-    margin-top: 20px;
-    column-gap: 5rem;
-  }
+    @media (width <= 700px) {
+        flex-wrap: wrap;
+        margin-top: 20px;
+        column-gap: 5rem;
+    }
 }
 
 .additional-chars-wrapper {
-  flex-direction: row;
-  column-gap: 7rem;
+    flex-direction: row;
+    column-gap: 7rem;
 
-  @media (width <= 800px) {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-    gap: 15px;
-  }
+    @media (width <= 800px) {
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-around;
+        gap: 15px;
+    }
 }

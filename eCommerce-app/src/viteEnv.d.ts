@@ -13,6 +13,9 @@ interface ImportMetaEnv {
     readonly VITE_CLIENT_REGISTER_ID: string;
     readonly VITE_CLIENT_REGISTER_SECRET: string;
     readonly VITE_CLIENT_REGISTER_SCOPES: string;
+    readonly VITE_ADMIN_ID: string;
+    readonly VITE_ADMIN_SECRET: string;
+    readonly VITE_ADMIN_SCOPES: string;
 }
 
 interface ImportMeta {
