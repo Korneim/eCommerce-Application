@@ -36,7 +36,6 @@ export const CatalogPage: FC = () => {
             setIsLoading(false);
         }
     }, [currentPage, pageSize, selectedIds, selectedSort, searchText]);
-
     useEffect(() => {
         loadProducts();
     }, [loadProducts, selectedIds, selectedSort, searchText]);

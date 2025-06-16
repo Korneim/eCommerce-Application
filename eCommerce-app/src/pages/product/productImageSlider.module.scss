@@ -39,39 +39,39 @@
 }
 
 .closeicon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    width: 4rem;
-    height: 4rem;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: rgb(0 0 0 / 50%);
-    color: #fff;
-    cursor: pointer;
-    font-size: 2.4rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: 4rem;
+  height: 4rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 50%);
+  color: #fff;
+  cursor: pointer;
+  font-size: 2.4rem;
 
-    &:hover {
-        background: rgb(0 0 0 / 80%);
-    }
+  &:hover {
+    background: rgb(0 0 0 / 80%);
+  }
 }
 
 .customdots {
-    li {
-        button {
-            background: #1890ff;
-        }
+  li {
+    button {
+      background: #1890ff;
     }
+  }
 }
 
 .modaldots {
-    li {
-        button {
-            background: #fff;
-        }
+  li {
+    button {
+      background: #fff;
     }
+  }
 }
 
 .modalcarousel {
@@ -83,8 +83,8 @@
         color: #fff;
         font-size: 2.4rem;
 
-        &:hover {
-            background: rgb(0 0 0 / 80%);
-        }
+    &:hover {
+      background: rgb(0 0 0 / 80%);
     }
+  }
 }
