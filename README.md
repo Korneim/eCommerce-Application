@@ -51,7 +51,9 @@ The application was created as part of [JavaScript/Front-end 2024Q4](https://rs.
 
 1. Clone the repository on your computer
 ```bash
+
 git clone https://github.com/Korneim/eCommerce-Application.git
+
 ```
 2. Navigate to the project directory
 ```bash

@@ -1,0 +1,21 @@
+.menu {
+    display: flex;
+    width: 80%;
+    height: 80px;
+    align-items: center;
+    justify-content: end;
+}
+
+.icon {
+    padding-left: 4px;
+    font-size: 19px !important;
+}
+
+.container {
+    width: 100%;
+    justify-content: space-between;
+
+    :hover {
+        cursor: pointer;
+    }
+}

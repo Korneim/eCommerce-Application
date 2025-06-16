@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+    font-family: Mulish, sans-serif;
+}
+
+body {
+    color: var(--font-color);
+}
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next,
+.ant-carousel .slick-prev:hover,
+.ant-carousel .slick-next:hover {
+    padding: 30px;
+    color: #1d1d1d;
+    font-size: 20px;
+}
+
+.ant-carousel .slick-dots li button {
+    background-color: #787878;
+}
